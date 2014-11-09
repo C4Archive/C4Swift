@@ -11,12 +11,15 @@ import C4Core
 import C4iOS
 import AVFoundation
 
-protocol MediaObject {
+protocol MediaObject: Run, Notification {
     func setup()
 }
 
+protocol VisibleMediaObject: MediaObject, Visible, Interactive, Animatable {
+
+}
+
 protocol Run {
-    
     func run()
     func run(delay: Double)
     
@@ -310,7 +313,7 @@ protocol Button {
     var titleColor: Color { get } //the current title color
     var titleShadowColor: Color { get } //the current title shadow color
     var image: Image { get } //the current image
-    var backgroundImage { get } //the current backgroundImage
+    var backgroundImage: Image { get } //the current backgroundImage
     var tintColor: Color { get set }
     var font: Font { get set }
     var showsTouchWhenHighlighted: Bool { get set }
