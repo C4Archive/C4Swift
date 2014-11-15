@@ -9,27 +9,21 @@
 import UIKit
 import C4iOS
 import C4Core
+import C4Animation
 
 class ViewController: UIViewController {
-    var currentCircle = UIView ()
-    var object = Obj()
+
+    var b: Bool = true
+    var v = C4View(frame: C4Rect(100,100,100,100))
+    var u = C4View(frame: C4Rect(50,50,25,25))
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        v.backgroundColor = C4Color(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
         
-        var timer = NSTimer.scheduledTimerWithTimeInterval(0.1,target:self, selector: Selector("update"), userInfo: nil, repeats: true)
+        u.backgroundColor = C4Color(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        v.mask = u
         
-        CATransaction.begin()
-        CATransaction.setAnimationDuration(10)
-        
-        CATransaction.commit()
+        v.interactionEnabled = false
+        self.view.add(v)
     }
-    
-    func update() {
-        C4Log("\(object.value)")
-    }
-}
-
-class Obj: NSObject {
-    var value: Double = 0.0
 }

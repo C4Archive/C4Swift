@@ -11,18 +11,17 @@ import C4Core
 import C4iOS
 import AVFoundation
 
-protocol MediaObject: Run, Notification {
+protocol MediaObject: Run, Notification, Animatable {
     func setup()
 }
 
-protocol VisibleMediaObject: MediaObject, Visible, Interactive, Animatable {
+protocol VisibleMediaObject: MediaObject, Visible, Interactive {
 
 }
 
 protocol Run {
     func run()
     func run(delay: Double)
-    
 }
 
 protocol Visible {
