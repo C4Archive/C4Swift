@@ -17,20 +17,69 @@ class ViewController: UIViewController {
     lazy var ox: Double = 0.0
     lazy var oy: Double = 0.0
     lazy var c: UIColor = .lightGrayColor()
-
+    lazy var edges: [Line] = [Line]()
+    lazy var hiddenEdges: [Int] = [Int]()
+    
     override func viewDidLoad() {
-        dx = 11.0
-        dy = dx / M_PI_2
-        ox = Double(88) / 2.0
+        dx = 5.0
+        dy = dx / 1.9
+        ox = Double(self.view.frame.size.width) / 2.0
         oy = 10.0
-
+        
         createGrid()
         createLogo()
+        hideSomeEdges()
+        dispatch_after(1, dispatch_get_main_queue(), {self.revealRandomEdge(0)})
+    }
+    
+    func hideSomeEdges() {
+        for i in 0...10 {
+            hideRandomEdge()
+        }
+    }
+    
+    func hideRandomEdge() {
+        var index = 0
+        do {
+            index = random(below: edges.count)
+        } while edges[index].alpha == 0.0
+        edges[index].alpha = 0.0
+    }
+    
+    func revealRandomEdge(previousEdge: Int) {
+        var index = 0
+        do {
+            index = random(below: edges.count)
+        } while edges[index].alpha > 0.0 && index != previousEdge
+        
+        let l = edges[index]
+        UIView.animateWithDuration(
+            0.75,
+            animations: {
+                l.alpha = 1.0
+            },
+            completion: { c in
+                if c { self.fadeRandomEdge(index) }
+        })
+    }
+    
+    func fadeRandomEdge(previousEdge: Int) {
+        var index = 0
+        do {
+            index = random(below: edges.count)
+        } while edges[index].alpha == 0.0 && index != previousEdge
+
+        let l = edges[index]
+        UIView.animateWithDuration(
+            0.75,
+            animations: { l.alpha = 0.0 },
+            completion: { c in if c { self.revealRandomEdge(index) }
+        })
     }
     
     func createGrid() {
-        for x in 0...50 {
-            for y in 0...50 {
+        for x in 0...120 {
+            for y in 0...120 {
                 let p = convertCoordinate(C4Point(x,y))
                 if C4Rect(self.view.frame).contains(p) {
                     let e = createPoint(p)
@@ -42,61 +91,68 @@ class ViewController: UIViewController {
     
     func createLogo() {
         
-//        pt(0,0)
-//        pt(0,1)
-//        pt(1,0)
-//        pt(1,1)
-        
-        c = .blackColor()
-        ln(0, 0, 0, 1)
-        ln(0, 0, 3, 0)
-        ln(3, 1, 0, 1)
-        ln(2, 2, 4, 2)
-        ln(2, 2, 4, 4)
-        ln(4, 4, 6, 4)
-        ln(6, 4, 7, 5)
-        ln(0, 1, 4, 5)
-        ln(4, 5, 7, 5)
-        ln(3, 2, 4, 3)
-        ln(4, 3, 5, 3)
-        ln(7,5, 7,4)
-        ln(4,4,4,3)
-        
-        c = .redColor()
-        ln(3,0,3,1)
-        ln(3,1,4,2)
-        ln(3,0,4,0)
-        ln(4,0,4,1)
-        ln(4,1,3,1)
-        ln(4,1,5,2)
-        ln(5,2, 5,1)
-        ln(5,1,4,0)
-        ln(5,2, 4,2)
-        
         c = .blueColor()
-        ln(4, 2, 6, 4)
-        ln(6,4, 8,4)
-        ln(8, 4, 9, 5)
-        ln(9,5,10,5)
-        ln(10,5,9,4)
-        ln(9,4,10,4)
-        ln(10,4,10,3)
-        ln(10,3,9,2)
-        ln(9,2,8,2)
-        ln(8,2,6,0)
-        ln(6,0,5,0)
-        ln(5,0,5,1)
-        ln(5,1,7,3)
-        ln(7, 3, 6, 3)
-        ln(6,3,5,2)
-        ln(5,1,6,1)
-        ln(6,1,6,0)
-        ln(6,1,8,3)
-        ln(8,3,9,3)
-        ln(9,3,9,2)
-        ln(10,4,10,5)
-        ln(6,2,6,3)
-        ln(8,2,8,3)
+        ln(0, 10, 0, 20)
+        ln(0, 20, 16, 36)
+        ln(0, 10, 2, 12)
+        ln(2,12,2,22)
+        ln(2,12,12,12)
+        ln(4,10,6,12)
+        ln(0,10,10,10)
+        ln(8,8,10,8)
+        ln(8,8,8,10)
+        ln(10,10,10,8)
+        ln(10,8,18,16)
+        ln(10,10,22,22)
+        ln(4, 22, 4, 12)
+        ln(4,22,16,34)
+        ln(16,34,24,34)
+        ln(24,34,26,36)
+        ln(26,36,16,36)
+        ln(26,36,26,26)
+        ln(26,34,24,32)
+        ln(24,32,24,24)
+        ln(24,24,24,16)
+        ln(24,32,16,32)
+        ln(16,32,6,22)
+        ln(6,22,6,12)
+        ln(6,20,16,30)
+        ln(16,30,20,30)
+        ln(20,30,20,24)
+        ln(20,24,12,16)
+        ln(12,16,6,16)
+        ln(6,14,12,14)
+        ln(12,14,24,26)
+        ln(12,14,12,16)
+        ln(14,18,12,18)
+        ln(12,18,10,16)
+        ln(22,32,22,26)
+        ln(22,26,24,26)
+        ln(20,24,22,26)
+        ln(22,22,22,14)
+        ln(22,14,10,2)
+        ln(26,26,24,24)
+        ln(24,18,32,26)
+        ln(32,26,32,24)
+        ln(32,24,24,16)
+        ln(22,14,20,14)
+        ln(20,14,20,18)
+        ln(20,18,18,16)
+        ln(18,16,18,12)
+        ln(20,14,10,4)
+        ln(10,4,10,0)
+        ln(10,0,12,0)
+        ln(12,0,20,8)
+        ln(20,6,22,8)
+        ln(20,6,20,8)
+        ln(18,6,20,6)
+        ln(22,8,22,10)
+        ln(22,10,34,22)
+        ln(34,22,34,26)
+        ln(34,26,32,26)
+        ln(34,24,12,2)
+        ln(12,2,10,2)
+        ln(12,30,14,30)
         
         var points = [C4Point]()
         points.append(convertCoordinate(C4Point(3,0)))
@@ -106,34 +162,16 @@ class ViewController: UIViewController {
         points.append(convertCoordinate(C4Point(5,1)))
         points.append(convertCoordinate(C4Point(4,0)))
         points.append(convertCoordinate(C4Point(3,0)))
-        
-        var poly = Polygon(points: points)
-        poly.fillColor = UIColor.redColor().colorWithAlphaComponent(0.33)
-        self.view.add(poly)
-        
-        points.removeAll()
-        points.append(convertCoordinate(C4Point(6,2)))
-        points.append(convertCoordinate(C4Point(6,3)))
-        points.append(convertCoordinate(C4Point(7,3)))
-        poly = Polygon(points: points)
-        poly.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.33)
-        self.view.add(poly)
-
-        points.removeAll()
-        points.append(convertCoordinate(C4Point(6,4)))
-        points.append(convertCoordinate(C4Point(7,5)))
-        points.append(convertCoordinate(C4Point(7,4)))
-        poly = Polygon(points: points)
-        poly.fillColor = UIColor.blackColor().colorWithAlphaComponent(0.33)
-        self.view.add(poly)
     }
-
+    
     func ln(x1: Int, _ y1: Int, _ x2: Int, _ y2: Int) {
         let a = convertCoordinate(C4Point(x1,y1))
         let b = convertCoordinate(C4Point(x2,y2))
         let l = Line([a,b])
+        l.lineCap = .Round
         l.strokeColor = c
-        l.lineWidth = 1.0
+        l.lineWidth = 2.0
+        edges.append(l)
         self.view.add(l)
     }
     
@@ -146,14 +184,14 @@ class ViewController: UIViewController {
     
     func convertCoordinate(point: C4Point) -> C4Point {
         var pt = C4Point(point.x * dx + ox - dx * point.y, point.y * dy + oy + dy * point.x)
-//        var pt = C4Point(point.x * 4, point.y * 4)
+        //        var pt = C4Point(point.x * 4, point.y * 4)
         return pt
     }
     
     func createEllipse(point: C4Point) -> Ellipse {
         let e = Ellipse(C4Rect(0,0,8,8))
         e.center = CGPoint(point)
-
+        
         e.strokeColor = .redColor()
         e.lineWidth = 1.0
         e.fillColor = .clearColor()
@@ -163,9 +201,9 @@ class ViewController: UIViewController {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-   
+    
     func createPoint(point: C4Point) -> Ellipse {
-        let e = Ellipse(C4Rect(0,0,4,4))
+        let e = Ellipse(C4Rect(0,0,3,3))
         e.fillColor = c
         e.center = CGPoint(point)
         return e
