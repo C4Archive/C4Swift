@@ -17,6 +17,10 @@
 		D928B5721A004E3200B0E813 /* C4SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B5711A004E3200B0E813 /* C4SwiftTests.swift */; };
 		D955EAFE1A005B12008356DD /* C4iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4iOS.framework */; };
 		D955EAFF1A005B12008356DD /* C4iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
+		D9DEA6281A200CAE0007E5EC /* C4Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; };
+		D9DEA62C1A200CAE0007E5EC /* C4Animation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +66,20 @@
 			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
 			remoteInfo = C4iOS;
 		};
+		D9DEA6291A200CAE0007E5EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A9596D181A054A960023323D;
+			remoteInfo = C4Core;
+		};
+		D9DEA62D1A200CAE0007E5EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A9596D891A089E9F0023323D;
+			remoteInfo = C4Animation;
+		};
 		D9EF499D1A0AB46E00C03774 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
@@ -85,7 +103,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D9DEA6281A200CAE0007E5EC /* C4Core.framework in Embed Frameworks */,
 				D955EAFF1A005B12008356DD /* C4iOS.framework in Embed Frameworks */,
+				D9DEA62C1A200CAE0007E5EC /* C4Animation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,7 +134,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */,
 				D955EAFE1A005B12008356DD /* C4iOS.framework in Frameworks */,
+				D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +239,8 @@
 			);
 			dependencies = (
 				D955EB011A005B12008356DD /* PBXTargetDependency */,
+				D9DEA62A1A200CAE0007E5EC /* PBXTargetDependency */,
+				D9DEA62E1A200CAE0007E5EC /* PBXTargetDependency */,
 			);
 			name = C4Swift;
 			productName = C4Swift;
@@ -382,6 +406,16 @@
 			isa = PBXTargetDependency;
 			name = C4iOS;
 			targetProxy = D955EB001A005B12008356DD /* PBXContainerItemProxy */;
+		};
+		D9DEA62A1A200CAE0007E5EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Core;
+			targetProxy = D9DEA6291A200CAE0007E5EC /* PBXContainerItemProxy */;
+		};
+		D9DEA62E1A200CAE0007E5EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Animation;
+			targetProxy = D9DEA62D1A200CAE0007E5EC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -21,12 +21,12 @@ class ViewController: UIViewController {
     lazy var hiddenEdges: [Int] = [Int]()
     
     override func viewDidLoad() {
-        dx = 5.0
+        dx = 8.0
         dy = dx / 1.9
-        ox = Double(self.view.frame.size.width) / 2.0
+        ox = Double(self.view.frame.size.width) / 2.0 + dx * 3.0
         oy = 10.0
         
-        createGrid()
+//        createGrid()
         createLogo()
         hideSomeEdges()
         dispatch_after(1, dispatch_get_main_queue(), {self.revealRandomEdge(0)})
