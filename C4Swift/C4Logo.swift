@@ -1,17 +1,26 @@
 //
-//  ViewController.swift
+//  C4Logo.swift
 //  C4Swift
 //
-//  Created by travis on 2014-10-28.
+//  Created by travis on 2014-11-24.
 //  Copyright (c) 2014 C4. All rights reserved.
 //
 
-import UIKit
-import C4iOS
+import Foundation
 import C4Core
+import C4iOS
 import C4Animation
 
-class ViewController: UIViewController {
+public protocol C4LogoProtocol {
+     var lineWidthRatio: Double { get }
+     var dx: Double { get }
+    
+     func isometricCoordinates() -> [C4Point]
+     func screenCoordinates() -> [C4Point]
+}
+
+class C4Logo: UIViewController {
+    let dxToLineWidth = 8.0/2.75
     lazy var dx: Double = 0.0
     lazy var dy: Double = 0.0
     lazy var ox: Double = 0.0
@@ -26,7 +35,7 @@ class ViewController: UIViewController {
         ox = Double(self.view.frame.size.width) / 2.0 + dx * 3.0
         oy = 10.0
         
-//        createGrid()
+        //        createGrid()
         createLogo()
         hideSomeEdges()
         dispatch_after(1, dispatch_get_main_queue(), {self.revealRandomEdge(0)})
@@ -68,7 +77,7 @@ class ViewController: UIViewController {
         do {
             index = random(below: edges.count)
         } while edges[index].alpha == 0.0 && index != previousEdge
-
+        
         let l = edges[index]
         UIView.animateWithDuration(
             0.75,

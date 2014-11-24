@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8201A1DC4B800298356 /* LogoNormalized */; };
 		1F53A8281A1DC4DD00298356 /* Logo in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8271A1DC4DD00298356 /* Logo */; };
+		1FB1A5C31A238F7000D164A0 /* C4Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB1A5C21A238F7000D164A0 /* C4Logo.swift */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
 		D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55D1A004E3200B0E813 /* ViewController.swift */; };
 		D928B5611A004E3200B0E813 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D928B55F1A004E3200B0E813 /* Main.storyboard */; };
@@ -115,6 +116,7 @@
 /* Begin PBXFileReference section */
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
+		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
 		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C4Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D928B55A1A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D928B55B1A004E3200B0E813 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
+				1FB1A5C21A238F7000D164A0 /* C4Logo.swift */,
 				1F53A8201A1DC4B800298356 /* LogoNormalized */,
 				1F53A8271A1DC4DD00298356 /* Logo */,
 				D9EF49981A0AB46E00C03774 /* C4MediaObject.swift */,
@@ -383,6 +386,7 @@
 			files = (
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,
+				1FB1A5C31A238F7000D164A0 /* C4Logo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +533,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Debug;
 		};
@@ -543,6 +548,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Release;
 		};
