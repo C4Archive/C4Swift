@@ -28,23 +28,13 @@ return CGFloat(arc4random_uniform(UInt32(val)))
 */
 class ShapeView: UIView {
     lazy internal var linePoints = [CGPoint]()
+    lazy internal var start = C4Point()
+    lazy internal var end = C4Point()
+    lazy public var duration = 1.0
+    
     convenience init(_ points: [CGPoint]) {
         self.init(frame: CGRectMakeFromPoints(points))
-        for i in 0..<points.count {
-            linePoints.append(points[i])
-        }
-        
-        self.clipsToBounds = false
-        
-        var path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, linePoints[0].x, linePoints[0].y)
-        
-        for i in 1..<linePoints.count {
-            CGPathAddLineToPoint(path, nil, linePoints[i].x, linePoints[i].y)
-        }
-        var transform = CGAffineTransformMakeTranslation(-frame.origin.x,-frame.origin.y)
-        shapeLayer.path = path
-        
+        updatePoints(points)
     }
     
     func updatePoints(points:[CGPoint]) {
@@ -69,6 +59,10 @@ class ShapeView: UIView {
     }
     
     func updatePath() {
+        if shapeLayer.path == nil {
+            shapeLayer.path = CGPathCreateMutable()
+            CGPathAddLineToPoint(CGPoint(-1,-1))
+        }
         if linePoints.count > 1 {
             var path = CGPathCreateMutable()
             CGPathMoveToPoint(path, nil, linePoints[0].x, linePoints[0].y)
