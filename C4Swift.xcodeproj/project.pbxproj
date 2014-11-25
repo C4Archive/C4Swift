@@ -116,6 +116,7 @@
 /* Begin PBXFileReference section */
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
+		1F6D325B1A246AA1009E7C5F /* ShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
 		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C4Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D928B55A1A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,6 +176,7 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
+				1F6D325B1A246AA1009E7C5F /* ShapeView.swift */,
 				1FB1A5C21A238F7000D164A0 /* C4Logo.swift */,
 				1F53A8201A1DC4B800298356 /* LogoNormalized */,
 				1F53A8271A1DC4DD00298356 /* Logo */,
