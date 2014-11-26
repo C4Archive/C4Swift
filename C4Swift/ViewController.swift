@@ -11,31 +11,41 @@ import C4iOS
 import C4Core
 import C4Animation
 
+//class ViewController: UIViewController {
+//    var s: C4Line = C4Line([C4Point(),C4Point(100,100)])
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        self.view.add(s)
+//        test(s)
+//        
+//        let tg = UITapGestureRecognizer(target: self, action: "handleTap:")
+//        self.view.addGestureRecognizer(tg)
+//        
+//        let cube = IsometricCube()
+//        cube.view.frame = self.view.frame
+//        self.view.add(cube.view)
+//    }
+//
+//    func test(s: C4Shape) {
+//        let v = s.strokeColor
+//        view.backgroundColor = v
+//        s.strokeColor = .redColor()
+//    }
+//    
+//    func handleTap(sender: UITapGestureRecognizer) {
+//        s.points = [C4Point(random(below: 100),random(below: 100)),C4Point(random(below: 100),random(below: 100))]
+//    }
+//    
+//    override func prefersStatusBarHidden() -> Bool {
+//        return true
+//    }
+//}
+
 class ViewController: UIViewController {
-    lazy var shapeView: ShapeView = ShapeView([CGPointMake(0,0),CGPointMake(100,100)])
-    override func viewDidLoad() {
-        shapeView.shapeLayer.strokeColor = UIColor.redColor().CGColor
-        self.view.addSubview(shapeView)
-        
-        var tap = UITapGestureRecognizer(target:self, action:"handleTap:")
-        view.addGestureRecognizer(tap)
-    }
     
-    func handleTap(sender: UITapGestureRecognizer) {
-        shapeView.updatePoints([CGPointMake(rand(100)+100,rand(100)+100),CGPointMake(rand(100)+100,rand(100)+100)])
-    }
-    
-    func rand(val: Int) -> CGFloat {
-        return CGFloat(arc4random_uniform(UInt32(val)))
-    }
+    var dynamicLine: C4Line = C4Line([C4Point(),C4Point(100,100)])
 
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-}
-
-class IsometricCube: UIViewController {
     let dx = 100.0
     var fill = UIColor.orangeColor()
     var offset = C4Vector()
@@ -64,9 +74,15 @@ class IsometricCube: UIViewController {
             for p in points {
                 addEllipse(p.screenCoordinate)
             }
-            
-            //        fill = .redColor()
-            //        addEllipse(C4Point(view.center))
+
+        let tg = UITapGestureRecognizer(target: self, action: "handleTap:")
+        self.view.addGestureRecognizer(tg)
+        
+        self.view.add(dynamicLine)
+    }
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        dynamicLine.points = [C4Point(random(below: 100),random(below: 100)),C4Point(random(below: 100),random(below: 100))]
     }
     
     func addEllipse(at: C4Point) {
@@ -77,7 +93,7 @@ class IsometricCube: UIViewController {
     }
     
     func addLine(from a:IsometricPoint, to b:IsometricPoint) {
-        let line = Line([a.screenCoordinate,b.screenCoordinate])
+        let line = C4Line([a.screenCoordinate,b.screenCoordinate])
         line.lineWidth = 2.0
         line.strokeColor = .blueColor()
         self.view.add(line)
@@ -119,155 +135,148 @@ struct IsometricPoint {
         }
     }
 }
+//
+//struct Logo {
+//    var offset: C4Vector = C4Vector(1,1)
+//    var dx = 1.0
+//    var dy = 1.0
+//    var scale: Int
+//}
+//
+//class GridLayout: UIViewController {
+//    let dx = 8.0
+//    let dy = 8.0 / 1.9
+//
+//    override func viewDidLoad() {
+//        for x in 0...200 {
+//            for y in 0...200 {
+//                let p = isometric(C4Point(Double(x),Double(y)))
+//                if C4Rect(self.view.frame).contains(p) {
+//                    addEllipse(p)
+//                }
+//
+//                if y > Int(self.view.frame.size.height) {
+//                    break
+//                }
+//            }
+//        }
+//    }
+//
+//    func isometric(var point: C4Point) -> C4Point {
+//        point = rotate(point, 45)
+//        point = C4Point(point.x * dx, point.y*dy)
+//        point = point + C4Vector(x: Double(self.view.center.x), y:10)
+//        return point
+//    }
+//
+//    func rotate(point: C4Point, _ degrees: Double) -> C4Point {
+//        let s = sin(degrees * M_PI / 180.0)
+//        let c = cos(degrees * M_PI / 180.0)
+//        return C4Point(c * point.x - s * point.y, s * point.x + c * point.y);
+//    }
+//
+//    func addEllipse(at: C4Point) {
+//            var e = Ellipse(C4Rect(0,0,4,4))
+//            e.center = CGPoint(at)
+//            self.view.add(e)
+//    }
+//
+//    override func prefersStatusBarHidden() -> Bool {
+//        return true
+//    }
+//}
+//
+//class ShapeView: UIView {
+//    lazy internal var linePoints = [CGPoint]()
+//    lazy internal var start = C4Point()
+//    lazy internal var end = C4Point()
+//    lazy internal var duration = 1.0
+//    
+//    convenience init(_ points: [CGPoint]) {
+//        self.init(frame: CGRectMakeFromPoints(points))
+//        let p = CGPathCreateMutable()
+//        CGPathMoveToPoint(p, nil, 0,0)
+//        CGPathAddLineToPoint(p, nil, 1, 1)
+//        shapeLayer.path = p
+//        updatePoints(points)
+//    }
+//    
+//    func updatePoints(points:[CGPoint]) {
+//        linePoints.removeAll()
+//        for i in 0..<points.count {
+//            linePoints.append(points[i])
+//        }
+//        updatePath()
+//    }
+//    
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//    }
+//    
+//    required init(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
+//    
+//    override class func layerClass() -> AnyClass {
+//        return CAShapeLayer.self
+//    }
+//    
+//    func updatePath() {
+//        if linePoints.count > 1 {
+//            var path = CGPathCreateMutable()
+//            CGPathMoveToPoint(path, nil, linePoints[0].x, linePoints[0].y)
+//            
+//            for i in 1..<linePoints.count {
+//                CGPathAddLineToPoint(path, nil, linePoints[i].x, linePoints[i].y)
+//            }
+//            animateKeyPath("path", toValue: path)
+//        }
+//    }
+//    
+//    var shapeLayer: CAShapeLayer {
+//        get {
+//            return layer as CAShapeLayer
+//        }
+//    }
+//    
+//    func animation() -> CABasicAnimation {
+//        var anim = CABasicAnimation()
+//        anim.duration = 0.25
+//        anim.beginTime = CACurrentMediaTime()
+//        anim.autoreverses = false
+//        anim.repeatCount = 0
+//        anim.removedOnCompletion = false
+//        anim.fillMode = kCAFillModeBoth
+//        return anim
+//    }
+//    
+//    func animateKeyPath(keyPath: String, toValue: AnyObject) {
+//        CATransaction.begin()
+//        CATransaction.setCompletionBlock({
+//            self.shapeLayer.path = toValue as CGPath
+//            self.adjustToFitPath()
+//        })
+//        var anim = animation()
+//        anim.keyPath = "path"
+//        anim.fromValue = self.layer.presentationLayer()?.valueForKeyPath("path")
+//        anim.toValue = toValue
+//        self.layer.addAnimation(anim, forKey:"animatepath")
+//        CATransaction.commit()
+//    }
+//    
+//    func adjustToFitPath() {
+//        if shapeLayer.path == nil {
+//            return
+//        }
+//        var f = CGPathGetPathBoundingBox(shapeLayer.path)
+//        var t = CGAffineTransformMakeTranslation(0,0)
+//        let p = CGPathCreateCopyByTransformingPath(shapeLayer.path, &t)
+//        
+//        self.shapeLayer.path = p
+//        bounds = CGPathGetPathBoundingBox(shapeLayer.path)
+//        frame = f
+//    }
+//}
 
-struct Logo {
-    var offset: C4Vector = C4Vector(1,1)
-    var dx = 1.0
-    var dy = 1.0
-    var scale: Int
-}
 
-class GridLayout: UIViewController {
-    let dx = 8.0
-    let dy = 8.0 / 1.9
-
-    override func viewDidLoad() {
-        for x in 0...200 {
-            for y in 0...200 {
-                let p = isometric(C4Point(Double(x),Double(y)))
-                if C4Rect(self.view.frame).contains(p) {
-                    addEllipse(p)
-                }
-
-                if y > Int(self.view.frame.size.height) {
-                    break
-                }
-            }
-        }
-    }
-
-    func isometric(var point: C4Point) -> C4Point {
-        point = rotate(point, 45)
-        point = C4Point(point.x * dx, point.y*dy)
-        point = point + C4Vector(x: Double(self.view.center.x), y:10)
-        return point
-    }
-
-    func rotate(point: C4Point, _ degrees: Double) -> C4Point {
-        let s = sin(degrees * M_PI / 180.0)
-        let c = cos(degrees * M_PI / 180.0)
-        return C4Point(c * point.x - s * point.y, s * point.x + c * point.y);
-    }
-
-    func addEllipse(at: C4Point) {
-            var e = Ellipse(C4Rect(0,0,4,4))
-            e.center = CGPoint(at)
-            self.view.add(e)
-    }
-
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-}
-
-class ShapeView: UIView {
-    lazy internal var linePoints = [CGPoint]()
-    lazy internal var start = C4Point()
-    lazy internal var end = C4Point()
-    lazy public var duration = 1.0
-    
-    convenience init(_ points: [CGPoint]) {
-        self.init(frame: CGRectMakeFromPoints(points))
-        let p = CGPathCreateMutable()
-        CGPathMoveToPoint(p, nil, 0,0)
-        CGPathAddLineToPoint(p, nil, 1, 1)
-        shapeLayer.path = p
-        updatePoints(points)
-    }
-    
-    func updatePoints(points:[CGPoint]) {
-        linePoints.removeAll()
-        for i in 0..<points.count {
-            linePoints.append(points[i])
-        }
-        updatePath()
-    }
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    override class func layerClass() -> AnyClass {
-        return CAShapeLayer.self
-    }
-    
-    func updatePath() {
-        if linePoints.count > 1 {
-            var path = CGPathCreateMutable()
-            CGPathMoveToPoint(path, nil, linePoints[0].x, linePoints[0].y)
-            
-            for i in 1..<linePoints.count {
-                CGPathAddLineToPoint(path, nil, linePoints[i].x, linePoints[i].y)
-            }
-            animateKeyPath("path", toValue: path)
-        }
-    }
-    
-    var shapeLayer: CAShapeLayer {
-        get {
-            return layer as CAShapeLayer
-        }
-    }
-    
-    func animation() -> CABasicAnimation {
-        var anim = CABasicAnimation()
-        anim.duration = 0.25
-        anim.beginTime = CACurrentMediaTime()
-        anim.autoreverses = false
-        anim.repeatCount = 0
-        anim.removedOnCompletion = false
-        anim.fillMode = kCAFillModeBoth
-        return anim
-    }
-    
-    func animateKeyPath(keyPath: String, toValue: AnyObject) {
-        CATransaction.begin()
-        CATransaction.setCompletionBlock({
-            self.shapeLayer.path = toValue as CGPath
-            self.adjustToFitPath()
-        })
-        var anim = animation()
-        anim.keyPath = "path"
-        anim.fromValue = self.layer.presentationLayer()?.valueForKeyPath("path")
-        anim.toValue = toValue
-        self.layer.addAnimation(anim, forKey:"animatepath")
-        CATransaction.commit()
-    }
-    
-    func adjustToFitPath() {
-        if shapeLayer.path == nil {
-            return
-        }
-        var f = CGPathGetPathBoundingBox(shapeLayer.path)
-        var t = CGAffineTransformMakeTranslation(0,0)
-        let p = CGPathCreateCopyByTransformingPath(shapeLayer.path, &t)
-        
-        self.shapeLayer.path = p
-        bounds = CGPathGetPathBoundingBox(shapeLayer.path)
-        frame = f
-    }
-}
-
-public func CGRectMakeFromPoints(points: [CGPoint]) -> CGRect {
-    var path = CGPathCreateMutable()
-    CGPathMoveToPoint(path, nil, points[0].x, points[0].y)
-    for i in 1..<points.count {
-        CGPathAddLineToPoint(path, nil, points[i].x, points[i].y)
-    }
-    return CGPathGetBoundingBox(path)
-}

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8201A1DC4B800298356 /* LogoNormalized */; };
 		1F53A8281A1DC4DD00298356 /* Logo in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8271A1DC4DD00298356 /* Logo */; };
-		1FB1A5C31A238F7000D164A0 /* C4Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB1A5C21A238F7000D164A0 /* C4Logo.swift */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
 		D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55D1A004E3200B0E813 /* ViewController.swift */; };
 		D928B5611A004E3200B0E813 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D928B55F1A004E3200B0E813 /* Main.storyboard */; };
@@ -17,11 +16,11 @@
 		D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D928B5641A004E3200B0E813 /* LaunchScreen.xib */; };
 		D928B5721A004E3200B0E813 /* C4SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B5711A004E3200B0E813 /* C4SwiftTests.swift */; };
 		D955EAFE1A005B12008356DD /* C4iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4iOS.framework */; };
-		D955EAFF1A005B12008356DD /* C4iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D96954FA1A251B2500622AB0 /* C4iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D96954FB1A251B2500622AB0 /* C4Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D96954FC1A251B2500622AB0 /* C4Animation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
-		D9DEA6281A200CAE0007E5EC /* C4Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; };
-		D9DEA62C1A200CAE0007E5EC /* C4Animation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,9 +103,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D9DEA6281A200CAE0007E5EC /* C4Core.framework in Embed Frameworks */,
-				D955EAFF1A005B12008356DD /* C4iOS.framework in Embed Frameworks */,
-				D9DEA62C1A200CAE0007E5EC /* C4Animation.framework in Embed Frameworks */,
+				D96954FA1A251B2500622AB0 /* C4iOS.framework in Embed Frameworks */,
+				D96954FB1A251B2500622AB0 /* C4Core.framework in Embed Frameworks */,
+				D96954FC1A251B2500622AB0 /* C4Animation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,7 +115,6 @@
 /* Begin PBXFileReference section */
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
-		1F6D325B1A246AA1009E7C5F /* ShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
 		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C4Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D928B55A1A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -176,7 +174,6 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
-				1F6D325B1A246AA1009E7C5F /* ShapeView.swift */,
 				1FB1A5C21A238F7000D164A0 /* C4Logo.swift */,
 				1F53A8201A1DC4B800298356 /* LogoNormalized */,
 				1F53A8271A1DC4DD00298356 /* Logo */,
@@ -388,7 +385,6 @@
 			files = (
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,
-				1FB1A5C31A238F7000D164A0 /* C4Logo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
