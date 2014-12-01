@@ -11,68 +11,147 @@ import C4iOS
 import C4Core
 import C4Animation
 
-//class ViewController: UIViewController {
-//    var s: C4Line = C4Line([C4Point(),C4Point(100,100)])
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        self.view.add(s)
-//        test(s)
-//        
-//        let tg = UITapGestureRecognizer(target: self, action: "handleTap:")
-//        self.view.addGestureRecognizer(tg)
-//        
-//        let cube = IsometricCube()
-//        cube.view.frame = self.view.frame
-//        self.view.add(cube.view)
-//    }
-//
-//    func test(s: C4Shape) {
-//        let v = s.strokeColor
-//        view.backgroundColor = v
-//        s.strokeColor = .redColor()
-//    }
-//    
-//    func handleTap(sender: UITapGestureRecognizer) {
-//        s.points = [C4Point(random(below: 100),random(below: 100)),C4Point(random(below: 100),random(below: 100))]
-//    }
-//    
-//    override func prefersStatusBarHidden() -> Bool {
-//        return true
-//    }
-//}
-
-//TODO: get rid of "shift" from things
-//TODO: clean up data model so that it only has rules
 //TODO: combine shapes as a set of lines
 
 class Rule {
     var a: IsometricPoint
     var b: IsometricPoint
-    lazy var shiftsA = [IsometricPoint]()
-    lazy var shiftsB = [IsometricPoint]()
-    lazy var slides = [[IsometricPoint]]()
+    lazy var targets = [[IsometricPoint]]()
     
     init(_ a: IsometricPoint, _ b: IsometricPoint) {
         self.a = a
         self.b = b
     }
     
-    func shiftA(target: IsometricPoint) {
-        shiftsA.append(target)
-    }
-    
-    func shiftB(target: IsometricPoint) {
-        shiftsB.append(target)
-    }
-    
-    func slide(a: IsometricPoint, _ b: IsometricPoint) {
-        slides.append([a,b])
+    func addTarget(a: IsometricPoint, _ b: IsometricPoint) {
+        targets.append([a,b])
     }
 }
 
+class IsometricLine {
+    var dx: Double = 0.0
+    var origin: C4Vector = C4Vector(0,0)
+    var rules = [String : Rule]()
+    internal var points: [IsometricPoint] {
+        didSet {
+            sort()
+            updatePath()
+        }
+    }
+    
+    var a: IsometricPoint {
+        get {
+            return points[0]
+        }
+    }
+    var b: IsometricPoint {
+        get {
+            return points[1]
+        }
+    }
+    
+    var line: C4Line
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+    
+    init(filePath: String, dx: Double, origin: C4Vector) {
+        self.dx = dx
+        self.origin = origin
+        let nsd = NSDictionary(contentsOfFile: filePath)
+        let lineRules = nsd as [String : [String]]
+        
+        for lineID in lineRules.keys {
+            let ruleCoordinates = pointsFromLineID(lineID, dx, origin)
+            var rule = Rule(ruleCoordinates.0,ruleCoordinates.1)
+            if let targets = lineRules[lineID] {
+                for index in 0..<targets.count {
+                    let targetPoints = pointsFromLineID(targets[index], dx, origin)
+                    rule.addTarget(targetPoints.0,targetPoints.1)
+                }
+                //TODO: figure out how you're not reading the rules properly
+                rules[lineID] = rule
+            }
+        }
+        
+        let index = random(below: rules.count)
+        let arr = [String](rules.keys)
+        let randomKey = arr[index]
+        let randomStartRule = rules[randomKey]!
+        
+        
+        points = [IsometricPoint]()
+        points.append(randomStartRule.a)
+        points.append(randomStartRule.b)
+
+        line = C4Line([points[0].screenCoordinate, points[1].screenCoordinate])
+    }
+
+    func updatePath() {
+        line.points = [points[0].screenCoordinate, points[1].screenCoordinate]
+    }
+
+    var id: String {
+        get {
+            return "\(Int(a.x)),\(Int(a.y)).\(Int(b.x)),\(Int(b.y))"
+        }
+    }
+    
+    internal func sort() {
+        let tmpa = a
+        let tmpb = b
+        if(tmpa.y > tmpb.y) {
+            points[0] = tmpb
+            points[1] = tmpa
+        } else if tmpa.y == tmpb.y {
+            if tmpa.x > tmpb.x {
+                points[0] = tmpb
+                points[1] = tmpa
+            }
+        }
+    }
+    
+    func run() {
+        if let rule = rules[self.id] {
+        
+            var r = 0
+
+            if rule.targets.count > 1 {
+                r = random() % rule.targets.count
+            }
+
+            self.points = rule.targets[r]
+        }
+        
+        delay(0.5) {
+            self.run()
+        }
+    }
+}
+
+func pointsFromLineID(lineID : String, dx: Double, origin: C4Vector) -> (IsometricPoint, IsometricPoint) {
+    let pointDescriptions = lineID.componentsSeparatedByString(".")
+    let pointA = pointDescriptions[0]
+    let pointAComponents = pointA.componentsSeparatedByString(",")
+    let pointB = pointDescriptions[1]
+    let pointBComponents = pointB.componentsSeparatedByString(",")
+    let x1 = pointAComponents[0].toInt()
+    let y1 = pointAComponents[1].toInt()
+    let x2 = pointBComponents[0].toInt()
+    let y2 = pointBComponents[1].toInt()
+    let a = IsometricPoint(x1!,y1!,dx,origin)
+    let b = IsometricPoint(x2!,y2!,dx,origin)
+    return (a,b)
+}
+
 class ViewController: UIViewController {
-    var d = [String: LogoLine]()
+    var isoLines = [IsometricLine]()
     var t: NSTimer = NSTimer()
     var dl = DynamicLine()
     var dl2 = DynamicLine()
@@ -86,15 +165,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         origin.x = Double(view.center.x)
         origin.y = 10.0
-        interpretLines()
-        load()
+        loadDynamically()
     }
     
-    func interpretLines() {
-        let nsd = NSArray(contentsOfFile: docsDir()+"/lines3.plist")
+    func createLogoLines(fileName: String) {
+        let nsd = NSArray(contentsOfFile: docsDir()+"/\(fileName).plist")
         let arr = nsd as [String]
         for lineID in arr {
-            let points = pointsFromLineID(lineID)
+            let points = pointsFromLineID(lineID, dx, origin)
             let line = C4Line([points.0.screenCoordinate,points.1.screenCoordinate])
             line.strokeColor = .blueColor()
             line.lineWidth = dx * wMod
@@ -103,163 +181,108 @@ class ViewController: UIViewController {
         }
     }
     
-    func createLines(lines: String) {
-        let nsd = NSArray(contentsOfFile: docsDir()+"/\(lines).plist")
-        let arr = nsd as [String]
-        for lineID in arr {
-            let points = pointsFromLineID(lineID)
-            let line = C4Line([points.0.screenCoordinate,points.1.screenCoordinate])
-            line.strokeColor = .blueColor()
-            line.lineWidth = dx * wMod
-            l[lineID] = line;
-            view.add(line)
+    func loadDynamically() {
+        let fileManager = NSFileManager.defaultManager()
+        if let enumerator = fileManager.enumeratorAtPath(docsDir()) {
+            for url in enumerator.allObjects {
+                let fileName : String = (url as String).componentsSeparatedByString(".")[0]
+                if fileName.hasPrefix("lines") {
+                    createLogoLines(fileName)
+                }
+                if fileName.hasPrefix("rules") {
+                    createIsoline(fileName)
+                }
+            }
         }
+    }
+    
+    func createIsoline(fileName: String) {
+        let isoline = IsometricLine(filePath: docsDir()+"/\(fileName).plist", dx: dx, origin: origin)
+        isoLines.append(isoline)
+        self.view.add(isoline.line)
+        isoline.run()
+        isoline.line.strokeColor = .blueColor()
+        isoline.line.lineWidth = dx * wMod
     }
     
     func load() {
-        createLines("lines")
-        createLines("lines3")
-//        createVisibleLine("rules")
-        createVisibleLine("rules3")
-    }
-    
-    func createVisibleLine(rules: String) {
-        let nsd = NSDictionary(contentsOfFile: docsDir()+"/\(rules).plist")
-        interpretRules(nsd as Dictionary)
-//        var v = C4Line([C4Point(0,0),C4Point(1,1)])
-        visibleLine.points = [dl.a.screenCoordinate,dl.b.screenCoordinate]
-        visibleLine.strokeColor = .blueColor()
-        visibleLine.lineWidth = dx * wMod
-        view.add(visibleLine)
-        logic(visibleLine)
-    }
-    
-    func interpretRules(rules: [String: [String: [String]]]) {
+        createLogoLines("lines")
+        createLogoLines("lines3")
         
-        for lineID in rules.keys {
-            if let lineDict = rules[lineID] {
-                var shiftA = Shift()
-                var shiftB = Shift()
-                var slide = Slides()
-                for option: String in lineDict.keys {
-                    if option == "shiftA" {
-                        if let arr = lineDict[option] {
-                            for pointDescription: String in arr {
-                                let components = pointDescription.componentsSeparatedByString(",")
-                                let x = components[0].toInt()
-                                let y = components[1].toInt()
-                                let p = IsometricPoint(x!,y!,dx,origin)
-                                shiftA.append(p)
-                            }
-                        }
-                    } else if option == "shiftB" {
-                        if let arr = lineDict[option] {
-                            for pointDescription: String in arr {
-                                let components = pointDescription.componentsSeparatedByString(",")
-                                let x = components[0].toInt()
-                                let y = components[1].toInt()
-                                let p = IsometricPoint(x!,y!,dx,origin)
-                                shiftB.append(p)
-                            }
-                        }
-                    } else if option == "slide" {
-                        if let arr = lineDict[option] {
-                            for lineDescription: String in arr {
-                                let points = pointsFromLineID(lineDescription)
-                                slide.append([points.0,points.1])
-                            }
-                        }
-                    }
-                }
-                let points = pointsFromLineID(lineID)
-                let line = LogoLine(a: points.0, b: points.1, slides: slide, shifts: Shifts(shiftA,shiftB))
-//                println("\(line.canSlide) \(line.slides.targets.count)")
-                d[lineID] = line
-            }
-        }
-        
-        dl = DynamicLine(IsometricPoint(2,6,dx,origin),IsometricPoint(3,7,dx,origin))
     }
     
-    func pointsFromLineID(lineID : String) -> (IsometricPoint, IsometricPoint) {
-        let pointDescriptions = lineID.componentsSeparatedByString(".")
-        let pointA = pointDescriptions[0]
-        let pointAComponents = pointA.componentsSeparatedByString(",")
-        let pointB = pointDescriptions[1]
-        let pointBComponents = pointB.componentsSeparatedByString(",")
-        let x1 = pointAComponents[0].toInt()
-        let y1 = pointAComponents[1].toInt()
-        let x2 = pointBComponents[0].toInt()
-        let y2 = pointBComponents[1].toInt()
-        let a = IsometricPoint(x1!,y1!,dx,origin)
-        let b = IsometricPoint(x2!,y2!,dx,origin)
-        return (a,b)
-    }
+//    func createVisibleLine(rules: String) {
+//        let nsd = NSDictionary(contentsOfFile: docsDir()+"/\(rules).plist")
+//        interpretRules(nsd as Dictionary)
+//        visibleLine.points = [dl.a.screenCoordinate,dl.b.screenCoordinate]
+//        visibleLine.strokeColor = .blueColor()
+//        visibleLine.lineWidth = dx * wMod
+//        view.add(visibleLine)
+//        logic(visibleLine)
+//    }
+//    
+//    func interpretRules(rules: [String: [String: [String]]]) {
+//        
+//        for lineID in rules.keys {
+//            if let lineDict = rules[lineID] {
+//                if let arr = lineDict["targets"] {
+//                    for lineDescription: String in arr {
+//                        let points = pointsFromLineID(lineDescription, dx, origin)
+////                        slide.append([points.0,points.1])
+//                    }
+//                }
+//                let points = pointsFromLineID(lineID, 16.0, C4Vector(0,0))
+////                d[lineID] = line
+//            }
+//        }
+//        
+//        dl = DynamicLine(IsometricPoint(2,6,dx,origin),IsometricPoint(3,7,dx,origin))
+//    }
+
+    
 
     func logic() {
-        if let line = d[dl.id]? {
-            var options = [String]()
-            //            if line.canShift { options.append("shift") }
-            if line.canSlide { options.append("slides") }
-            
-            var r = 0
-            
-            if options.count > 1 {
-                r = random() % options.count
-            }
-            
-            if(options[r] == "slides") {
-                let arr = line.slides.targets
-                r = random() % arr.count
-                let nl = line.slides.targets[r]
-                //println("line({\(dl.a.x),\(dl.a.y)},{\(dl.b.x),\(dl.b.y)}) should slide to ({\(nl[0].x),\(nl[0].y)},{\(nl[1].x),\(nl[1].y)})")
-                dl = DynamicLine(nl[0],nl[1])
-            } else {
-                options = [String]()
-                if line.shifts.a.targets.count > 0 { options.append("a") }
-                if line.shifts.b.targets.count > 0 { options.append("b") }
-                
-                r = 0
-                
-                if options.count > 1 {
-                    r = random() % options.count
-                }
-                
-                if(options[r] == "a") {
-                    let arr = line.shifts.a.targets
-                    r = random() % arr.count
-                    //println("line({\(dl.a.x),\(dl.a.y)},{\(dl.b.x),\(dl.b.y)}) should shift to ({\(arr[r].x),\(arr[r].y)},{\(dl.b.x),\(dl.b.y)})")
-                    dl.a = arr[r]
-                } else {
-                    let arr = line.shifts.b.targets
-                    r = random() % arr.count
-                    //println("line({\(dl.a.x),\(dl.a.y)},{\(dl.b.x),\(dl.b.y)}) should shift to ({\(dl.a.x),\(dl.a.y)},{\(arr[r].x),\(arr[r].y)})")
-                    dl.b = arr[r]
-                }
-            }
-            visibleLine.points = [dl.a.screenCoordinate,dl.b.screenCoordinate]
-        }
-        
-        delay(0.5, closure: {
-            self.logic()
-        })
+//        if let line = d[dl.id]? {
+//            var options = [String]()
+//            //            if line.canShift { options.append("shift") }
+//            if line.canSlide { options.append("slides") }
+//            
+//            var r = 0
+//            
+//            if options.count > 1 {
+//                r = random() % options.count
+//            }
+//            
+//            if(options[r] == "slides") {
+//                let arr = line.slides.targets
+//                r = random() % arr.count
+//                let nl = line.slides.targets[r]
+//                //println("line({\(dl.a.x),\(dl.a.y)},{\(dl.b.x),\(dl.b.y)}) should slide to ({\(nl[0].x),\(nl[0].y)},{\(nl[1].x),\(nl[1].y)})")
+//                dl = DynamicLine(nl[0],nl[1])
+//            }
+//            visibleLine.points = [dl.a.screenCoordinate,dl.b.screenCoordinate]
+//        }
+//        
+//        delay(0.5, closure: {
+//            self.logic()
+//        })
     }
     
     func logic(vLine: C4Line) {
-        if let line = d[dl.id]? {
-            
-                let arr = line.slides.targets
-                let r = random() % arr.count
-                let nl = line.slides.targets[r]
-                //println("line({\(dl.a.x),\(dl.a.y)},{\(dl.b.x),\(dl.b.y)}) should slide to ({\(nl[0].x),\(nl[0].y)},{\(nl[1].x),\(nl[1].y)})")
-                dl = DynamicLine(nl[0],nl[1])
-
-                vLine.points = [dl.a.screenCoordinate,dl.b.screenCoordinate]
-        }
-        
-        delay(0.5, closure: {
-            self.logic(vLine)
-        })
+//        if let line = d[dl.id]? {
+//            
+//                let arr = line.slides.targets
+//                let r = random() % arr.count
+//                let nl = line.slides.targets[r]
+//                //println("line({\(dl.a.x),\(dl.a.y)},{\(dl.b.x),\(dl.b.y)}) should slide to ({\(nl[0].x),\(nl[0].y)},{\(nl[1].x),\(nl[1].y)})")
+//                dl = DynamicLine(nl[0],nl[1])
+//
+//                vLine.points = [dl.a.screenCoordinate,dl.b.screenCoordinate]
+//        }
+//        
+//        delay(0.5, closure: {
+//            self.logic(vLine)
+//        })
     }
     
     func delay(delay:Double, closure:()->()) {
@@ -277,284 +300,66 @@ class ViewController: UIViewController {
     }
     
     func printAllOptions() {
-        let keys = d.keys
-        for k in keys {
-            printOptions(k)
-        }
+//        let keys = d.keys
+//        for k in keys {
+////            printOptions(k)
+//        }
     }
     
     func exportOptions() {
-        let keys = d.keys
-        var allLines = [String: [String:[String]]]()
-        for k in keys {
-            allLines[k] = exportOptions(k)
-        }
-        
-        let nsd : NSDictionary = allLines
-        nsd.writeToFile(docsDir()+"/rules.plist", atomically: true)
+//        let keys = d.keys
+//        var allLines = [String: [String:[String]]]()
+//        for k in keys {
+//            allLines[k] = exportOptions(k)
+//        }
+//        
+//        let nsd : NSDictionary = allLines
+//        nsd.writeToFile(docsDir()+"/rules.plist", atomically: true)
     }
     
     func reveal() {
-        for k in d.keys {
-            let logoline: LogoLine = d[k]!
-            let line = C4Line([logoline.a.screenCoordinate,logoline.b.screenCoordinate])
-            line.strokeColor = .lightGrayColor()
-            view.add(line)
-        }
+//        for k in d.keys {
+//            let logoline: LogoLine = d[k]!
+//            let line = C4Line([logoline.a.screenCoordinate,logoline.b.screenCoordinate])
+//            line.strokeColor = .lightGrayColor()
+//            view.add(line)
+//        }
     }
     
     func exportOptions(id:String)-> [String:[String]] {
-        let l = d[id]
+//        let l = d[id]
         var dict = [String:[String]]()
         
         var lineDict = [String: [String]]()
-        if let line = l? {
-            if line.canSlide {
-                var slideArr = [String]()
-                for i in 0..<line.slides.targets.count {
-                    let points = line.slides.targets[i]
-                    slideArr.append("\(points[0].x),\(points[0].y).\(points[1].x),\(points[1].y)")
-                }
-                lineDict["slide"] = slideArr
-            }
-            if line.canShift {
-                if line.shifts.a.targets.count > 0 {
-                    var shiftA = [String]()
-                    for i in 0..<line.shifts.a.targets.count {
-                        let target = line.shifts.a.targets[i]
-                        shiftA.append("\(target.x),\(target.y)")
-                    }
-                    lineDict["shiftA"] = shiftA
-                }
-                if line.shifts.b.targets.count > 0 {
-                    var shiftB = [String]()
-                    for i in 0..<line.shifts.b.targets.count {
-                        let target = line.shifts.b.targets[i]
-                        shiftB.append("\(target.x),\(target.y)")
-                    }
-                    lineDict["shiftB"] = shiftB
-                }
-            }
-        }
+//        if let line = l? {
+//            if line.canSlide {
+//                var slideArr = [String]()
+//                for i in 0..<line.slides.targets.count {
+//                    let points = line.slides.targets[i]
+//                    slideArr.append("\(points[0].x),\(points[0].y).\(points[1].x),\(points[1].y)")
+//                }
+//                lineDict["slide"] = slideArr
+//            }
+//            if line.canShift {
+//                if line.shifts.a.targets.count > 0 {
+//                    var shiftA = [String]()
+//                    for i in 0..<line.shifts.a.targets.count {
+//                        let target = line.shifts.a.targets[i]
+//                        shiftA.append("\(target.x),\(target.y)")
+//                    }
+//                    lineDict["shiftA"] = shiftA
+//                }
+//                if line.shifts.b.targets.count > 0 {
+//                    var shiftB = [String]()
+//                    for i in 0..<line.shifts.b.targets.count {
+//                        let target = line.shifts.b.targets[i]
+//                        shiftB.append("\(target.x),\(target.y)")
+//                    }
+//                    lineDict["shiftB"] = shiftB
+//                }
+//            }
+//        }
         return lineDict
-    }
-
-    func printOptions(id:String) {
-        let l = d[id]
-        
-        if let line = l? {
-            println("The line running from (\(line.a.x),\(line.a.y)) to (\(line.b.x),\(line.b.y))")
-            if line.canSlide {
-                println("\tCan slide to:")
-                for i in 0..<line.slides.targets.count {
-                    let points = line.slides.targets[i]
-                    println("\t\t(\(points[0].x),\(points[0].y)) to (\(points[1].x),\(points[1].y))")
-                }
-            } else {
-                println("\tCan NOT slide")
-            }
-            if line.canShift {
-                println("\tCan shift:")
-                if line.shifts.a.targets.count > 0 {
-                    println("\t\t A to:")
-                    for i in 0..<line.shifts.a.targets.count {
-                        let target = line.shifts.a.targets[i]
-                        println("\t\t\t(\(target.x),\(target.y))")
-                    }
-                }
-                if line.shifts.b.targets.count > 0 {
-                    println("\t\t B to:")
-                    for i in 0..<line.shifts.b.targets.count {
-                        let target = line.shifts.b.targets[i]
-                        println("\t\t\t(\(target.x),\(target.y))")
-                    }
-                }
-            } else {
-                println("\tCan NOT shift")
-            }
-        }
-    }
-    
-    func build() {
-        
-        func run0() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(1,1,dx,offset))
-            b.append(IsometricPoint(1,0,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(0,1,dx,offset),IsometricPoint(1,1,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(0,0,dx,offset), b: IsometricPoint(0,1,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run1() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(0,1,dx,offset))
-            b.append(IsometricPoint(2,1,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(0,0,dx,offset),IsometricPoint(0,1,dx,offset)])
-            slides.append([IsometricPoint(2,1,dx,offset),IsometricPoint(2,2,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(1,0,dx,offset), b: IsometricPoint(1,1,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run2() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(1,1,dx,offset))
-            b.append(IsometricPoint(0,1,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(0,1,dx,offset),IsometricPoint(1,1,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(0,0,dx,offset), b: IsometricPoint(1,0,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run3() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(1,0,dx,offset))
-            a.append(IsometricPoint(2,2,dx,offset))
-            b.append(IsometricPoint(0,0,dx,offset))
-            b.append(IsometricPoint(1,2,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(0,0,dx,offset),IsometricPoint(1,0,dx,offset)])
-            slides.append([IsometricPoint(1,2,dx,offset),IsometricPoint(2,2,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(0,1,dx,offset), b: IsometricPoint(1,1,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run4() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(2,2,dx,offset))
-            b.append(IsometricPoint(1,1,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(1,1,dx,offset),IsometricPoint(2,2,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(0,1,dx,offset), b: IsometricPoint(1,2,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run5() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(2,2,dx,offset))
-            b.append(IsometricPoint(1,1,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(1,1,dx,offset),IsometricPoint(2,2,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(1,0,dx,offset), b: IsometricPoint(2,1,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run6() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(1,2,dx,offset))
-            a.append(IsometricPoint(2,1,dx,offset))
-            b.append(IsometricPoint(1,0,dx,offset))
-            b.append(IsometricPoint(0,1,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(0,1,dx,offset),IsometricPoint(1,2,dx,offset)])
-            slides.append([IsometricPoint(1,0,dx,offset),IsometricPoint(2,1,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(1,1,dx,offset), b: IsometricPoint(2,2,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run7() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(1,1,dx,offset))
-            b.append(IsometricPoint(0,1,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(0,1,dx,offset),IsometricPoint(1,1,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(1,2,dx,offset), b: IsometricPoint(2,2,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        func run8() {
-            let dx = 100.0
-            var offset = C4Vector(x:Double(view.center.x),y:Double(20))
-            var a = Shift()
-            var b = Shift()
-            
-            a.append(IsometricPoint(1,1,dx,offset))
-            b.append(IsometricPoint(1,0,dx,offset))
-            
-            var shifts = Shifts(a,b)
-            
-            var slides = Slides()
-            slides.append([IsometricPoint(1,0,dx,offset),IsometricPoint(1,1,dx,offset)])
-            
-            let l = LogoLine(a: IsometricPoint(2,1,dx,offset), b: IsometricPoint(2,2,dx,offset), slides: slides, shifts: shifts)
-            d[l.id] = l
-        }
-        
-        run0()
-        run1()
-        run2()
-        run3()
-        run4()
-        run5()
-        run6()
-        run7()
-        run8()
     }
  
     func docsDir()-> String {
@@ -565,67 +370,9 @@ class ViewController: UIViewController {
     func saveRules() {
         let url = NSURL(string: docsDir()+"/rules.plist")
         println("\(url)")
-        let nsd: NSDictionary = d
-        nsd.writeToFile(docsDir()+"/rules.plist", atomically: true)
+//        let nsd: NSDictionary = d
+//        nsd.writeToFile(docsDir()+"/rules.plist", atomically: true)
     }
-    //    var dynamicLine: C4Line = C4Line([C4Point(),C4Point(100,100)])
-//
-//    let dx = 100.0
-//    var fill = UIColor.orangeColor()
-//    var offset = C4Vector()
-//    var points = [IsometricPoint]()
-//    
-//    override func viewDidLoad() {
-//            offset = C4Vector(x:Double(view.center.x),y:Double(view.center.y)-74.5) //hacking the 74.5
-//            points.append(IsometricPoint(0,0,dx,offset))
-//            points.append(IsometricPoint(0,1,dx,offset))
-//            points.append(IsometricPoint(1,0,dx,offset))
-//            points.append(IsometricPoint(1,1,dx,offset))
-//            points.append(IsometricPoint(1,2,dx,offset))
-//            points.append(IsometricPoint(2,2,dx,offset))
-//            points.append(IsometricPoint(2,1,dx,offset))
-//            
-//            addLine(from: points[0], to: points[1])
-//            addLine(from: points[0], to: points[2])
-//            addLine(from: points[1], to: points[3])
-//            addLine(from: points[2], to: points[3])
-//            addLine(from: points[1], to: points[4])
-//            addLine(from: points[3], to: points[5])
-//            addLine(from: points[2], to: points[6])
-//            addLine(from: points[4], to: points[5])
-//            addLine(from: points[5], to: points[6])
-//            
-//            for p in points {
-//                addEllipse(p.screenCoordinate)
-//            }
-//
-//        let tg = UITapGestureRecognizer(target: self, action: "handleTap:")
-//        self.view.addGestureRecognizer(tg)
-//        
-//        self.view.add(dynamicLine)
-//    }
-//    
-//    func handleTap(sender: UITapGestureRecognizer) {
-//        dynamicLine.points = [C4Point(random(below: 100),random(below: 100)),C4Point(random(below: 100),random(below: 100))]
-//    }
-//    
-//    func addEllipse(at: C4Point) {
-//        var e = Ellipse(C4Rect(0,0,4,4))
-//        e.center = CGPoint(at)
-//        e.fillColor = fill
-//        self.view.add(e)
-//    }
-//    
-//    func addLine(from a:IsometricPoint, to b:IsometricPoint) {
-//        let line = C4Line([a.screenCoordinate,b.screenCoordinate])
-//        line.lineWidth = 2.0
-//        line.strokeColor = .blueColor()
-//        self.view.add(line)
-//    }
-//    
-//    override func prefersStatusBarHidden() -> Bool {
-//        return true
-//    }
 }
 
 struct IsometricPoint {
@@ -710,61 +457,37 @@ struct DynamicLine {
     }
 }
 
-class LogoLine: NSObject {
-    let a: IsometricPoint
-    let b: IsometricPoint
-    let slides: Slides
-    let shifts: Shifts
-    
-    var id: String {
-        get {
-            return "\(Int(a.x)),\(Int(a.y)).\(Int(b.x)),\(Int(b.y))"
-        }
-    }
-    
-    init(a: IsometricPoint, b: IsometricPoint, slides: Slides, shifts: Shifts) {
-        self.a = a
-        self.b = b
-        self.slides = slides
-        self.shifts = shifts
-    }
-    
-    var canShift: Bool {
-        get {
-            return shifts.a.targets.count > 0 || shifts.b.targets.count > 0
-        }
-    }
-    
-    var canSlide: Bool {
-        get {
-            return slides.targets.count > 0
-        }
-    }
-}
-
-public struct Slides {
-    var targets: [[IsometricPoint]] = [[IsometricPoint]]()
-    mutating func append(points: [IsometricPoint]) {
-        targets.append(points)
-    }
-}
-
-public struct Shifts {
-    var a: Shift
-    var b: Shift
-    init(_ a: Shift, _ b: Shift) {
-        self.a = a
-        self.b = b
-    }
-}
-
-public struct Shift {
-    var targets: [IsometricPoint] = [IsometricPoint]()
-    
-    mutating func append(point: IsometricPoint) {
-        targets.append(point)
-    }
-}
+//class LogoLine: NSObject {
+//    let a: IsometricPoint
+//    let b: IsometricPoint
+////    let slides: Slides
+////    let shifts: Shifts
+//    
+//    var id: String {
+//        get {
+//            return "\(Int(a.x)),\(Int(a.y)).\(Int(b.x)),\(Int(b.y))"
+//        }
+//    }
+//    
+//    init(a: IsometricPoint, b: IsometricPoint, slides: Slides, shifts: Shifts) {
+//        self.a = a
+//        self.b = b
+//        self.slides = slides
+//        self.shifts = shifts
+//    }
+//    
+//    var canShift: Bool {
+//        get {
+////            return shifts.a.targets.count > 0 || shifts.b.targets.count > 0
+//        }
+//    }
+//    
+//    var canSlide: Bool {
+//        get {
+//            return slides.targets.count > 0
+//        }
+//    }
+//}
 
 //
 //struct Logo {
