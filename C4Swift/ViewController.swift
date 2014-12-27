@@ -15,7 +15,8 @@ import C4Animation
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
-        
+        let line = C4Line([C4Point(100,100),C4Point(200,200)])
+        view.add(line)
     }
 }
 
