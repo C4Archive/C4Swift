@@ -19,4 +19,3 @@ class ViewController: UIViewController {
         view.add(line)
     }
 }
-
