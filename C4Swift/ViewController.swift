@@ -15,8 +15,11 @@ import C4Animation
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
-        let rect = C4Ellipse(frame: C4Rect(100,100,100,100))
-//        rect.corner = C4Size(15,15)
-        view.add(rect)
+        let r = C4View(frame: C4Rect(100,100,100,100))
+        r.border.width = 1
+        view.add(r)
+        
+        let poly = C4RegularPolygon(frame:C4Rect(100,100,100,100))
+        view.add(poly)
     }
 }
