@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
 		1F4881DF1A5666A700E0EBA4 /* CA_11011010_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */; };
+		1F4881EA1A567C6B00E0EBA4 /* halo.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 1F4881E91A567C6B00E0EBA4 /* halo.m4v */; };
+		1F4881EE1A56871B00E0EBA4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4881ED1A56871B00E0EBA4 /* AVFoundation.framework */; };
 		1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8201A1DC4B800298356 /* LogoNormalized */; };
 		1F53A8281A1DC4DD00298356 /* Logo in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8271A1DC4DD00298356 /* Logo */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
@@ -115,6 +117,8 @@
 
 /* Begin PBXFileReference section */
 		1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CA_11011010_0.png; sourceTree = "<group>"; };
+		1F4881E91A567C6B00E0EBA4 /* halo.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = halo.m4v; sourceTree = "<group>"; };
+		1F4881ED1A56871B00E0EBA4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
 		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F4881EE1A56871B00E0EBA4 /* AVFoundation.framework in Frameworks */,
 				D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */,
 				D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */,
 				1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */,
@@ -156,6 +161,7 @@
 		D928B54D1A004E3200B0E813 = {
 			isa = PBXGroup;
 			children = (
+				1F4881ED1A56871B00E0EBA4 /* AVFoundation.framework */,
 				D928B5581A004E3200B0E813 /* C4Swift */,
 				D928B56E1A004E3200B0E813 /* C4SwiftTests */,
 				D928B5571A004E3200B0E813 /* Products */,
@@ -176,6 +182,7 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
+				1F4881E91A567C6B00E0EBA4 /* halo.m4v */,
 				1FB1A5C21A238F7000D164A0 /* C4Logo.swift */,
 				1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */,
 				1F53A8201A1DC4B800298356 /* LogoNormalized */,
@@ -365,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */,
+				1F4881EA1A567C6B00E0EBA4 /* halo.m4v in Resources */,
 				D928B5611A004E3200B0E813 /* Main.storyboard in Resources */,
 				D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */,
 				1F4881DF1A5666A700E0EBA4 /* CA_11011010_0.png in Resources */,

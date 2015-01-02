@@ -15,7 +15,8 @@ import C4Animation
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
-//        let img = C4Image("CA_11011010_0")
-//        view.add(img)
+        let m = C4Movie("halo.m4v")
+        view.add(m)
+        m.play()
     }
 }
