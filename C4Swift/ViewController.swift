@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import C4iOS
+import C4UI
 import C4Core
 import C4Animation
 
@@ -15,11 +15,7 @@ import C4Animation
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
-        let r = C4View(frame: C4Rect(100,100,100,100))
-        r.border.width = 1
-        view.add(r)
-        
-        let poly = C4RegularPolygon(frame:C4Rect(100,100,100,100))
-        view.add(poly)
+//        let img = C4Image("CA_11011010_0")
+//        view.add(img)
     }
 }

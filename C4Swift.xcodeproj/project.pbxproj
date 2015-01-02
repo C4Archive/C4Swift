@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
+		1F4881DF1A5666A700E0EBA4 /* CA_11011010_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */; };
 		1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8201A1DC4B800298356 /* LogoNormalized */; };
 		1F53A8281A1DC4DD00298356 /* Logo in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8271A1DC4DD00298356 /* Logo */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
@@ -15,8 +17,7 @@
 		D928B5631A004E3200B0E813 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D928B5621A004E3200B0E813 /* Images.xcassets */; };
 		D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D928B5641A004E3200B0E813 /* LaunchScreen.xib */; };
 		D928B5721A004E3200B0E813 /* C4SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B5711A004E3200B0E813 /* C4SwiftTests.swift */; };
-		D955EAFE1A005B12008356DD /* C4iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4iOS.framework */; };
-		D96954FA1A251B2500622AB0 /* C4iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D96954FA1A251B2500622AB0 /* C4UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D96954FB1A251B2500622AB0 /* C4Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D96954FC1A251B2500622AB0 /* C4Animation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
@@ -24,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1F0D0DC41A56066400481D65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
+			remoteInfo = C4UI;
+		};
 		1FB628CF1A0B17B100699D1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
@@ -58,13 +66,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 614F824E19DB5ED4001DF1D4;
 			remoteInfo = C4iOSTests;
-		};
-		D955EB001A005B12008356DD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
-			remoteInfo = C4iOS;
 		};
 		D9DEA6291A200CAE0007E5EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -103,7 +104,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D96954FA1A251B2500622AB0 /* C4iOS.framework in Embed Frameworks */,
+				D96954FA1A251B2500622AB0 /* C4UI.framework in Embed Frameworks */,
 				D96954FB1A251B2500622AB0 /* C4Core.framework in Embed Frameworks */,
 				D96954FC1A251B2500622AB0 /* C4Animation.framework in Embed Frameworks */,
 			);
@@ -113,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CA_11011010_0.png; sourceTree = "<group>"; };
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
 		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
@@ -136,8 +138,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */,
-				D955EAFE1A005B12008356DD /* C4iOS.framework in Frameworks */,
 				D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */,
+				1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +177,7 @@
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
 				1FB1A5C21A238F7000D164A0 /* C4Logo.swift */,
+				1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */,
 				1F53A8201A1DC4B800298356 /* LogoNormalized */,
 				1F53A8271A1DC4DD00298356 /* Logo */,
 				D9EF49981A0AB46E00C03774 /* C4MediaObject.swift */,
@@ -215,8 +218,8 @@
 		D955EAF61A004F4A008356DD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D955EAFB1A004F4B008356DD /* C4iOS.framework */,
-				D955EAFD1A004F4B008356DD /* C4iOSTests.xctest */,
+				D955EAFB1A004F4B008356DD /* C4UI.framework */,
+				D955EAFD1A004F4B008356DD /* C4UITests.xctest */,
 				D9EF499E1A0AB46E00C03774 /* C4Core.framework */,
 				D9EF49A01A0AB46E00C03774 /* C4CoreTests.xctest */,
 				1FB628D01A0B17B100699D1E /* C4Animation.framework */,
@@ -240,7 +243,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				D955EB011A005B12008356DD /* PBXTargetDependency */,
+				1F0D0DC51A56066400481D65 /* PBXTargetDependency */,
 				D9DEA62A1A200CAE0007E5EC /* PBXTargetDependency */,
 				D9DEA62E1A200CAE0007E5EC /* PBXTargetDependency */,
 			);
@@ -326,17 +329,17 @@
 			remoteRef = 1FB628D11A0B17B100699D1E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D955EAFB1A004F4B008356DD /* C4iOS.framework */ = {
+		D955EAFB1A004F4B008356DD /* C4UI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = C4iOS.framework;
+			path = C4UI.framework;
 			remoteRef = D955EAFA1A004F4B008356DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D955EAFD1A004F4B008356DD /* C4iOSTests.xctest */ = {
+		D955EAFD1A004F4B008356DD /* C4UITests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = C4iOSTests.xctest;
+			path = C4UITests.xctest;
 			remoteRef = D955EAFC1A004F4B008356DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -364,6 +367,7 @@
 				1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */,
 				D928B5611A004E3200B0E813 /* Main.storyboard in Resources */,
 				D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */,
+				1F4881DF1A5666A700E0EBA4 /* CA_11011010_0.png in Resources */,
 				1F53A8281A1DC4DD00298356 /* Logo in Resources */,
 				D928B5631A004E3200B0E813 /* Images.xcassets in Resources */,
 			);
@@ -399,15 +403,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1F0D0DC51A56066400481D65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4UI;
+			targetProxy = 1F0D0DC41A56066400481D65 /* PBXContainerItemProxy */;
+		};
 		D928B56D1A004E3200B0E813 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D928B5551A004E3200B0E813 /* C4Swift */;
 			targetProxy = D928B56C1A004E3200B0E813 /* PBXContainerItemProxy */;
-		};
-		D955EB011A005B12008356DD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = C4iOS;
-			targetProxy = D955EB001A005B12008356DD /* PBXContainerItemProxy */;
 		};
 		D9DEA62A1A200CAE0007E5EC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
