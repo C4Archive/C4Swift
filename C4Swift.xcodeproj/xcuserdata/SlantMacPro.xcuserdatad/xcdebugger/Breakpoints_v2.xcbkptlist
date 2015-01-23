@@ -10,13 +10,85 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "C4Swift/ViewController.swift"
-            timestampString = "438919688.259161"
+            timestampString = "443664964.935502"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "logic()"
+            startingLineNumber = "328"
+            endingLineNumber = "328">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../C4iOS/C4Core/C4Transform.swift"
+            timestampString = "443651135.27474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../C4iOS/C4UI/C4TextShape.swift"
+            timestampString = "443666256.356581"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "init(text:font:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "C4UI.C4TextShape.init (C4UI.C4TextShape.Type)(text : Swift.String, font : C4UI.C4Font) -&gt; C4UI.C4TextShape"
+                  moduleName = "C4UI"
+                  urlString = "file:///Users/SlantMacPro/Development/C4iOS/C4UI/C4TextShape.swift"
+                  timestampString = "443666256.698347"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "1683">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "C4UI.C4TextShape.(init (C4UI.C4TextShape.Type) -&gt; (text : Swift.String, font : C4UI.C4Font) -&gt; C4UI.C4TextShape).(closure #1)"
+                  moduleName = "C4UI"
+                  urlString = "file:///Users/SlantMacPro/Development/C4iOS/C4UI/C4TextShape.swift"
+                  timestampString = "443666256.698492"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "reabstraction thunk helper from @callee_owned (@unowned Swift.UnsafePointer&lt;C.CGAffineTransform&gt;) -&gt; (@owned ObjectiveC.CGPath) to @callee_owned (@unowned Swift.UnsafePointer&lt;C.CGAffineTransform&gt;) -&gt; (@out ObjectiveC.CGPath)"
+                  moduleName = "C4UI"
+                  urlString = "file:///Users/SlantMacPro/Development/C4iOS/C4UI/C4TextShape.swift"
+                  timestampString = "443666256.698605"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "11">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

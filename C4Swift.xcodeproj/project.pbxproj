@@ -10,7 +10,6 @@
 		1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
 		1F4881DF1A5666A700E0EBA4 /* CA_11011010_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */; };
 		1F4881EA1A567C6B00E0EBA4 /* halo.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 1F4881E91A567C6B00E0EBA4 /* halo.m4v */; };
-		1F4881EE1A56871B00E0EBA4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4881ED1A56871B00E0EBA4 /* AVFoundation.framework */; };
 		1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8201A1DC4B800298356 /* LogoNormalized */; };
 		1F53A8281A1DC4DD00298356 /* Logo in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8271A1DC4DD00298356 /* Logo */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
@@ -22,6 +21,11 @@
 		D96954FA1A251B2500622AB0 /* C4UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D96954FB1A251B2500622AB0 /* C4Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D96954FC1A251B2500622AB0 /* C4Animation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D9722B1F1A5B40A500346C24 /* Submarine.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D9722B1E1A5B40A500346C24 /* Submarine.aiff */; };
+		D9722B211A5B41C300346C24 /* uptight.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9722B201A5B41C300346C24 /* uptight.mp3 */; };
+		D9722B291A5B523500346C24 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D9722B281A5B523500346C24 /* logo.png */; };
+		D9D3D6F61A71AF8500A3A471 /* MercuryBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9D3D6F51A71AF8500A3A471 /* MercuryBold.otf */; };
+		D9D3D6FC1A71C75500A3A471 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D3D6FB1A71C75500A3A471 /* MenuButton.swift */; };
 		D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
 		D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; };
 /* End PBXBuildFile section */
@@ -118,7 +122,6 @@
 /* Begin PBXFileReference section */
 		1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CA_11011010_0.png; sourceTree = "<group>"; };
 		1F4881E91A567C6B00E0EBA4 /* halo.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = halo.m4v; sourceTree = "<group>"; };
-		1F4881ED1A56871B00E0EBA4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
 		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
@@ -133,6 +136,11 @@
 		D928B5701A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D928B5711A004E3200B0E813 /* C4SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C4SwiftTests.swift; sourceTree = "<group>"; };
 		D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = C4iOS.xcodeproj; path = ../../../Development/C4iOS/C4iOS.xcodeproj; sourceTree = "<group>"; };
+		D9722B1E1A5B40A500346C24 /* Submarine.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Submarine.aiff; sourceTree = "<group>"; };
+		D9722B201A5B41C300346C24 /* uptight.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = uptight.mp3; sourceTree = "<group>"; };
+		D9722B281A5B523500346C24 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		D9D3D6F51A71AF8500A3A471 /* MercuryBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MercuryBold.otf; sourceTree = "<group>"; };
+		D9D3D6FB1A71C75500A3A471 /* MenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		D9EF49981A0AB46E00C03774 /* C4MediaObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4MediaObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,7 +149,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F4881EE1A56871B00E0EBA4 /* AVFoundation.framework in Frameworks */,
 				D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */,
 				D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */,
 				1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */,
@@ -161,7 +168,6 @@
 		D928B54D1A004E3200B0E813 = {
 			isa = PBXGroup;
 			children = (
-				1F4881ED1A56871B00E0EBA4 /* AVFoundation.framework */,
 				D928B5581A004E3200B0E813 /* C4Swift */,
 				D928B56E1A004E3200B0E813 /* C4SwiftTests */,
 				D928B5571A004E3200B0E813 /* Products */,
@@ -182,12 +188,17 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
+				D9D3D6FB1A71C75500A3A471 /* MenuButton.swift */,
+				D9722B201A5B41C300346C24 /* uptight.mp3 */,
 				1F4881E91A567C6B00E0EBA4 /* halo.m4v */,
+				D9722B281A5B523500346C24 /* logo.png */,
+				D9722B1E1A5B40A500346C24 /* Submarine.aiff */,
 				1FB1A5C21A238F7000D164A0 /* C4Logo.swift */,
 				1F4881DE1A5666A700E0EBA4 /* CA_11011010_0.png */,
 				1F53A8201A1DC4B800298356 /* LogoNormalized */,
 				1F53A8271A1DC4DD00298356 /* Logo */,
 				D9EF49981A0AB46E00C03774 /* C4MediaObject.swift */,
+				D9D3D6F51A71AF8500A3A471 /* MercuryBold.otf */,
 				D928B55F1A004E3200B0E813 /* Main.storyboard */,
 				D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */,
 				D928B5621A004E3200B0E813 /* Images.xcassets */,
@@ -371,12 +382,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9722B1F1A5B40A500346C24 /* Submarine.aiff in Resources */,
+				D9D3D6F61A71AF8500A3A471 /* MercuryBold.otf in Resources */,
 				1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */,
 				1F4881EA1A567C6B00E0EBA4 /* halo.m4v in Resources */,
 				D928B5611A004E3200B0E813 /* Main.storyboard in Resources */,
 				D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */,
 				1F4881DF1A5666A700E0EBA4 /* CA_11011010_0.png in Resources */,
+				D9722B291A5B523500346C24 /* logo.png in Resources */,
 				1F53A8281A1DC4DD00298356 /* Logo in Resources */,
+				D9722B211A5B41C300346C24 /* uptight.mp3 in Resources */,
 				D928B5631A004E3200B0E813 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,6 +412,7 @@
 			files = (
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,
+				D9D3D6FC1A71C75500A3A471 /* MenuButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

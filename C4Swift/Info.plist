@@ -47,5 +47,9 @@
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MercuryBold.otf</string>
+	</array>
 </dict>
 </plist>
