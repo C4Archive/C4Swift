@@ -12,8 +12,55 @@ import C4Core
 import C4Animation
 
 class ViewController: UIViewController {
+    var shapes = [C4Ellipse]()
+    var anims = [C4ViewAnimation]()
     
     override func viewDidLoad() {
+        delayedAnims()
+    }
+    
+    func delayedAnims() {
+        for i in 0...3 {
+            let shape = C4Ellipse(frame: C4Rect(0,0,44,44))
+            shape.center = C4Point(view.center)
+            view.add(shape)
+            
+            let anim = C4ViewAnimation(duration: 0.5) {
+                var target = shape.center
+                let displacement = shape.width
+                switch i {
+                case 0:
+                    target.y -= displacement
+                case 1:
+                    target.x -= displacement
+                case 2:
+                    target.y += displacement
+                case 3:
+                    target.x += displacement
+                default:
+                    break
+                }
+                shape.center = target
+            }
+            anim.curve = .EaseOut
+            anims.append(anim)
+        }
+        
+        delay(1.0) {
+            self.anims[3].animate()
+        }
+        delay(1.1) {
+            self.anims[2].animate()
+        }
+        delay(1.2) {
+            self.anims[1].animate()
+        }
+        delay(1.3) {
+            self.anims[0].animate()
+        }
+    }
+    
+    func buttons() {
         var about = MenuButton("About C4")
         about.center = C4Point(view.center)
         view.backgroundColor = UIColor(lightGray)
@@ -43,7 +90,7 @@ class ViewController: UIViewController {
         
         var menu = C4View(frame: C4Rect(0,0,Double(view.frame.size.width),276))
         menu.backgroundColor = white
-
+        
         var origin = C4Point(menu.width-20-components.width, 20)
         components.origin = origin
         origin.y += components.height + 20
@@ -143,7 +190,6 @@ class ViewController: UIViewController {
         delay(1.1) {
             fanim.animate()
         }
-        
     }
 }
 
