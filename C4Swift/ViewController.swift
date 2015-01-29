@@ -12,57 +12,58 @@ import C4Core
 import C4Animation
 
 class ViewController: UIViewController {
-    var shapes = [C4Ellipse]()
-    var anims = [C4ViewAnimation]()
-    var scrollview = UIScrollView()
-    var logo = C4Image("logoTwitter")
-    var bg = C4Rectangle()
+
+    override func viewDidLoad() {
+        view.backgroundColor = UIColor(lightGray)
+        createMenu()
+        createLogo()
+        createAnimations()
+    }
+
     var buttons = [MenuButton]()
     var tapView = C4View()
     var menu = C4View()
-    override func viewDidLoad() {
-        createmenu()
-        c4()
-    }
-    
-    func createmenu() {
+    func createMenu() {
+        let menuHeight = 211.0
+        let screenSize = C4Size(view.frame.size)
+        let menuFrame = C4Rect(0.0,screenSize.height - menuHeight, screenSize.width, menuHeight)
+        menu = C4View(frame: menuFrame)
+        menu.backgroundColor = white
+        
         var about = MenuButton("About C4")
-        about.center = C4Point(view.center)
-        view.backgroundColor = UIColor(lightGray)
         about.action = {
-            println("run")
+            println("-> about")
+            self.toggleMenu()
         }
         
         var components = MenuButton("Components")
-        components.center = C4Point(view.center)
-        view.backgroundColor = UIColor(lightGray)
         components.action = {
-            println("run")
+            println("-> components")
+            self.toggleMenu()
         }
         
         var tutorials = MenuButton("Tutorials")
-        tutorials.center = C4Point(view.center)
-        view.backgroundColor = UIColor(lightGray)
         tutorials.action = {
-            println("run")
+            println("-> tutorials")
+            self.toggleMenu()
         }
+
         var examples = MenuButton("Examples")
-        examples.center = C4Point(view.center)
-        view.backgroundColor = UIColor(lightGray)
         examples.action = {
-            println("run")
+            println("-> examples")
+            self.toggleMenu()
         }
         
-        menu = C4View(frame: C4Rect(0,Double(view.frame.size.height) - 211.0,Double(view.frame.size.width),211))
-        menu.backgroundColor = white
-        
-        var origin = C4Point(menu.width-20-components.width, 20)
+        var origin = C4Point(menu.width - 20 - components.width, 20)
+        var buttonSize = components.size
+        let gap = 9.0
+        let dy = buttonSize.height + gap
         components.origin = origin
-        origin.y += components.height + 9
+        origin.y += dy
         tutorials.origin = origin
-        origin.y += components.height + 9
+        origin.y += dy
         examples.origin = origin
-        origin.y += components.height + 9
+        origin.y += dy
         about.origin = origin
         
         menu.add(components)
@@ -76,163 +77,114 @@ class ViewController: UIViewController {
         buttons.append(about)
         
         view.add(menu)
+    }
+    
+    var menuAnimation = C4ViewAnimation(){}
+    var tapViewAnimation = C4ViewAnimation(){}
+    var buttonAnimations = [C4ViewAnimation]()
+    var cAnimation = C4ViewAnimation(){}
+    var fAnimation = C4ViewAnimation(){}
+    let dy = 118.0
+    var isUp = true
+    var up = C4ViewAnimation(){}
+    var down = C4ViewAnimation(){}
+    
+    func createAnimations() {
         tapView = C4View(frame: C4Rect(0,Double(view.frame.size.height)-204,100,86))
-        tapView.backgroundColor = clear
         view.add(tapView)
-        tapView.addTapGestureRecognizer { (location, state) -> () in
-            if(self.isUp) {
-                var manim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.menu.origin
-                    origin.y += self.menu.height
-                    self.menu.origin = origin
-                }
-                
-                manim.curve = .EaseOut
-                
-                var b3anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[3].origin
-                    origin.y += 118
-                    self.buttons[3].origin = origin
-                }
-                b3anim.curve = .EaseOut
-                
-                var b2anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[2].origin
-                    origin.y += 118
-                    self.buttons[2].origin = origin
-                }
-                b2anim.curve = .EaseOut
-                
-                var b1anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[1].origin
-                    origin.y += 118
-                    self.buttons[1].origin = origin
-                }
-                b1anim.curve = .EaseOut
-                
-                var b0anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[0].origin
-                    origin.y += 118
-                    self.buttons[0].origin = origin
-                }
-                b0anim.curve = .EaseOut
-                
-                var tanim = C4ViewAnimation(duration: 0.25) {
-                    self.tapView.origin = C4Point(self.tapView.origin.x,self.tapView.origin.y + 118)
-                }
-                
-                var canim = C4ViewAnimation(duration: 0.25) {
-                    self.c.origin = C4Point(self.c.origin.x,self.c.origin.y + 118)
-                    self.fmask.origin = C4Point(self.fmask.origin.x,self.fmask.origin.y + 118)
-                }
-                canim.curve = .EaseOut
-                
-                var fanim = C4ViewAnimation(duration: 0.25) {
-                    self.f.origin = C4Point(self.f.origin.x,self.f.origin.y + 118)
-                    self.f2.origin = C4Point(self.f2.origin.x,self.f2.origin.y + 118)
-                    self.fmask.origin = C4Point(self.fmask.origin.x,self.fmask.origin.y - 118)
-                }
-                
-                fanim.curve = .EaseOut
-                
-                delay(0.05) {
-                    manim.animate()
-                }
-                b3anim.animate()
-                delay(0.05) {
-                    b2anim.animate()
-                }
-                delay(0.1) {
-                    b1anim.animate()
-                }
-                delay(0.15) {
-                    b0anim.animate()
-                }
-
-                tanim.animate()
-                canim.animate()
-                delay(0.1) {
-                    fanim.animate()
-                }
-                self.isUp = false
-            } else {
-                var manim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.menu.origin
-                    origin.y -= self.menu.height
-                    self.menu.origin = origin
-                }
-                
-                var b3anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[3].origin
-                    origin.y -= 118
-                    self.buttons[3].origin = origin
-                }
-                var b2anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[2].origin
-                    origin.y -= 118
-                    self.buttons[2].origin = origin
-                }
-                var b1anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[1].origin
-                    origin.y -= 118
-                    self.buttons[1].origin = origin
-                }
-                var b0anim = C4ViewAnimation(duration: 0.25) {
-                    var origin = self.buttons[0].origin
-                    origin.y -= 118
-                    self.buttons[0].origin = origin
-                }
-
-                var tanim = C4ViewAnimation(duration: 0.25) {
-                    self.tapView.origin = C4Point(self.tapView.origin.x,self.tapView.origin.y - 118)
-                }
-
-                var canim = C4ViewAnimation(duration: 0.25) {
-                    self.c.origin = C4Point(self.c.origin.x,self.c.origin.y - 118)
-                    self.fmask.origin = C4Point(self.fmask.origin.x,self.fmask.origin.y - 118)
-                }
-                canim.curve = .EaseOut
-                
-                var fanim = C4ViewAnimation(duration: 0.25) {
-                    self.f.origin = C4Point(self.f.origin.x,self.f.origin.y - 118)
-                    self.f2.origin = C4Point(self.f2.origin.x,self.f2.origin.y - 118)
-                    self.fmask.origin = C4Point(self.fmask.origin.x,self.fmask.origin.y + 118)
-                }
-                manim.animate()
-                b0anim.animate()
-                delay(0.05) {
-                    b1anim.animate()
-                }
-                delay(0.1) {
-                    b2anim.animate()
-                }
-                delay(0.15) {
-                    b3anim.animate()
-                }
-                fanim.curve = .EaseOut
-                tanim.animate()
-                canim.animate()
-                delay(0.1) {
-                    fanim.animate()
-                }
-                self.isUp = true
+        
+        menuAnimation = C4ViewAnimation(duration: 0.25) {
+            let y = self.isUp ? Double(self.view.frame.size.height) : Double(self.view.frame.size.height)-self.menu.height
+            self.menu.origin = C4Point(0,y)
+        }
+        menuAnimation.curve = .EaseOut
+        
+        for i in 0...3 {
+            var anim = C4ViewAnimation(duration: 0.25) {
+                let dy = self.isUp ? self.dy : -self.dy
+                var origin = self.buttons[i].origin
+                origin.y += dy
+                self.buttons[i].origin = origin
             }
+            anim.curve = .EaseOut
+            buttonAnimations.append(anim)
+        }
+        
+        tapViewAnimation = C4ViewAnimation(duration: 0.25) {
+            let dy = self.isUp ? self.dy : -self.dy
+            self.tapView.origin = C4Point(self.tapView.origin.x,self.tapView.origin.y + dy)
+        }
+        
+        cAnimation = C4ViewAnimation(duration: 0.25) {
+            let dy = self.isUp ? self.dy : -self.dy
+            self.c.origin = C4Point(self.c.origin.x,self.c.origin.y + dy)
+            self.fmask.origin = C4Point(self.fmask.origin.x,self.fmask.origin.y + dy)
+        }
+        cAnimation.curve = .EaseOut
+        
+        fAnimation = C4ViewAnimation(duration: 0.25) {
+            let dy = self.isUp ? self.dy : -self.dy
+            self.f.origin = C4Point(self.f.origin.x,self.f.origin.y + dy)
+            self.f2.origin = C4Point(self.f2.origin.x,self.f2.origin.y + dy)
+            self.fmask.origin = C4Point(self.fmask.origin.x,self.fmask.origin.y - dy)
+        }
+        fAnimation.curve = .EaseOut
+        
+        
+        tapView.addTapGestureRecognizer { (location, state) -> () in
+            self.toggleMenu()
         }
     }
     
-    var up = C4ViewAnimation(){}
-    var down = C4ViewAnimation(){}
-    var isUp = true
+    func toggleMenu() {
+        self.isUp = self.menu.origin.y < Double(self.view.frame.size.height) ? true : false
+        
+        delay(0.05) {
+            self.menuAnimation.animate()
+        }
+        
+        if(self.isUp) {
+            self.buttonAnimations[3].animate()
+            delay(0.05) {
+                self.buttonAnimations[2].animate()
+            }
+            delay(0.1) {
+                self.buttonAnimations[1].animate()
+            }
+            delay(0.15) {
+                self.buttonAnimations[0].animate()
+            }
+        } else {
+            self.buttonAnimations[0].animate()
+            delay(0.05) {
+                self.buttonAnimations[1].animate()
+            }
+            delay(0.1) {
+                self.buttonAnimations[2].animate()
+            }
+            delay(0.15) {
+                self.buttonAnimations[3].animate()
+            }
+        }
+        
+        self.tapViewAnimation.animate()
+        self.cAnimation.animate()
+        
+        delay(0.1) {
+            self.fAnimation.animate()
+        }
+    }
     
     var c = C4Shape()
     var f = C4Shape()
     var f2 = C4Shape()
     var fmask = C4Shape()
-    
-    func c4() {
+
+    func createLogo() {
         var t = C4Transform.makeScale(4.0, 4.0, 0.0)
         
         var cp = C4Path()
+        
         cp.moveToPoint(C4Point(12.5, 10))
         cp.addLineToPoint(C4Point(7.5, 10))
         cp.addCurveToPoint(C4Point(6.12, 10), control2: C4Point(5, 8.88), point: C4Point(5, 7.5))
@@ -251,9 +203,8 @@ class ViewController: UIViewController {
         
         c = C4Shape(cp)
         c.fillColor = C4Pink
-        c.origin = C4Point(c.origin.x + 11, Double(view.frame.size.height) - 191)
+        c.origin = C4Point(20.0, menu.origin.y + 20.0)
         c.interactionEnabled = false
-        view.add(c)
         
         var fp = C4Path()
         fp.moveToPoint(C4Point(17.5, 5))
@@ -278,35 +229,28 @@ class ViewController: UIViewController {
         
         f = C4Shape(fp)
         f.fillColor = C4Blue
-        f.origin = C4Point(f.origin.x+11, c.origin.y)
+        f.origin = C4Point(f.origin.x+20, c.origin.y)
         f.interactionEnabled = false
-        view.add(f)
+        f.interactionEnabled = false;
         
         f2 = C4Shape(fp)
         f2.fillColor = C4Purple
         f2.origin = f.origin
         f2.interactionEnabled = false
-        view.add(f2)
         
         fmask = C4Shape(cp)
-        fmask.origin = C4Point(c.origin.x - f.origin.x-0.5, 0)
+        fmask.origin = C4Point(c.origin.x - f.origin.x, 0)
         fmask.lineWidth = 1.0
         f2.layer?.mask = fmask.layer
         
-        self.up = C4ViewAnimation() {
-            
-        }
-        
-        f.interactionEnabled = false;
+        view.add(c)
+        view.add(f)
+        view.add(f2)
     }
-
     
-    
-    
-    
-    
-    
-    
+    var bg = C4Rectangle()
+    var scrollview = UIScrollView()
+    var logo = C4Image("logoTwitter")
     func twitterCellHeader() {
         scrollview.frame = view.frame
         var size = scrollview.frame.size
@@ -379,8 +323,8 @@ class ViewController: UIViewController {
                 a.animate()
             }
         }
-        
     }
+    
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject: AnyObject], context: UnsafeMutablePointer<Void>) {
         if keyPath == "contentOffset" {
             let offset = self.scrollview.contentOffset.y / self.scrollview.frame.size.height
@@ -389,6 +333,7 @@ class ViewController: UIViewController {
             }
         }
     }
+    var anims = [C4ViewAnimation]()
     func delayedAnims() {
         for i in 0...3 {
             let shape = C4Ellipse(frame: C4Rect(0,0,44,44))
