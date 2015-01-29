@@ -18,8 +18,8 @@ class MenuButton: C4View {
     var off = C4ViewAnimation(){}
     
     convenience init(_ title: String) {
-        self.init(frame: C4Rect(0,0,180,44))
-        self.border.radius = 22
+        self.init(frame: C4Rect(0,0,180,36))
+        self.border.radius = self.height / 2.0
         self.border.width = 1
         self.border.color = C4Blue
         
