@@ -13,7 +13,32 @@ import C4Animation
 
 class ViewController: UIViewController {
 
+    var container = C4View()
+    
     override func viewDidLoad() {
+        container.frame = C4Rect(view.frame)
+        
+        let text = C4TextShape(text: "hello there", font: C4Font(name: "menlo", size:20.0))
+        let circ = C4Ellipse(frame: C4Rect(0,0,100,100))
+        circ.origin = C4Point(100,100)
+        text.origin = C4Point(100,200)
+        
+        container.add(circ)
+        container.add(text)
+        container.interactionEnabled = false
+        view.add(container)
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: NSSelectorFromString("animate")))
+    }
+    
+    func animate() {
+        let anim = C4ViewAnimation(duration: 0.25) {
+            self.container.transform = C4Transform.makeScale(0.8, 0.8, 0)
+        }
+        anim.animate()
+    }
+    
+    func appMenu() {
         view.backgroundColor = UIColor(lightGray)
         createMenu()
         createLogo()
@@ -30,27 +55,27 @@ class ViewController: UIViewController {
         menu = C4View(frame: menuFrame)
         menu.backgroundColor = white
         
-        var about = MenuButton("About C4")
+        var about = MenuButton("News")
         about.action = {
-            println("-> about")
+            println("-> news")
             self.toggleMenu()
         }
         
-        var components = MenuButton("Components")
+        var components = MenuButton("Story")
         components.action = {
-            println("-> components")
+            println("-> story")
             self.toggleMenu()
         }
         
-        var tutorials = MenuButton("Tutorials")
+        var tutorials = MenuButton("Components")
         tutorials.action = {
-            println("-> tutorials")
+            println("-> components")
             self.toggleMenu()
         }
 
         var examples = MenuButton("Examples")
         examples.action = {
-            println("-> examples")
+            println("-> other")
             self.toggleMenu()
         }
         
@@ -139,7 +164,7 @@ class ViewController: UIViewController {
     func toggleMenu() {
         self.isUp = self.menu.origin.y < Double(self.view.frame.size.height) ? true : false
         
-        delay(0.05) {
+        delay(0.1) {
             self.menuAnimation.animate()
         }
         
@@ -258,7 +283,7 @@ class ViewController: UIViewController {
         scrollview.contentSize = size
         view.add(scrollview)
         
-        bg = C4Rectangle(frame: C4Rect(0,0,320,44))
+        bg = C4Rectangle(frame: C4Rect(0,0,Double(view.frame.size.width),44))
         bg.origin = C4Point(0,Double(view.frame.size.height))
         bg.lineWidth = 0
         bg.fillColor = darkGray
@@ -324,7 +349,7 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject: AnyObject], context: UnsafeMutablePointer<Void>) {
         if keyPath == "contentOffset" {
             let offset = self.scrollview.contentOffset.y / self.scrollview.frame.size.height
