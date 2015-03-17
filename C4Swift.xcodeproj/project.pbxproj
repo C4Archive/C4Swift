@@ -14,6 +14,10 @@
 		1FA635C31A7C95170061A54E /* C4UI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FA635C41A7C95170061A54E /* C4Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FA635C51A7C95170061A54E /* C4Animation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1FD29A221AB1426B009EE227 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1FD29A201AB1426B009EE227 /* MyParticle.sks */; };
+		1FD29A231AB1426B009EE227 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD29A211AB1426B009EE227 /* spark.png */; };
+		1FD29A301AB15B56009EE227 /* MyParticleB.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1FD29A2F1AB15B56009EE227 /* MyParticleB.sks */; };
+		1FD29A321AB15F0E009EE227 /* MyParticleC.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1FD29A311AB15F0E009EE227 /* MyParticleC.sks */; };
 		1FFF9D4C1A7C879A00B21C7F /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
 		1FFF9D501A7C879A00B21C7F /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
 		1FFF9D541A7C879A00B21C7F /* C4Animation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; };
@@ -124,6 +128,10 @@
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
 		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
+		1FD29A201AB1426B009EE227 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
+		1FD29A211AB1426B009EE227 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		1FD29A2F1AB15B56009EE227 /* MyParticleB.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticleB.sks; sourceTree = "<group>"; };
+		1FD29A311AB15F0E009EE227 /* MyParticleC.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticleC.sks; sourceTree = "<group>"; };
 		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C4Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D928B55A1A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D928B55B1A004E3200B0E813 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -187,6 +195,10 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
+				1FD29A201AB1426B009EE227 /* MyParticle.sks */,
+				1FD29A2F1AB15B56009EE227 /* MyParticleB.sks */,
+				1FD29A311AB15F0E009EE227 /* MyParticleC.sks */,
+				1FD29A211AB1426B009EE227 /* spark.png */,
 				D9D3D6FB1A71C75500A3A471 /* MenuButton.swift */,
 				D9722B201A5B41C300346C24 /* uptight.mp3 */,
 				1F4881E91A567C6B00E0EBA4 /* halo.m4v */,
@@ -386,8 +398,12 @@
 				1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */,
 				1F4881EA1A567C6B00E0EBA4 /* halo.m4v in Resources */,
 				D928B5611A004E3200B0E813 /* Main.storyboard in Resources */,
+				1FD29A231AB1426B009EE227 /* spark.png in Resources */,
+				1FD29A301AB15B56009EE227 /* MyParticleB.sks in Resources */,
+				1FD29A321AB15F0E009EE227 /* MyParticleC.sks in Resources */,
 				D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */,
 				1F4881DF1A5666A700E0EBA4 /* CA_11011010_0.png in Resources */,
+				1FD29A221AB1426B009EE227 /* MyParticle.sks in Resources */,
 				D9722B291A5B523500346C24 /* logo.png in Resources */,
 				1F53A8281A1DC4DD00298356 /* Logo in Resources */,
 				D9722B211A5B41C300346C24 /* uptight.mp3 in Resources */,
