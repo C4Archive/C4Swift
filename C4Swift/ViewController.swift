@@ -22,7 +22,6 @@ class ViewController: UIViewController {
         path.addEllipse(C4Rect(-156,-156,312,312))
         path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
         
-        
         var donut = C4Shape(path)
         donut.fillRule = .EvenOdd
 
@@ -36,7 +35,7 @@ class ViewController: UIViewController {
         canvas.add(wedge)
 
         canvas.addPanGestureRecognizer { (location, translation, velocity, state) -> () in
-            let a = C4Vector(x:self.canvas.center.x+1000.0, y:self.canvas.center.y)
+            let a = C4Vector(x:self.canvas.center.x+1.0, y:self.canvas.center.y)
             let b = C4Vector(x:self.canvas.center.x, y:self.canvas.center.y)
             let c = C4Vector(x:location.x, y:location.y)
 
@@ -50,7 +49,7 @@ class ViewController: UIViewController {
                 }
                 
                 var newAngle = Int(radToDeg(angle)) / 30
-                
+
                 if self.intAngle != newAngle {
                     self.intAngle = newAngle
                     
