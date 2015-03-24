@@ -12,140 +12,128 @@ import C4Core
 import C4Animation
 
 class ViewController: UIViewController {
-    var scrv = InfiniteScrollView()
-    var ctxContentOffset = 0
-    var sv0 = InfiniteScrollView()
-    var sv1 = InfiniteScrollView()
-    var sv2 = InfiniteScrollView()
-    var sv3 = InfiniteScrollView()
-
+    let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)
+    var circles = [C4Circle]()
+    var wedge = C4Wedge()
+    var intAngle = 0
+    
     override func viewDidLoad() {
-        canvas.backgroundColor = C4Color(red:0.078, green:0.118, blue:0.306, alpha:1.0)
+        var path = C4Path()
+        path.addEllipse(C4Rect(-156,-156,312,312))
+        path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
         
-        sv0.frame = CGRect(canvas.frame)
-        sv1.frame = CGRect(canvas.frame)
-        sv2.frame = CGRect(canvas.frame)
-        sv3.frame = CGRect(canvas.frame)
         
-        let size = C4Size(canvas.width*36,canvas.height)
-        sv0.contentSize = CGSize(size)
-        sv1.contentSize = CGSize(size)
-        sv2.contentSize = CGSize(size)
-        sv3.contentSize = CGSize(size)
+        var donut = C4Shape(path)
+        donut.fillRule = .EvenOdd
 
-        var pos1 = C4Point(157,8)
-        var pos2 = C4Point(0,215)
-        var pos3 = C4Point(171, 460)
-        var pos4 = C4Point()
-        for i in 0...35 {
-            let img1 = C4Image("star3")
-            let img2 = C4Image("star3")
-            let img3 = C4Image("star3")
+        wedge = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
+        wedge.fillColor = cosmosblue
+        wedge.lineWidth = 0.0
+        wedge.interactionEnabled = false
+        wedge.layer?.mask = donut.layer
+        wedge.layer?.anchorPoint = CGPointZero
+        wedge.center = canvas.center
+        canvas.add(wedge)
 
-            img1.origin = C4Point(pos1.x + Double(i) * canvas.width, pos1.y)
-            img2.origin = C4Point(pos2.x + Double(i) * canvas.width, pos2.y)
-            img3.origin = C4Point(pos3.x + Double(i) * canvas.width, pos3.y)
+        canvas.addPanGestureRecognizer { (location, translation, velocity, state) -> () in
+            let a = C4Vector(x:self.canvas.center.x+1000.0, y:self.canvas.center.y)
+            let b = C4Vector(x:self.canvas.center.x, y:self.canvas.center.y)
+            let c = C4Vector(x:location.x, y:location.y)
 
-            sv3.add(img1)
-            sv3.add(img2)
-            sv3.add(img3)
+            let dist = distance(location, self.canvas.center)
+            
+            if dist > 102.0 && dist < 156 {
+                var angle = c.angleTo(a, basedOn: b)
+                
+                if c.y < a.y {
+                    angle = 2*M_PI - angle
+                }
+                
+                var newAngle = Int(radToDeg(angle)) / 30
+                
+                if self.intAngle != newAngle {
+                    self.intAngle = newAngle
+                    
+                    var rotation = C4Transform()
+                    rotation.rotate(degToRad(Double(self.intAngle) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
+                    self.wedge.transform = rotation
+                }
+            }
         }
-        canvas.add(sv3)
         
-        pos1.x = 62
-        pos1.y = 51
-        pos2.x = 248
-        pos2.y = 208
-        pos3.x = 27
-        pos3.y = 270
-        pos4.x = 90
-        pos4.y = 541
+        addCircles()
         
-        for i in 0...35 {
-            let img1 = C4Image("star2")
-            let img2 = C4Image("star2")
-            let img3 = C4Image("star2")
-            let img4 = C4Image("star2")
+        for i in 0...11 {
+            donut = C4Shape(path)
+            donut.fillRule = .EvenOdd
             
-            img1.origin = C4Point(pos1.x + Double(i) * canvas.width, pos1.y)
-            img2.origin = C4Point(pos2.x + Double(i) * canvas.width, pos2.y)
-            img3.origin = C4Point(pos3.x + Double(i) * canvas.width, pos3.y)
-            img4.origin = C4Point(pos4.x + Double(i) * canvas.width, pos4.y)
-
-            sv2.add(img1)
-            sv2.add(img2)
-            sv2.add(img3)
-            sv2.add(img4)
+            let shape = C4Line([C4Point(),C4Point(156,0)])
+            shape.layer?.anchorPoint = CGPointZero
+            shape.center = canvas.center
+            var rotation = C4Transform()
+            rotation.rotate(degToRad(Double(i) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
+            shape.transform = rotation
+            shape.lineWidth = 1.25
+            shape.strokeColor = cosmosblue
+            shape.layer?.mask = donut.layer
+            canvas.add(shape)
         }
-        canvas.add(sv2)
-
-        pos1.x = 162
-        pos1.y = 51
-        pos2.x = 148
-        pos2.y = 308
-        pos3.x = 97
-        pos3.y = 170
-        pos4.x = 60
-        pos4.y = 341
-        
-        for i in 0...35 {
-            let img1 = C4Image("star2")
-            let img2 = C4Image("star2")
-            let img3 = C4Image("star2")
-            let img4 = C4Image("star2")
-            
-            img1.origin = C4Point(pos1.x + Double(i) * canvas.width, pos1.y)
-            img2.origin = C4Point(pos2.x + Double(i) * canvas.width, pos2.y)
-            img3.origin = C4Point(pos3.x + Double(i) * canvas.width, pos3.y)
-            img4.origin = C4Point(pos4.x + Double(i) * canvas.width, pos4.y)
-            
-            sv1.add(img1)
-            sv1.add(img2)
-            sv1.add(img3)
-            sv1.add(img4)
-        }
-        canvas.add(sv1)
-        
-        pos1.x = 93
-        pos1.y = 150
-        pos2.x = 55
-        pos2.y = 11
-        pos3.x = 204
-        pos3.y = 446
-        
-        for i in 0...35 {
-            let img1 = C4Image("star1")
-            let img2 = C4Image("star1")
-            let img3 = C4Image("star1")
-            
-            img1.origin = C4Point(pos1.x + Double(i) * canvas.width, pos1.y)
-            img2.origin = C4Point(pos2.x + Double(i) * canvas.width, pos2.y)
-            img3.origin = C4Point(pos3.x + Double(i) * canvas.width, pos3.y)
-            
-            sv0.add(img1)
-            sv0.add(img2)
-            sv0.add(img3)
-        }
-        canvas.add(sv0)
-
-        let vign = C4Image("vignette")
-        vign.center = canvas.center
-//        canvas.add(vign)
-        vign.interactionEnabled = false
-        sv0.addObserver(self, forKeyPath: "contentOffset", options: .New, context: &ctxContentOffset)
     }
     
-    
-    
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        if context == &ctxContentOffset {
-            var mod = sv0.contentOffset
-            mod.x *= 0.8
-            sv1.contentOffset = mod
-            mod.x *= 0.8
-            sv2.contentOffset = mod
-            mod.x *= 0.8
-            sv3.contentOffset = mod
+    func addCircles() {
+        circles.append(C4Circle(center: canvas.center, radius: 8))
+        circles.append(C4Circle(center: canvas.center, radius: 14))
+        circles.append(C4Circle(center: canvas.center, radius: 56))
+        circles.append(C4Circle(center: canvas.center, radius: 78))
+        circles.append(C4Circle(center: canvas.center, radius: 82+2))
+        circles.append(C4Circle(center: canvas.center, radius: 82+2))
+        circles.append(C4Circle(center: canvas.center, radius: 98))
+        circles.append(C4Circle(center: canvas.center, radius: 102))
+        circles.append(C4Circle(center: canvas.center, radius: 156))
+        circles.append(C4Circle(center: canvas.center, radius: 225))
+        
+        for i in 0..<circles.count {
+            var circle = circles[i]
+            circle.lineWidth = 1.25
+            if i == 1 || i == 2 {
+                circle.lineWidth = 4.25
+            }
+            
+            if i == 4 {
+                circle.lineWidth = 4
+                var pattern = [1.465,1.465,1.465,1.465,1.465,1.465,1.465,1.465*3.0] as [NSNumber]
+                circle.lineDashPattern = pattern
+                var rotation = C4Transform()
+                circle.strokeEnd = 0.995
+                rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+                circle.transform = rotation
+            }
+
+            if i == 5 {
+                circle.lineWidth = 12
+                
+                var pattern = [1.465,1.465*9.0] as [NSNumber]
+                circle.lineDashPattern = pattern
+                circle.strokeEnd = 0.995
+
+                var rotation = C4Transform()
+                rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+                circle.transform = rotation
+                var mask = C4Circle(center: C4Point(circle.width/2.0,circle.height/2.0), radius: 82+4)
+                mask.fillColor = clear
+                mask.strokeColor = red
+                mask.lineWidth = 8
+                circle.layer?.mask = mask.layer
+            }
+            
+            circle.strokeColor = cosmosblue
+            circle.fillColor = clear
+            circle.interactionEnabled = false
+            canvas.add(circle)
         }
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }
