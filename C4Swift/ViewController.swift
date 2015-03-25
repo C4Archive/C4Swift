@@ -16,8 +16,243 @@ class ViewController: UIViewController {
     var circles = [C4Circle]()
     var wedge = C4Wedge()
     var intAngle = 0
+    var out = true
+    var animateOut = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
+    var animateIn = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
+    var frames = [C4Rect]()
+    var outerCircle = C4Circle()
+    var lines = [C4Line]()
+    var linesOut = [C4ViewAnimation]()
+    var linesIn = [C4ViewAnimation]()
+    var menuVisible = false
+    var shouldRevert = false
+    var thickCircle = C4Circle()
+    var thickCircleFrames = [C4Rect]()
     
     override func viewDidLoad() {
+        thickCircle = C4Circle(center: canvas.center, radius: 14)
+        thickCircle.fillColor = clear
+        thickCircle.lineWidth = 3
+        thickCircle.strokeColor = cosmosblue
+        thickCircle.interactionEnabled = false
+        canvas.add(thickCircle)
+        
+        outerCircle = C4Circle(center: self.canvas.center, radius: 156)
+        outerCircle.strokeEnd = 0.0
+        outerCircle.fillColor = clear
+        outerCircle.lineWidth = 1
+        outerCircle.strokeColor = cosmosblue
+        outerCircle.interactionEnabled = false
+        canvas.add(outerCircle)
+        
+        createLines()
+        
+        circles.append(C4Circle(center: canvas.center, radius: 8))
+        circles.append(C4Circle(center: canvas.center, radius: 56))
+        circles.append(C4Circle(center: canvas.center, radius: 78))
+        circles.append(C4Circle(center: canvas.center, radius: 98))
+        circles.append(C4Circle(center: canvas.center, radius: 102))
+        
+        for i in 0..<circles.count {
+            var circle = circles[i]
+            circle.fillColor = clear
+            circle.lineWidth = 1
+            circle.strokeColor = cosmosblue
+            circle.interactionEnabled = false
+            if i > 0 {
+                circle.opacity = 0.0
+            }
+            canvas.add(circle)
+            frames.append(circle.frame)
+        }
+        
+        let inner = C4Circle(center: canvas.center, radius: 14)
+        let outer = C4Circle(center: canvas.center, radius: 225)
+        
+        thickCircleFrames.append(inner.frame)
+        thickCircleFrames.append(outer.frame)
+        
+        createOutAnimations()
+        createInAnimations()
+        createMenuAnimations()
+        
+        canvas.addLongPressGestureRecognizer { (location, state) -> () in
+            switch state {
+            case .Began:
+                self.menuOut()
+            case .Cancelled, .Ended, .Failed:
+                self.canvas.interactionEnabled = false
+                if self.menuVisible {
+                    self.menuIn()
+                } else {
+                    self.shouldRevert = true
+                }
+            default:
+                let i = 0
+            }
+        }
+    }
+    
+    func menuOut() {
+        self.out = false
+        self.menuVisible = false
+        var thickCircleOut = C4ViewAnimation(duration: 0.5) {
+            self.thickCircle.frame = self.thickCircleFrames[1]
+            self.thickCircle.updatePath()
+        }
+        thickCircleOut.curve = .EaseOut
+        thickCircleOut.animate()
+        
+        self.animateOut.animate()
+        delay(0.6) {
+            self.animateMenu(self.linesOut)
+        }
+        delay(1.2) {
+            self.menuVisible = true
+            if self.shouldRevert {
+                self.menuIn()
+                self.shouldRevert = false
+            }
+        }
+    }
+    
+    func menuIn() {
+        self.out = true
+        self.animateMenu(self.linesIn)
+        delay(0.6) {
+            self.animateIn.animate()
+        }
+        delay(1.0 ) {
+            var thickCircleIn = C4ViewAnimation(duration: 0.5) {
+                self.thickCircle.frame = self.thickCircleFrames[0]
+                self.thickCircle.updatePath()
+            }
+            thickCircleIn.curve = .EaseOut
+            thickCircleIn.animate()
+            self.canvas.interactionEnabled = true
+        }
+    }
+
+    func animateMenu(lines: [C4ViewAnimation]) {
+        let dt = 0.05
+        
+        for i in 0..<lines.count {
+            delay(dt*Double(i)){
+                lines[i].animate()
+            }
+        }
+        
+        if self.outerCircle.strokeEnd < 1.0 { //animate out
+            delay(dt) {
+                let anim = C4ViewAnimation(duration: 12.0 * dt) {
+                    self.outerCircle.strokeEnd = 1.0
+                }
+                anim.animate()
+            }
+        } else { //animate in
+            let anim = C4ViewAnimation(duration: 12.0 * dt) {
+                self.outerCircle.strokeEnd = 0.0
+            }
+            anim.animate()
+        }
+    }
+    
+    func createMenuAnimations() {
+        for i in 0...self.lines.count-1 {
+            let anim = C4ViewAnimation(duration: 0.05) {
+                let line = self.lines[i]
+                line.strokeEnd = 1.0
+            }
+            anim.curve = .EaseOut
+            linesOut.append(anim)
+        }
+        
+        
+        for i in 1...self.lines.count {
+            let anim = C4ViewAnimation(duration: 0.05) {
+                let line = self.lines[self.lines.count - i]
+                line.strokeEnd = 0.0
+            }
+            anim.curve = .EaseOut
+            linesIn.append(anim)
+        }
+        
+    }
+    
+    func createLines() {
+        for i in 0...11 {
+            var line = C4Line([C4Point(),C4Point(54,0)])
+            line.layer?.anchorPoint = CGPointMake(-1.88888,0)
+            line.center = canvas.center
+            var rot = C4Transform()
+            rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
+            line.transform = rot
+            line.strokeColor = cosmosblue
+            line.lineWidth = 1.0
+            line.strokeEnd = 0.0
+            canvas.add(line)
+            lines.append(line)
+        }
+    }
+    
+    func createOutAnimations() {
+        var animationsOut = [C4ViewAnimation]()
+        for i in 0..<self.circles.count-1 {
+            
+            let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
+                var circle = self.circles[i]
+                if ( i > 0) {
+                    let opacity = C4ViewAnimation(duration: 0.0375, animations: { () -> Void in
+                        circle.opacity = 1.0
+                    })
+                    opacity.animate()
+                }
+
+                circle.frame = self.frames[i+1]
+                circle.updatePath()
+            })
+            anim.curve = .EaseOut
+            animationsOut.append(anim)
+        }
+        
+        animateOut = C4ViewAnimationSequence(animations: animationsOut)
+    }
+    
+    func createInAnimations() {
+        var animations = [C4ViewAnimation]()
+        
+        let outerCircleIn = C4ViewAnimation(duration: 0.25) { () -> Void in
+//            self.outerCircle.strokeEnd = 0.0
+            
+                var reverseAnims = [C4ViewAnimation]()
+                for i in 1...self.circles.count {
+                    let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
+                        var circle = self.circles[self.circles.count - i]
+                        if self.circles.count - i > 0 {
+                            let opacity = C4ViewAnimation(duration: 0.0375, animations: { () -> Void in
+                                circle.opacity = 0.0
+                            })
+                            opacity.animate()
+                        }
+                        circle.frame = self.frames[self.circles.count - i]
+                        circle.updatePath()
+                    })
+                    anim.curve = .EaseOut
+                    reverseAnims.append(anim)
+                }
+            
+            let reverseSequence = C4ViewAnimationSequence(animations: reverseAnims)
+            delay(0.25, { () -> () in
+                reverseSequence.animate()
+            })
+        }
+        outerCircleIn.curve = .EaseOut
+        animations.append(outerCircleIn)
+        
+        animateIn = C4ViewAnimationSequence(animations: animations)
+    }
+    
+    func layoutMenu() {
         var path = C4Path()
         path.addEllipse(C4Rect(-156,-156,312,312))
         path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
@@ -93,9 +328,9 @@ class ViewController: UIViewController {
         
         for i in 0..<circles.count {
             var circle = circles[i]
-            circle.lineWidth = 1.25
+            circle.lineWidth = 1
             if i == 1 || i == 2 {
-                circle.lineWidth = 4.25
+                circle.lineWidth = 3
             }
             
             if i == 4 {
