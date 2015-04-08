@@ -30,6 +30,161 @@ class ViewController: UIViewController {
     var thickCircleFrames = [C4Rect]()
     
     override func viewDidLoad() {
+        circles.append(C4Circle(center: canvas.center, radius: 102))
+        circles.append(C4Circle(center: canvas.center, radius: 156))
+        
+        for i in 0..<circles.count {
+            var circle = circles[i]
+            circle.fillColor = clear
+            circle.lineWidth = 1
+            circle.strokeColor = cosmosblue
+            circle.interactionEnabled = false
+            canvas.add(circle)
+        }
+        
+        createLines()
+        
+        out = false
+        
+        
+        
+        canvas.addTapGestureRecognizer { (location, state) -> () in
+            if self.out {
+                self.out = false
+//                self.staggeredOut()
+                self.randomOut()
+                            } else {
+                self.out = true
+//                self.staggeredIn()
+                self.randomIn()
+            }
+        }
+    }
+    
+    func randomOut() {
+        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
+        
+        for i in 0...11 {
+            delay(0.05*Double(i)) {
+                let randomIndex = random(below: indices.count)
+                let index = indices[randomIndex]
+                let a = C4ViewAnimation(duration: 0.1) {
+                    self.lines[index].strokeEnd = 1.0
+                }
+                a.animate()
+                indices.removeAtIndex(randomIndex)
+            }
+        }
+    }
+ 
+    func randomIn() {
+        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
+        
+        for i in 0...11 {
+            delay(0.05*Double(i)) {
+                let randomIndex = random(below: indices.count)
+                let index = indices[randomIndex]
+                
+                let a = C4ViewAnimation(duration: 0.1) {
+                    self.lines[index].strokeEnd = 0.0
+                }
+                a.animate()
+                indices.removeAtIndex(randomIndex)
+            }
+        }
+    }
+    
+    func staggeredOut() {
+        self.lines[9].strokeEnd = 1.0
+        self.lines[3].strokeEnd = 1.0
+        
+        delay(0.1) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[0].strokeEnd = 1.0
+                self.lines[6].strokeEnd = 1.0
+            }
+            a.animate()
+        }
+        
+        delay(0.2) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[5].strokeEnd = 1.0
+                self.lines[11].strokeEnd = 1.0
+            }
+            a.animate()
+        }
+        
+        delay(0.3) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[1].strokeEnd = 1.0
+                self.lines[7].strokeEnd = 1.0
+            }
+            a.animate()
+        }
+        
+        delay(0.4) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[4].strokeEnd = 1.0
+                self.lines[10].strokeEnd = 1.0
+            }
+            a.animate()
+        }
+        
+        delay(0.5) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[2].strokeEnd = 1.0
+                self.lines[8].strokeEnd = 1.0
+            }
+            a.animate()
+        }
+    }
+    
+    func staggeredIn() {
+        self.lines[9].strokeEnd = 0.0
+        self.lines[3].strokeEnd = 0.0
+        
+        delay(0.1) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[0].strokeEnd = 0.0
+                self.lines[6].strokeEnd = 0.0
+            }
+            a.animate()
+        }
+        
+        delay(0.2) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[5].strokeEnd = 0.0
+                self.lines[11].strokeEnd = 0.0
+            }
+            a.animate()
+        }
+        
+        delay(0.3) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[1].strokeEnd = 0.0
+                self.lines[7].strokeEnd = 0.0
+            }
+            a.animate()
+        }
+        
+        delay(0.4) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[4].strokeEnd = 0.0
+                self.lines[10].strokeEnd = 0.0
+            }
+            a.animate()
+        }
+        
+        delay(0.5) {
+            let a = C4ViewAnimation(duration: 0.1) {
+                self.lines[2].strokeEnd = 0.0
+                self.lines[8].strokeEnd = 0.0
+            }
+            a.animate()
+        }
+    }
+    
+    func miewDidLoad() {
         thickCircle = C4Circle(center: canvas.center, radius: 14)
         thickCircle.fillColor = clear
         thickCircle.lineWidth = 3
@@ -132,7 +287,7 @@ class ViewController: UIViewController {
             self.canvas.interactionEnabled = true
         }
     }
-
+    
     func animateMenu(lines: [C4ViewAnimation]) {
         let dt = 0.05
         
@@ -207,7 +362,7 @@ class ViewController: UIViewController {
                     })
                     opacity.animate()
                 }
-
+                
                 circle.frame = self.frames[i+1]
                 circle.updatePath()
             })
@@ -222,24 +377,24 @@ class ViewController: UIViewController {
         var animations = [C4ViewAnimation]()
         
         let outerCircleIn = C4ViewAnimation(duration: 0.25) { () -> Void in
-//            self.outerCircle.strokeEnd = 0.0
+            //            self.outerCircle.strokeEnd = 0.0
             
-                var reverseAnims = [C4ViewAnimation]()
-                for i in 1...self.circles.count {
-                    let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
-                        var circle = self.circles[self.circles.count - i]
-                        if self.circles.count - i > 0 {
-                            let opacity = C4ViewAnimation(duration: 0.0375, animations: { () -> Void in
-                                circle.opacity = 0.0
-                            })
-                            opacity.animate()
-                        }
-                        circle.frame = self.frames[self.circles.count - i]
-                        circle.updatePath()
-                    })
-                    anim.curve = .EaseOut
-                    reverseAnims.append(anim)
-                }
+            var reverseAnims = [C4ViewAnimation]()
+            for i in 1...self.circles.count {
+                let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
+                    var circle = self.circles[self.circles.count - i]
+                    if self.circles.count - i > 0 {
+                        let opacity = C4ViewAnimation(duration: 0.0375, animations: { () -> Void in
+                            circle.opacity = 0.0
+                        })
+                        opacity.animate()
+                    }
+                    circle.frame = self.frames[self.circles.count - i]
+                    circle.updatePath()
+                })
+                anim.curve = .EaseOut
+                reverseAnims.append(anim)
+            }
             
             let reverseSequence = C4ViewAnimationSequence(animations: reverseAnims)
             delay(0.25, { () -> () in
@@ -259,7 +414,7 @@ class ViewController: UIViewController {
         
         var donut = C4Shape(path)
         donut.fillRule = .EvenOdd
-
+        
         wedge = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
         wedge.fillColor = cosmosblue
         wedge.lineWidth = 0.0
@@ -268,12 +423,12 @@ class ViewController: UIViewController {
         wedge.layer?.anchorPoint = CGPointZero
         wedge.center = canvas.center
         canvas.add(wedge)
-
+        
         canvas.addPanGestureRecognizer { (location, translation, velocity, state) -> () in
             let a = C4Vector(x:self.canvas.center.x+1.0, y:self.canvas.center.y)
             let b = C4Vector(x:self.canvas.center.x, y:self.canvas.center.y)
             let c = C4Vector(x:location.x, y:location.y)
-
+            
             let dist = distance(location, self.canvas.center)
             
             if dist > 102.0 && dist < 156 {
@@ -284,7 +439,7 @@ class ViewController: UIViewController {
                 }
                 
                 var newAngle = Int(radToDeg(angle)) / 30
-
+                
                 if self.intAngle != newAngle {
                     self.intAngle = newAngle
                     
@@ -342,14 +497,14 @@ class ViewController: UIViewController {
                 rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
                 circle.transform = rotation
             }
-
+            
             if i == 5 {
                 circle.lineWidth = 12
                 
                 var pattern = [1.465,1.465*9.0] as [NSNumber]
                 circle.lineDashPattern = pattern
                 circle.strokeEnd = 0.995
-
+                
                 var rotation = C4Transform()
                 rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
                 circle.transform = rotation
