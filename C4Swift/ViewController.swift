@@ -29,176 +29,20 @@ class ViewController: UIViewController {
     var thickCircle = C4Circle()
     var thickCircleFrames = [C4Rect]()
     
+    /*
+    Next steps: 
+        1) integrate the random out with the rest of the menu build.
+        2) integreate the logos
+        3) add longpress changed tracking to see which logo is selected
+    */
+    
     override func viewDidLoad() {
-        circles.append(C4Circle(center: canvas.center, radius: 102))
-        circles.append(C4Circle(center: canvas.center, radius: 156))
-        
-        for i in 0..<circles.count {
-            var circle = circles[i]
-            circle.fillColor = clear
-            circle.lineWidth = 1
-            circle.strokeColor = cosmosblue
-            circle.interactionEnabled = false
-            canvas.add(circle)
-        }
-        
-        createLines()
-        
-        out = false
-        
-        
-        
-        canvas.addTapGestureRecognizer { (location, state) -> () in
-            if self.out {
-                self.out = false
-//                self.staggeredOut()
-                self.randomOut()
-                            } else {
-                self.out = true
-//                self.staggeredIn()
-                self.randomIn()
-            }
-        }
-    }
-    
-    func randomOut() {
-        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
-        
-        for i in 0...11 {
-            delay(0.05*Double(i)) {
-                let randomIndex = random(below: indices.count)
-                let index = indices[randomIndex]
-                let a = C4ViewAnimation(duration: 0.1) {
-                    self.lines[index].strokeEnd = 1.0
-                }
-                a.animate()
-                indices.removeAtIndex(randomIndex)
-            }
-        }
-    }
- 
-    func randomIn() {
-        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
-        
-        for i in 0...11 {
-            delay(0.05*Double(i)) {
-                let randomIndex = random(below: indices.count)
-                let index = indices[randomIndex]
-                
-                let a = C4ViewAnimation(duration: 0.1) {
-                    self.lines[index].strokeEnd = 0.0
-                }
-                a.animate()
-                indices.removeAtIndex(randomIndex)
-            }
-        }
-    }
-    
-    func staggeredOut() {
-        self.lines[9].strokeEnd = 1.0
-        self.lines[3].strokeEnd = 1.0
-        
-        delay(0.1) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[0].strokeEnd = 1.0
-                self.lines[6].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.2) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[5].strokeEnd = 1.0
-                self.lines[11].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.3) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[1].strokeEnd = 1.0
-                self.lines[7].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.4) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[4].strokeEnd = 1.0
-                self.lines[10].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.5) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[2].strokeEnd = 1.0
-                self.lines[8].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-    }
-    
-    func staggeredIn() {
-        self.lines[9].strokeEnd = 0.0
-        self.lines[3].strokeEnd = 0.0
-        
-        delay(0.1) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[0].strokeEnd = 0.0
-                self.lines[6].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.2) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[5].strokeEnd = 0.0
-                self.lines[11].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.3) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[1].strokeEnd = 0.0
-                self.lines[7].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.4) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[4].strokeEnd = 0.0
-                self.lines[10].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.5) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[2].strokeEnd = 0.0
-                self.lines[8].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-    }
-    
-    func miewDidLoad() {
         thickCircle = C4Circle(center: canvas.center, radius: 14)
         thickCircle.fillColor = clear
         thickCircle.lineWidth = 3
         thickCircle.strokeColor = cosmosblue
         thickCircle.interactionEnabled = false
         canvas.add(thickCircle)
-        
-        outerCircle = C4Circle(center: self.canvas.center, radius: 156)
-        outerCircle.strokeEnd = 0.0
-        outerCircle.fillColor = clear
-        outerCircle.lineWidth = 1
-        outerCircle.strokeColor = cosmosblue
-        outerCircle.interactionEnabled = false
-        canvas.add(outerCircle)
         
         createLines()
         
@@ -207,6 +51,7 @@ class ViewController: UIViewController {
         circles.append(C4Circle(center: canvas.center, radius: 78))
         circles.append(C4Circle(center: canvas.center, radius: 98))
         circles.append(C4Circle(center: canvas.center, radius: 102))
+        circles.append(C4Circle(center: canvas.center, radius: 156))
         
         for i in 0..<circles.count {
             var circle = circles[i]
@@ -229,7 +74,7 @@ class ViewController: UIViewController {
         
         createOutAnimations()
         createInAnimations()
-        createMenuAnimations()
+//        createMenuAnimations()
         
         canvas.addLongPressGestureRecognizer { (location, state) -> () in
             switch state {
@@ -247,6 +92,67 @@ class ViewController: UIViewController {
             }
         }
     }
+
+    func liewDidLoad() {
+        circles.append(C4Circle(center: canvas.center, radius: 102))
+        circles.append(C4Circle(center: canvas.center, radius: 156))
+        
+        for i in 0..<circles.count {
+            var circle = circles[i]
+            circle.fillColor = clear
+            circle.lineWidth = 1
+            circle.strokeColor = cosmosblue
+            circle.interactionEnabled = false
+            canvas.add(circle)
+        }
+        
+        createLines()
+        
+        out = false
+        
+        canvas.addTapGestureRecognizer { (location, state) -> () in
+            if self.out {
+                self.out = false
+                self.randomOut()
+            } else {
+                self.out = true
+                self.randomIn()
+            }
+        }
+    }
+    
+    func randomOut() {
+        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
+        
+        for i in 0...11 {
+            delay(0.05*Double(i)) {
+                let randomIndex = random(below: indices.count)
+                let index = indices[randomIndex]
+                let a = C4ViewAnimation(duration: 0.1) {
+                    self.lines[index].strokeEnd = 1.0
+                }
+                a.animate()
+                indices.removeAtIndex(randomIndex)
+            }
+        }
+    }
+    
+    func randomIn() {
+        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
+        
+        for i in 0...11 {
+            delay(0.05*Double(i)) {
+                let randomIndex = random(below: indices.count)
+                let index = indices[randomIndex]
+                
+                let a = C4ViewAnimation(duration: 0.1) {
+                    self.lines[index].strokeEnd = 0.0
+                }
+                a.animate()
+                indices.removeAtIndex(randomIndex)
+            }
+        }
+    }
     
     func menuOut() {
         self.out = false
@@ -259,13 +165,13 @@ class ViewController: UIViewController {
         thickCircleOut.animate()
         
         self.animateOut.animate()
-        delay(0.6) {
-            self.animateMenu(self.linesOut)
+        delay(0.33) {
+            self.randomOut()
         }
-        delay(1.2) {
+        delay(0.66) {
             self.menuVisible = true
             if self.shouldRevert {
-                self.menuIn()
+                self.randomIn()
                 self.shouldRevert = false
             }
         }
@@ -273,11 +179,11 @@ class ViewController: UIViewController {
     
     func menuIn() {
         self.out = true
-        self.animateMenu(self.linesIn)
-        delay(0.6) {
+        self.randomIn()
+        delay(0.33) {
             self.animateIn.animate()
         }
-        delay(1.0 ) {
+        delay(0.66) {
             var thickCircleIn = C4ViewAnimation(duration: 0.5) {
                 self.thickCircle.frame = self.thickCircleFrames[0]
                 self.thickCircle.updatePath()
@@ -296,20 +202,6 @@ class ViewController: UIViewController {
                 lines[i].animate()
             }
         }
-        
-        if self.outerCircle.strokeEnd < 1.0 { //animate out
-            delay(dt) {
-                let anim = C4ViewAnimation(duration: 12.0 * dt) {
-                    self.outerCircle.strokeEnd = 1.0
-                }
-                anim.animate()
-            }
-        } else { //animate in
-            let anim = C4ViewAnimation(duration: 12.0 * dt) {
-                self.outerCircle.strokeEnd = 0.0
-            }
-            anim.animate()
-        }
     }
     
     func createMenuAnimations() {
@@ -322,7 +214,6 @@ class ViewController: UIViewController {
             linesOut.append(anim)
         }
         
-        
         for i in 1...self.lines.count {
             let anim = C4ViewAnimation(duration: 0.05) {
                 let line = self.lines[self.lines.count - i]
@@ -331,7 +222,6 @@ class ViewController: UIViewController {
             anim.curve = .EaseOut
             linesIn.append(anim)
         }
-        
     }
     
     func createLines() {
