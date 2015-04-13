@@ -12,517 +12,212 @@ import C4Core
 import C4Animation
 
 class ViewController: UIViewController {
+    var myContext = 0
     let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)
-    var circles = [C4Circle]()
-    var wedge = C4Wedge()
-    var intAngle = 0
-    var out = true
-    var animateOut = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
-    var animateIn = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
-    var frames = [C4Rect]()
-    var outerCircle = C4Circle()
-    var lines = [C4Line]()
-    var linesOut = [C4ViewAnimation]()
-    var linesIn = [C4ViewAnimation]()
-    var menuVisible = false
-    var shouldRevert = false
-    var thickCircle = C4Circle()
-    var thickCircleFrames = [C4Rect]()
+    let cosmosbkgd = C4Color(red: 0.078, green: 0.118, blue: 0.306, alpha: 1.0)
+    let cosmosprpl = C4Color(red:0.565, green: 0.075, blue: 0.996, alpha: 1.0)
+    var scrollviews = [InfiniteScrollView]()
+    var speeds : [CGFloat] = [0.05,0.08,0.10,0.0,0.15,1.0,0.8,1.0]
     
     override func viewDidLoad() {
-        circles.append(C4Circle(center: canvas.center, radius: 102))
-        circles.append(C4Circle(center: canvas.center, radius: 156))
         
-        for i in 0..<circles.count {
-            var circle = circles[i]
-            circle.fillColor = clear
-            circle.lineWidth = 1
-            circle.strokeColor = cosmosblue
-            circle.interactionEnabled = false
-            canvas.add(circle)
-        }
+        canvas.backgroundColor = cosmosbkgd
+        scrollviews.append(layer03())
+        scrollviews.append(layer04())
+        scrollviews.append(layer05())
+        scrollviews.append(layer06())
+        scrollviews.append(layer07())
+        scrollviews.append(layer08())
+        scrollviews.append(layer09())
+        scrollviews.append(layer10())
         
-        createLines()
-        
-        out = false
-        
-        
-        
-        canvas.addTapGestureRecognizer { (location, state) -> () in
-            if self.out {
-                self.out = false
-//                self.staggeredOut()
-                self.randomOut()
-                            } else {
-                self.out = true
-//                self.staggeredIn()
-                self.randomIn()
-            }
+        for scrollview in scrollviews {
+            canvas.add(scrollview)
         }
     }
     
-    func randomOut() {
-        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
+    func layer03() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        sv.contentSize = CGSizeMake(sv.frame.size.width * 12.0, 1.0)
         
         for i in 0...11 {
-            delay(0.05*Double(i)) {
-                let randomIndex = random(below: indices.count)
-                let index = indices[randomIndex]
-                let a = C4ViewAnimation(duration: 0.1) {
-                    self.lines[index].strokeEnd = 1.0
-                }
-                a.animate()
-                indices.removeAtIndex(randomIndex)
+            let start = Double(i) * canvas.width
+            for j in 0...14 {
+                let pt = C4Point( start + random01() * canvas.width, random01() * canvas.height)
+                let img = C4Image("03Star")
+                img.center = pt
+                sv.add(img)
             }
         }
+        
+        return sv
     }
- 
-    func randomIn() {
-        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
+    
+    func layer04() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        sv.contentSize = CGSizeMake(sv.frame.size.width * 12.0, 1.0)
         
         for i in 0...11 {
-            delay(0.05*Double(i)) {
-                let randomIndex = random(below: indices.count)
-                let index = indices[randomIndex]
-                
-                let a = C4ViewAnimation(duration: 0.1) {
-                    self.lines[index].strokeEnd = 0.0
-                }
-                a.animate()
-                indices.removeAtIndex(randomIndex)
+            let start = Double(i) * canvas.width
+            for j in 0...24 {
+                let pt = C4Point( start + random01() * canvas.width, random01() * canvas.height)
+                let img = C4Image("04Star")
+                img.center = pt
+                sv.add(img)
             }
         }
+        
+        return sv
     }
+
     
-    func staggeredOut() {
-        self.lines[9].strokeEnd = 1.0
-        self.lines[3].strokeEnd = 1.0
+    func layer05() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        sv.contentSize = CGSizeMake(sv.frame.size.width * 12.0, 1.0)
         
-        delay(0.1) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[0].strokeEnd = 1.0
-                self.lines[6].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.2) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[5].strokeEnd = 1.0
-                self.lines[11].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.3) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[1].strokeEnd = 1.0
-                self.lines[7].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.4) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[4].strokeEnd = 1.0
-                self.lines[10].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-        
-        delay(0.5) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[2].strokeEnd = 1.0
-                self.lines[8].strokeEnd = 1.0
-            }
-            a.animate()
-        }
-    }
-    
-    func staggeredIn() {
-        self.lines[9].strokeEnd = 0.0
-        self.lines[3].strokeEnd = 0.0
-        
-        delay(0.1) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[0].strokeEnd = 0.0
-                self.lines[6].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.2) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[5].strokeEnd = 0.0
-                self.lines[11].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.3) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[1].strokeEnd = 0.0
-                self.lines[7].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.4) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[4].strokeEnd = 0.0
-                self.lines[10].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-        
-        delay(0.5) {
-            let a = C4ViewAnimation(duration: 0.1) {
-                self.lines[2].strokeEnd = 0.0
-                self.lines[8].strokeEnd = 0.0
-            }
-            a.animate()
-        }
-    }
-    
-    func miewDidLoad() {
-        thickCircle = C4Circle(center: canvas.center, radius: 14)
-        thickCircle.fillColor = clear
-        thickCircle.lineWidth = 3
-        thickCircle.strokeColor = cosmosblue
-        thickCircle.interactionEnabled = false
-        canvas.add(thickCircle)
-        
-        outerCircle = C4Circle(center: self.canvas.center, radius: 156)
-        outerCircle.strokeEnd = 0.0
-        outerCircle.fillColor = clear
-        outerCircle.lineWidth = 1
-        outerCircle.strokeColor = cosmosblue
-        outerCircle.interactionEnabled = false
-        canvas.add(outerCircle)
-        
-        createLines()
-        
-        circles.append(C4Circle(center: canvas.center, radius: 8))
-        circles.append(C4Circle(center: canvas.center, radius: 56))
-        circles.append(C4Circle(center: canvas.center, radius: 78))
-        circles.append(C4Circle(center: canvas.center, radius: 98))
-        circles.append(C4Circle(center: canvas.center, radius: 102))
-        
-        for i in 0..<circles.count {
-            var circle = circles[i]
-            circle.fillColor = clear
-            circle.lineWidth = 1
-            circle.strokeColor = cosmosblue
-            circle.interactionEnabled = false
-            if i > 0 {
-                circle.opacity = 0.0
-            }
-            canvas.add(circle)
-            frames.append(circle.frame)
-        }
-        
-        let inner = C4Circle(center: canvas.center, radius: 14)
-        let outer = C4Circle(center: canvas.center, radius: 225)
-        
-        thickCircleFrames.append(inner.frame)
-        thickCircleFrames.append(outer.frame)
-        
-        createOutAnimations()
-        createInAnimations()
-        createMenuAnimations()
-        
-        canvas.addLongPressGestureRecognizer { (location, state) -> () in
-            switch state {
-            case .Began:
-                self.menuOut()
-            case .Cancelled, .Ended, .Failed:
-                self.canvas.interactionEnabled = false
-                if self.menuVisible {
-                    self.menuIn()
-                } else {
-                    self.shouldRevert = true
-                }
-            default:
-                let i = 0
-            }
-        }
-    }
-    
-    func menuOut() {
-        self.out = false
-        self.menuVisible = false
-        var thickCircleOut = C4ViewAnimation(duration: 0.5) {
-            self.thickCircle.frame = self.thickCircleFrames[1]
-            self.thickCircle.updatePath()
-        }
-        thickCircleOut.curve = .EaseOut
-        thickCircleOut.animate()
-        
-        self.animateOut.animate()
-        delay(0.6) {
-            self.animateMenu(self.linesOut)
-        }
-        delay(1.2) {
-            self.menuVisible = true
-            if self.shouldRevert {
-                self.menuIn()
-                self.shouldRevert = false
-            }
-        }
-    }
-    
-    func menuIn() {
-        self.out = true
-        self.animateMenu(self.linesIn)
-        delay(0.6) {
-            self.animateIn.animate()
-        }
-        delay(1.0 ) {
-            var thickCircleIn = C4ViewAnimation(duration: 0.5) {
-                self.thickCircle.frame = self.thickCircleFrames[0]
-                self.thickCircle.updatePath()
-            }
-            thickCircleIn.curve = .EaseOut
-            thickCircleIn.animate()
-            self.canvas.interactionEnabled = true
-        }
-    }
-    
-    func animateMenu(lines: [C4ViewAnimation]) {
-        let dt = 0.05
-        
-        for i in 0..<lines.count {
-            delay(dt*Double(i)){
-                lines[i].animate()
-            }
-        }
-        
-        if self.outerCircle.strokeEnd < 1.0 { //animate out
-            delay(dt) {
-                let anim = C4ViewAnimation(duration: 12.0 * dt) {
-                    self.outerCircle.strokeEnd = 1.0
-                }
-                anim.animate()
-            }
-        } else { //animate in
-            let anim = C4ViewAnimation(duration: 12.0 * dt) {
-                self.outerCircle.strokeEnd = 0.0
-            }
-            anim.animate()
-        }
-    }
-    
-    func createMenuAnimations() {
-        for i in 0...self.lines.count-1 {
-            let anim = C4ViewAnimation(duration: 0.05) {
-                let line = self.lines[i]
-                line.strokeEnd = 1.0
-            }
-            anim.curve = .EaseOut
-            linesOut.append(anim)
-        }
-        
-        
-        for i in 1...self.lines.count {
-            let anim = C4ViewAnimation(duration: 0.05) {
-                let line = self.lines[self.lines.count - i]
-                line.strokeEnd = 0.0
-            }
-            anim.curve = .EaseOut
-            linesIn.append(anim)
-        }
-        
-    }
-    
-    func createLines() {
         for i in 0...11 {
-            var line = C4Line([C4Point(),C4Point(54,0)])
-            line.layer?.anchorPoint = CGPointMake(-1.88888,0)
-            line.center = canvas.center
-            var rot = C4Transform()
-            rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
-            line.transform = rot
-            line.strokeColor = cosmosblue
+            let start = Double(i) * canvas.width
+            for j in 0...19 {
+                let pt = C4Point( start + random01() * canvas.width, random01() * canvas.height)
+                let img = C4Image("05Star")
+                img.center = pt
+                sv.add(img)
+            }
+        }
+        
+        return sv
+    }
+    
+    func layer06() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        let img = C4Image("06Vignette")
+        img.frame = canvas.frame
+        sv.add(img)
+        return sv
+    }
+
+    func layer07() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        sv.contentSize = CGSizeMake(sv.frame.size.width * 12.0, 1.0)
+        
+        for i in 0...11 {
+            let start = Double(i) * canvas.width
+            for j in 0...19 {
+                let pt = C4Point( start + random01() * canvas.width, random01() * canvas.height)
+                let img = C4Image("07Star")
+                img.center = pt
+                sv.add(img)
+            }
+        }
+        
+        return sv
+    }
+
+    func layer08() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        sv.contentSize = CGSizeMake(sv.frame.size.width * 12.0, 1.0)
+        
+        for points in taurus().lines {
+            let line = C4Line(points)
+            line.strokeColor = cosmosprpl
             line.lineWidth = 1.0
-            line.strokeEnd = 0.0
-            canvas.add(line)
-            lines.append(line)
+            line.opacity = 0.4
+            sv.add(line)
         }
-    }
-    
-    func createOutAnimations() {
-        var animationsOut = [C4ViewAnimation]()
-        for i in 0..<self.circles.count-1 {
-            
-            let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
-                var circle = self.circles[i]
-                if ( i > 0) {
-                    let opacity = C4ViewAnimation(duration: 0.0375, animations: { () -> Void in
-                        circle.opacity = 1.0
-                    })
-                    opacity.animate()
-                }
+
+        for i in 1...11 {
+            let start = Double(i) * canvas.width
+            for j in 0...3 {
+                let bgn = C4Point( start + random01() * canvas.width, random01() * canvas.height)
+                let end = C4Point( start + random01() * canvas.width, random01() * canvas.height)
                 
-                circle.frame = self.frames[i+1]
-                circle.updatePath()
-            })
-            anim.curve = .EaseOut
-            animationsOut.append(anim)
-        }
-        
-        animateOut = C4ViewAnimationSequence(animations: animationsOut)
-    }
-    
-    func createInAnimations() {
-        var animations = [C4ViewAnimation]()
-        
-        let outerCircleIn = C4ViewAnimation(duration: 0.25) { () -> Void in
-            //            self.outerCircle.strokeEnd = 0.0
-            
-            var reverseAnims = [C4ViewAnimation]()
-            for i in 1...self.circles.count {
-                let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
-                    var circle = self.circles[self.circles.count - i]
-                    if self.circles.count - i > 0 {
-                        let opacity = C4ViewAnimation(duration: 0.0375, animations: { () -> Void in
-                            circle.opacity = 0.0
-                        })
-                        opacity.animate()
-                    }
-                    circle.frame = self.frames[self.circles.count - i]
-                    circle.updatePath()
-                })
-                anim.curve = .EaseOut
-                reverseAnims.append(anim)
-            }
-            
-            let reverseSequence = C4ViewAnimationSequence(animations: reverseAnims)
-            delay(0.25, { () -> () in
-                reverseSequence.animate()
-            })
-        }
-        outerCircleIn.curve = .EaseOut
-        animations.append(outerCircleIn)
-        
-        animateIn = C4ViewAnimationSequence(animations: animations)
-    }
-    
-    func layoutMenu() {
-        var path = C4Path()
-        path.addEllipse(C4Rect(-156,-156,312,312))
-        path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
-        
-        var donut = C4Shape(path)
-        donut.fillRule = .EvenOdd
-        
-        wedge = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
-        wedge.fillColor = cosmosblue
-        wedge.lineWidth = 0.0
-        wedge.interactionEnabled = false
-        wedge.layer?.mask = donut.layer
-        wedge.layer?.anchorPoint = CGPointZero
-        wedge.center = canvas.center
-        canvas.add(wedge)
-        
-        canvas.addPanGestureRecognizer { (location, translation, velocity, state) -> () in
-            let a = C4Vector(x:self.canvas.center.x+1.0, y:self.canvas.center.y)
-            let b = C4Vector(x:self.canvas.center.x, y:self.canvas.center.y)
-            let c = C4Vector(x:location.x, y:location.y)
-            
-            let dist = distance(location, self.canvas.center)
-            
-            if dist > 102.0 && dist < 156 {
-                var angle = c.angleTo(a, basedOn: b)
-                
-                if c.y < a.y {
-                    angle = 2*M_PI - angle
-                }
-                
-                var newAngle = Int(radToDeg(angle)) / 30
-                
-                if self.intAngle != newAngle {
-                    self.intAngle = newAngle
-                    
-                    var rotation = C4Transform()
-                    rotation.rotate(degToRad(Double(self.intAngle) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
-                    self.wedge.transform = rotation
-                }
+                let line = C4Line([bgn,end])
+                line.strokeColor = cosmosprpl
+                line.lineWidth = 1.0
+                line.opacity = 0.4
+                sv.add(line)
             }
         }
         
-        addCircles()
+        return sv
+    }
+
+    func layer09() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        sv.contentSize = CGSizeMake(sv.frame.size.width * 12.0, 1.0)
         
-        for i in 0...11 {
-            donut = C4Shape(path)
-            donut.fillRule = .EvenOdd
-            
-            let shape = C4Line([C4Point(),C4Point(156,0)])
-            shape.layer?.anchorPoint = CGPointZero
-            shape.center = canvas.center
-            var rotation = C4Transform()
-            rotation.rotate(degToRad(Double(i) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
-            shape.transform = rotation
-            shape.lineWidth = 1.25
-            shape.strokeColor = cosmosblue
-            shape.layer?.mask = donut.layer
-            canvas.add(shape)
+        for point in taurus().small {
+            let img = C4Image("09Star")
+            img.center = point
+            sv.add(img)
         }
+        
+        for i in 1...11 {
+            let start = Double(i) * canvas.width
+            for j in 0...6 {
+                let pt = C4Point( start + random01() * canvas.width, random01() * canvas.height)
+                let img = C4Image("09Star")
+                img.center = pt
+                sv.add(img)
+            }
+        }
+        
+        return sv
+    }
+
+    func layer10() -> InfiniteScrollView {
+        let sv = InfiniteScrollView(frame: view.frame)
+        sv.contentSize = CGSizeMake(sv.frame.size.width * 12.0, 1.0)
+        
+        for point in taurus().big {
+            let img = C4Image("10Star")
+            img.center = point
+            sv.add(img)
+        }
+        
+        for i in 1...11 {
+            let start = Double(i) * canvas.width
+            for j in 0...2 {
+                let pt = C4Point( start + random01() * canvas.width, random01() * canvas.height)
+                let img = C4Image("10Star")
+                img.center = pt
+                sv.add(img)
+            }
+        }
+        
+        sv.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.New, context: &myContext)
+        
+        return sv
     }
     
-    func addCircles() {
-        circles.append(C4Circle(center: canvas.center, radius: 8))
-        circles.append(C4Circle(center: canvas.center, radius: 14))
-        circles.append(C4Circle(center: canvas.center, radius: 56))
-        circles.append(C4Circle(center: canvas.center, radius: 78))
-        circles.append(C4Circle(center: canvas.center, radius: 82+2))
-        circles.append(C4Circle(center: canvas.center, radius: 82+2))
-        circles.append(C4Circle(center: canvas.center, radius: 98))
-        circles.append(C4Circle(center: canvas.center, radius: 102))
-        circles.append(C4Circle(center: canvas.center, radius: 156))
-        circles.append(C4Circle(center: canvas.center, radius: 225))
+    func taurus() -> (big:[C4Point],small:[C4Point],lines:[[C4Point]]) {
+        let big = [C4Point(126,165),C4Point(123,338)]
+        let small = [C4Point(45,199),C4Point(156,342),C4Point(156,361),C4Point(267,364),C4Point(147,384),C4Point(164,441),C4Point(211,516)]
+        let lines = [
+            [big[0],small[1]],
+            [small[0],big[1]],
+            [small[1],small[2]],
+            [big[1],small[4]],
+            [small[1],small[3]],
+            [small[2],small[4]],
+            [small[4],small[5]],
+            [small[5],small[6]]]
         
-        for i in 0..<circles.count {
-            var circle = circles[i]
-            circle.lineWidth = 1
-            if i == 1 || i == 2 {
-                circle.lineWidth = 3
-            }
-            
-            if i == 4 {
-                circle.lineWidth = 4
-                var pattern = [1.465,1.465,1.465,1.465,1.465,1.465,1.465,1.465*3.0] as [NSNumber]
-                circle.lineDashPattern = pattern
-                var rotation = C4Transform()
-                circle.strokeEnd = 0.995
-                rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
-                circle.transform = rotation
-            }
-            
-            if i == 5 {
-                circle.lineWidth = 12
-                
-                var pattern = [1.465,1.465*9.0] as [NSNumber]
-                circle.lineDashPattern = pattern
-                circle.strokeEnd = 0.995
-                
-                var rotation = C4Transform()
-                rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
-                circle.transform = rotation
-                var mask = C4Circle(center: C4Point(circle.width/2.0,circle.height/2.0), radius: 82+4)
-                mask.fillColor = clear
-                mask.strokeColor = red
-                mask.lineWidth = 8
-                circle.layer?.mask = mask.layer
-            }
-            
-            circle.strokeColor = cosmosblue
-            circle.fillColor = clear
-            circle.interactionEnabled = false
-            canvas.add(circle)
-        }
+        return (big,small,lines)
     }
-    
+
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        if context == &myContext {
+            let sv = object as! InfiniteScrollView
+            let offset = sv.contentOffset
+            for i in 0...6 {
+                let layer = scrollviews[i]
+                layer.contentOffset = CGPointMake(offset.x * speeds[i], 0.0)
+            }
+        }
     }
 }
