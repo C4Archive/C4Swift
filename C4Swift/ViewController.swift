@@ -30,27 +30,33 @@ class ViewController: UIViewController {
     var thickCircle = C4Circle()
     var thickCircleFrames = [C4Rect]()
     var logosOrder = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"]
+    var currentSelection = 0
+    var dashedCircles = [C4Circle]()
+
     /*
     Next steps:
         3) add longpress changed tracking to see which logo is selected
     */
-    
+
     override func viewDidLoad() {
         canvas.backgroundColor = cosmosbkgd
         
         createCircles()
+        addDashedCircles()
         createLines()
         createOutAnimations()
         createInAnimations()
         createGesture()
     
+        layoutHighlight()
+        
         createLogos()
         positionLogos()
     }
-    
+
     var innerTargets = [C4Point]()
     var outerTargets = [C4Point]()
-    
+
     func positionLogos() {
         var r = 10.5
         let dx = canvas.center.x
@@ -66,7 +72,7 @@ class ViewController: UIViewController {
                 innerTargets.append(sign.center)
             }
         }
-        
+
         for i in 0..<logosOrder.count {
             let r = 129.0
             let ϴ = M_PI/6 * Double(i) + M_PI/12.0
@@ -119,11 +125,19 @@ class ViewController: UIViewController {
                 self.menuOut()
             case .Cancelled, .Ended, .Failed:
                 self.canvas.interactionEnabled = false
+                if !self.wedge.hidden {
+                    println("\(self.logosOrder[self.currentSelection])")
+                    self.wedge.hidden = true
+                } else {
+                    println("no selection")
+                }
                 if self.menuVisible {
                     self.menuIn()
                 } else {
                     self.shouldRevert = true
                 }
+            case .Changed:
+                self.moveWedge(location)
             default:
                 let i = 0
             }
@@ -192,17 +206,26 @@ class ViewController: UIViewController {
                 sign.strokeEnd = 1.0
             }
         }
-        
         logosReveal.curve = .EaseOut
+
+        let dashedCirclesReveal = C4ViewAnimation(duration: 0.25) {
+            self.dashedCircles[0].lineWidth = 4
+            self.dashedCircles[1].lineWidth = 12
+        }
+        dashedCirclesReveal.curve = .EaseOut
+        
         
         delay(0.33) {
             self.randomOut()
             logosReveal.animate()
         }
         delay(0.66) {
+            dashedCirclesReveal.animate()
+        }
+        delay(1.0) {
             self.menuVisible = true
             if self.shouldRevert {
-                self.randomIn()
+                self.menuIn()
                 self.shouldRevert = false
             }
         }
@@ -228,6 +251,14 @@ class ViewController: UIViewController {
             }
         }
         logosHide.curve = .EaseOut
+        
+        let dashedCirclesHide = C4ViewAnimation(duration: 0.25) {
+            self.dashedCircles[0].lineWidth = 0
+            self.dashedCircles[1].lineWidth = 0
+        }
+        dashedCirclesHide.curve = .EaseOut
+
+        dashedCirclesHide.animate()
 
         delay(0.16) {
             logosHide.animate()
@@ -352,7 +383,7 @@ class ViewController: UIViewController {
         animateIn = C4ViewAnimationSequence(animations: animations)
     }
     
-    func layoutMenu() {
+    func layoutHighlight() {
         var path = C4Path()
         path.addEllipse(C4Rect(-156,-156,312,312))
         path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
@@ -367,50 +398,75 @@ class ViewController: UIViewController {
         wedge.layer?.mask = donut.layer
         wedge.layer?.anchorPoint = CGPointZero
         wedge.center = canvas.center
+        wedge.hidden = true
         canvas.add(wedge)
+    }
+    
+    func moveWedge(location: C4Point) {
         
-        canvas.addPanGestureRecognizer { (location, translation, velocity, state) -> () in
-            let a = C4Vector(x:self.canvas.center.x+1.0, y:self.canvas.center.y)
-            let b = C4Vector(x:self.canvas.center.x, y:self.canvas.center.y)
-            let c = C4Vector(x:location.x, y:location.y)
+        let a = C4Vector(x:self.canvas.center.x+1.0, y:self.canvas.center.y)
+        let b = C4Vector(x:self.canvas.center.x, y:self.canvas.center.y)
+        let c = C4Vector(x:location.x, y:location.y)
+        
+        let dist = distance(location, self.canvas.center)
+        
+        if dist > 102.0 && dist < 156 {
+            wedge.hidden = false
+            var angle = c.angleTo(a, basedOn: b)
             
-            let dist = distance(location, self.canvas.center)
-            
-            if dist > 102.0 && dist < 156 {
-                var angle = c.angleTo(a, basedOn: b)
-                
-                if c.y < a.y {
-                    angle = 2*M_PI - angle
-                }
-                
-                var newAngle = Int(radToDeg(angle)) / 30
-                
-                if self.intAngle != newAngle {
-                    self.intAngle = newAngle
-                    
-                    var rotation = C4Transform()
-                    rotation.rotate(degToRad(Double(self.intAngle) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
-                    self.wedge.transform = rotation
-                }
+            if c.y < a.y {
+                angle = 2*M_PI - angle
             }
-        }
-        
-        addCircles()
-        
-        for i in 0...11 {
-            donut = C4Shape(path)
-            donut.fillRule = .EvenOdd
             
-            let shape = C4Line([C4Point(),C4Point(156,0)])
-            shape.layer?.anchorPoint = CGPointZero
-            shape.center = canvas.center
-            var rotation = C4Transform()
-            rotation.rotate(degToRad(Double(i) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
-            shape.transform = rotation
-            shape.lineWidth = 1.25
-            shape.strokeColor = cosmosblue
-            shape.layer?.mask = donut.layer
-            canvas.add(shape)
+            var newSelection = Int(radToDeg(angle)) / 30
+            
+            if self.currentSelection != newSelection {
+                self.currentSelection = newSelection
+                var rotation = C4Transform()
+                rotation.rotate(degToRad(Double(self.currentSelection) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
+                self.wedge.transform = rotation
+            }
+        } else {
+            wedge.hidden = true
+        }
+
+    }
+    
+    func addDashedCircles() {
+        dashedCircles.append(C4Circle(center: canvas.center, radius: 82+2))
+        dashedCircles.append(C4Circle(center: canvas.center, radius: 82+2))
+        
+        
+        let c = dashedCircles[0]
+        c.lineWidth = 0
+        var pattern = [1.465,1.465,1.465,1.465,1.465,1.465,1.465,1.465*3.0] as [NSNumber]
+        c.lineDashPattern = pattern
+        var rotation = C4Transform()
+        c.strokeEnd = 0.995
+        rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+        c.transform = rotation
+        
+        let d = dashedCircles[1]
+        d.lineWidth = 0
+        
+        pattern = [1.465,1.465*9.0] as [NSNumber]
+        d.lineDashPattern = pattern
+        d.strokeEnd = 0.995
+        
+        rotation = C4Transform()
+        rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+        d.transform = rotation
+        var mask = C4Circle(center: C4Point(d.width/2.0,d.height/2.0), radius: 82+4)
+        mask.fillColor = clear
+        mask.strokeColor = red
+        mask.lineWidth = 8
+        d.layer?.mask = mask.layer
+        
+        for circle in dashedCircles {
+            circle.strokeColor = cosmosblue
+            circle.fillColor = clear
+            circle.interactionEnabled = false
+            canvas.add(circle)
         }
     }
     
