@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1AAC1896-00F7-4D85-8263-77A20FE22510</string>
 	<key>IDESourceControlProjectName</key>
-	<string>C4Swift</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>54F4D03C461288D08B6868DC66C04481BECA35A3</key>
@@ -16,7 +16,7 @@
 		<string>https://github.com/C4Framework/C4Swift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>C4Swift.xcodeproj</string>
+	<string>C4Swift.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>54F4D03C461288D08B6868DC66C04481BECA35A3</key>
