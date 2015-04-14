@@ -1,22 +1,24 @@
 //
-//  ViewController.swift
+//  MenuViewController.swift
 //  C4Swift
 //
-//  Created by travis on 2014-10-28.
-//  Copyright (c) 2014 C4. All rights reserved.
+//  Created by travis on 2015-04-14.
+//  Copyright (c) 2015 C4. All rights reserved.
 //
+
+import Foundation
 
 import UIKit
 import C4UI
 import C4Core
 import C4Animation
 
-class ViewController: UIViewController {
-    let cosmosbkgd = C4Color(red:0.078, green:0.118, blue:0.306, alpha:1.0)
-    let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)
+let cosmosbkgd = C4Color(red:0.078, green:0.118, blue:0.306, alpha:1.0)
+let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)
+
+class MenuViewController: UIViewController {
     var circles = [C4Circle]()
     var wedge = C4Wedge()
-    var intAngle = 0
     var out = true
     var animateOut = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
     var animateIn = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
@@ -32,14 +34,14 @@ class ViewController: UIViewController {
     var logosOrder = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"]
     var currentSelection = 0
     var dashedCircles = [C4Circle]()
-
+    
     /*
     Next steps:
-        3) add longpress changed tracking to see which logo is selected
+    3) add longpress changed tracking to see which logo is selected
     */
-
+    
     override func viewDidLoad() {
-        canvas.backgroundColor = cosmosbkgd
+        canvas.backgroundColor = clear
         
         createCircles()
         addDashedCircles()
@@ -47,16 +49,16 @@ class ViewController: UIViewController {
         createOutAnimations()
         createInAnimations()
         createGesture()
-    
+        
         layoutHighlight()
         
         createLogos()
         positionLogos()
     }
-
+    
     var innerTargets = [C4Point]()
     var outerTargets = [C4Point]()
-
+    
     func positionLogos() {
         var r = 10.5
         let dx = canvas.center.x
@@ -72,7 +74,7 @@ class ViewController: UIViewController {
                 innerTargets.append(sign.center)
             }
         }
-
+        
         for i in 0..<logosOrder.count {
             let r = 129.0
             let ϴ = M_PI/6 * Double(i) + M_PI/12.0
@@ -82,35 +84,38 @@ class ViewController: UIViewController {
     
     func createCircles() {
         thickCircle = C4Circle(center: canvas.center, radius: 14)
-        thickCircle.fillColor = clear
-        thickCircle.lineWidth = 3
-        thickCircle.strokeColor = cosmosblue
-        thickCircle.interactionEnabled = false
-
-        let inner = C4Circle(center: canvas.center, radius: 14)
-        let outer = C4Circle(center: canvas.center, radius: 225)
-        
-        thickCircleFrames.append(inner.frame)
-        thickCircleFrames.append(outer.frame)
-
         circles.append(C4Circle(center: canvas.center, radius: 8))
         circles.append(C4Circle(center: canvas.center, radius: 56))
         circles.append(C4Circle(center: canvas.center, radius: 78))
         circles.append(C4Circle(center: canvas.center, radius: 98))
         circles.append(C4Circle(center: canvas.center, radius: 102))
         circles.append(C4Circle(center: canvas.center, radius: 156))
-
-        for i in 0..<circles.count {
-            var circle = circles[i]
-            circle.fillColor = clear
-            circle.lineWidth = 1
-            circle.strokeColor = cosmosblue
-            circle.interactionEnabled = false
-            if i > 0 {
-                circle.opacity = 0.0
+        
+        let inner = C4Circle(center: canvas.center, radius: 14)
+        let outer = C4Circle(center: canvas.center, radius: 225)
+        
+        thickCircleFrames.append(inner.frame)
+        thickCircleFrames.append(outer.frame)
+        
+        C4ViewAnimation(duration: 0.0) {
+            self.thickCircle.fillColor = clear
+            self.thickCircle.lineWidth = 3
+            self.thickCircle.strokeColor = cosmosblue
+            self.thickCircle.interactionEnabled = false
+            
+            for i in 0..<self.circles.count {
+                var circle = self.circles[i]
+                circle.fillColor = clear
+                circle.lineWidth = 1
+                circle.strokeColor = cosmosblue
+                circle.interactionEnabled = false
+                if i > 0 {
+                    circle.opacity = 0.0
+                }
+                self.frames.append(circle.frame)
             }
-            frames.append(circle.frame)
-        }
+        }.animate()
+
         
         canvas.add(thickCircle)
         for circle in circles {
@@ -207,7 +212,7 @@ class ViewController: UIViewController {
             }
         }
         logosReveal.curve = .EaseOut
-
+        
         let dashedCirclesReveal = C4ViewAnimation(duration: 0.25) {
             self.dashedCircles[0].lineWidth = 4
             self.dashedCircles[1].lineWidth = 12
@@ -244,7 +249,7 @@ class ViewController: UIViewController {
             }
         }
         logosIn.curve = .EaseOut
-
+        
         let logosHide = C4ViewAnimation(duration: 0.5) {
             for sign in [C4Shape](self.logos.values) {
                 sign.strokeEnd = 0.001
@@ -257,9 +262,9 @@ class ViewController: UIViewController {
             self.dashedCircles[1].lineWidth = 0
         }
         dashedCirclesHide.curve = .EaseOut
-
+        
         dashedCirclesHide.animate()
-
+        
         delay(0.16) {
             logosHide.animate()
         }
@@ -317,10 +322,10 @@ class ViewController: UIViewController {
                 var rot = C4Transform()
                 rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
                 line.transform = rot
-                line.strokeColor = self.cosmosblue
+                line.strokeColor = cosmosblue
                 line.lineWidth = 1.0
                 line.strokeEnd = 0.0
-            }.animate()
+                }.animate()
             canvas.add(line)
             lines.append(line)
         }
@@ -429,45 +434,46 @@ class ViewController: UIViewController {
         } else {
             wedge.hidden = true
         }
-
+        
     }
     
     func addDashedCircles() {
         dashedCircles.append(C4Circle(center: canvas.center, radius: 82+2))
         dashedCircles.append(C4Circle(center: canvas.center, radius: 82+2))
         
-        
-        let c = dashedCircles[0]
-        c.lineWidth = 0
-        var pattern = [1.465,1.465,1.465,1.465,1.465,1.465,1.465,1.465*3.0] as [NSNumber]
-        c.lineDashPattern = pattern
-        var rotation = C4Transform()
-        c.strokeEnd = 0.995
-        rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
-        c.transform = rotation
-        
-        let d = dashedCircles[1]
-        d.lineWidth = 0
-        
-        pattern = [1.465,1.465*9.0] as [NSNumber]
-        d.lineDashPattern = pattern
-        d.strokeEnd = 0.995
-        
-        rotation = C4Transform()
-        rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
-        d.transform = rotation
-        var mask = C4Circle(center: C4Point(d.width/2.0,d.height/2.0), radius: 82+4)
-        mask.fillColor = clear
-        mask.strokeColor = red
-        mask.lineWidth = 8
-        d.layer?.mask = mask.layer
-        
-        for circle in dashedCircles {
-            circle.strokeColor = cosmosblue
-            circle.fillColor = clear
-            circle.interactionEnabled = false
-            canvas.add(circle)
-        }
+        C4ViewAnimation(duration: 0.0) {
+            let c = self.dashedCircles[0]
+            c.lineWidth = 0
+            var pattern = [1.465,1.465,1.465,1.465,1.465,1.465,1.465,1.465*3.0] as [NSNumber]
+            c.lineDashPattern = pattern
+            var rotation = C4Transform()
+            c.strokeEnd = 0.995
+            rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+            c.transform = rotation
+            
+            let d = self.dashedCircles[1]
+            d.lineWidth = 0
+            
+            pattern = [1.465,1.465*9.0] as [NSNumber]
+            d.lineDashPattern = pattern
+            d.strokeEnd = 0.995
+            
+            rotation = C4Transform()
+            rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+            d.transform = rotation
+            var mask = C4Circle(center: C4Point(d.width/2.0,d.height/2.0), radius: 82+4)
+            mask.fillColor = clear
+            mask.strokeColor = red
+            mask.lineWidth = 8
+            d.layer?.mask = mask.layer
+            
+            for circle in self.dashedCircles {
+                circle.strokeColor = cosmosblue
+                circle.fillColor = clear
+                circle.interactionEnabled = false
+                self.canvas.add(circle)
+            }
+        }.animate()
     }
     
     func addCircles() {
@@ -543,7 +549,7 @@ class ViewController: UIViewController {
     func createLogos() {
         
         var logosOrder = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"]
-
+        
         logos["aries"] = aries()
         logos["taurus"] = taurus()
         logos["gemini"] = gemini()
@@ -567,7 +573,7 @@ class ViewController: UIViewController {
                 shape.strokeColor = white
                 shape.fillColor = clear
             }
-        }.animate()
+            }.animate()
     }
     
     func taurus() -> C4Shape {
@@ -656,7 +662,7 @@ class ViewController: UIViewController {
         var shape = C4Shape(bezier)
         
         shape.anchorPoint = C4Point(0,0.27)
-
+        
         return shape
     }
     
@@ -679,7 +685,7 @@ class ViewController: UIViewController {
         
         
         shape.anchorPoint = C4Point(0.375,0.632)
-
+        
         return shape
     }
     
@@ -750,7 +756,7 @@ class ViewController: UIViewController {
         var shape = C4Shape(bezier)
         
         shape.anchorPoint = C4Point(0.1,0.005)
-
+        
         return shape
     }
     
@@ -852,7 +858,7 @@ class ViewController: UIViewController {
         var shape = C4Shape(bezier)
         
         shape.anchorPoint = C4Point(0.26,0.775)
-
+        
         return shape
     }
 }
