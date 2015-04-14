@@ -41,40 +41,7 @@ class ViewController: UIViewController {
 
         layout()
     }
-    
-//    func printFunctions() {
-//
-//        for key in signs.keys {
-//            
-//            if let closure = signs[key] {
-//                let big = closure().big
-//                let small = closure().small
-//                
-//                println("func "+key+"() -> (big:[C4Point],small:[C4Point],lines:[[C4Point]]) {")
-//                println("\tlet big = [")
-//                for i in 0..<big.count {
-//                    let pt = big[i]
-//                    println("\t\tC4Point(\(pt.x-canvas.center.x),\(pt.y-canvas.center.y)),")
-//                }
-//                println("\t]")
-//                println()
-//                println("\tlet small = [")
-//                for i in 0..<small.count {
-//                    let pt = small[i]
-//                    println("\t\tC4Point(\(pt.x-canvas.center.x),\(pt.y-canvas.center.y)),")
-//                }
-//                println("\t]")
-//                println()
-//                println("\tlet lines = [[big[0],big[0]]]")
-//                println()
-//                println("\treturn (big,small,lines)")
-//                println("}")
-//                println()
-//                println()
-//            }
-//        }
-//    }
-    
+
     func layout() {
         canvas.backgroundColor = cosmosbkgd
         scrollviews.append(starsLayer(speeds[0],imageName: "03Star",starCount: 4))
