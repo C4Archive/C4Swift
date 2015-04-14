@@ -16,7 +16,7 @@ class InfiniteScrollView : UIScrollView {
         super.layoutSubviews()
         calculateNormalizedPosition()
     }
-    
+
     internal func calculateNormalizedPosition() {
         var curr = self.contentOffset
         if curr.x < 0 {

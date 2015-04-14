@@ -13,7 +13,11 @@ import C4UI
 import C4Core
 import C4Animation
 
+typealias MenuAction = (selection: Int) -> Void
+
 class MenuViewController: UIViewController {
+    var longpress = UILongPressGestureRecognizer()
+
     var circles = [C4Circle]()
     var wedge = C4Wedge()
     var out = true
@@ -32,6 +36,8 @@ class MenuViewController: UIViewController {
     var currentSelection = 0
     var dashedCircles = [C4Circle]()
     
+    var action : MenuAction?
+    
     /*
     Next steps:
     3) add longpress changed tracking to see which logo is selected
@@ -39,6 +45,7 @@ class MenuViewController: UIViewController {
     
     override func viewDidLoad() {
         canvas.backgroundColor = clear
+        canvas.frame = C4Rect(0,0,80,80)
         
         createCircles()
         addDashedCircles()
@@ -51,6 +58,7 @@ class MenuViewController: UIViewController {
         
         createLogos()
         positionLogos()
+        
     }
     
     var innerTargets = [C4Point]()
@@ -112,7 +120,6 @@ class MenuViewController: UIViewController {
                 self.frames.append(circle.frame)
             }
         }.animate()
-
         
         canvas.add(thickCircle)
         for circle in circles {
@@ -121,14 +128,16 @@ class MenuViewController: UIViewController {
     }
     
     func createGesture() {
-        canvas.addLongPressGestureRecognizer { (location, state) -> () in
+        longpress = canvas.addLongPressGestureRecognizer { (location, state) -> () in
             switch state {
             case .Began:
                 self.menuOut()
             case .Cancelled, .Ended, .Failed:
                 self.canvas.interactionEnabled = false
                 if !self.wedge.hidden {
-                    println("\(self.logosOrder[self.currentSelection])")
+                    if let a = self.action {
+                        a(selection: self.currentSelection)
+                    }
                     self.wedge.hidden = true
                 } else {
                     println("no selection")
@@ -406,11 +415,11 @@ class MenuViewController: UIViewController {
     
     func moveWedge(location: C4Point) {
         
-        let a = C4Vector(x:self.canvas.center.x+1.0, y:self.canvas.center.y)
-        let b = C4Vector(x:self.canvas.center.x, y:self.canvas.center.y)
+        let a = C4Vector(x:self.canvas.width / 2.0+1.0, y:self.canvas.height/2.0)
+        let b = C4Vector(x:self.canvas.width / 2.0, y:self.canvas.height/2.0)
         let c = C4Vector(x:location.x, y:location.y)
         
-        let dist = distance(location, self.canvas.center)
+        let dist = distance(location, self.canvas.bounds.center)
         
         if dist > 102.0 && dist < 156 {
             wedge.hidden = false

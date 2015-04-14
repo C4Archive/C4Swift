@@ -20,6 +20,17 @@ class ViewController: UIViewController {
     let background = BackgroundViewController()
     
     override func viewDidLoad() {
-        //work your magic here
+        canvas.add(background.canvas)
+        canvas.add(menu.canvas)
+        menu.canvas.center = canvas.center
+        menu.action = self.grabSelection
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    func grabSelection(selection: Int) {
+        background.goto(selection)
     }
 }

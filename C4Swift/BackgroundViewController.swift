@@ -57,6 +57,20 @@ class BackgroundViewController: UIViewController {
         }
     }
     
+    func goto(selection: Int) {
+        println("should go to: \(order[selection]) (\(selection))")
+        
+        let top = scrollviews[scrollviews.count-1]
+        
+        let target = canvas.width * gap * Double(selection)
+        
+        let anim = C4ViewAnimation(duration: 2.0) { () -> Void in
+            top.contentOffset = CGPoint(x: CGFloat(target),y: 0)
+        }
+        anim.curve = .EaseOut
+        anim.animate()
+    }
+    
     func vignette() -> InfiniteScrollView {
         let sv = InfiniteScrollView(frame: view.frame)
         let img = C4Image("06Vignette")
