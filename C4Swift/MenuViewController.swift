@@ -32,7 +32,7 @@ class MenuViewController: UIViewController {
     var shouldRevert = false
     var thickCircle = C4Circle()
     var thickCircleFrames = [C4Rect]()
-    var logosOrder = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"]
+    var logosOrder = ["pisces","aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius"]
     var currentSelection = 0
     var dashedCircles = [C4Circle]()
     
