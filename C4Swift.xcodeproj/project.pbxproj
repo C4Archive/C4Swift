@@ -13,6 +13,7 @@
 		1F4881EA1A567C6B00E0EBA4 /* halo.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 1F4881E91A567C6B00E0EBA4 /* halo.m4v */; };
 		1F53A8211A1DC4B800298356 /* LogoNormalized in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8201A1DC4B800298356 /* LogoNormalized */; };
 		1F53A8281A1DC4DD00298356 /* Logo in Resources */ = {isa = PBXBuildFile; fileRef = 1F53A8271A1DC4DD00298356 /* Logo */; };
+		1FD859531ADD81980031023B /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD859521ADD81980031023B /* BackgroundViewController.swift */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
 		D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55D1A004E3200B0E813 /* ViewController.swift */; };
 		D928B5611A004E3200B0E813 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D928B55F1A004E3200B0E813 /* Main.storyboard */; };
@@ -127,6 +128,7 @@
 		1F53A8201A1DC4B800298356 /* LogoNormalized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoNormalized; sourceTree = "<group>"; };
 		1F53A8271A1DC4DD00298356 /* Logo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Logo; sourceTree = "<group>"; };
 		1FB1A5C21A238F7000D164A0 /* C4Logo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = C4Logo.swift; sourceTree = "<group>"; };
+		1FD859521ADD81980031023B /* BackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C4Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D928B55A1A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D928B55B1A004E3200B0E813 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
+				1FD859521ADD81980031023B /* BackgroundViewController.swift */,
 				1F433CA71AB7F7BD00F3D3EF /* InfiniteScrollview.swift */,
 				D9D3D6FB1A71C75500A3A471 /* MenuButton.swift */,
 				D9722B201A5B41C300346C24 /* uptight.mp3 */,
@@ -415,6 +418,7 @@
 			files = (
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,
+				1FD859531ADD81980031023B /* BackgroundViewController.swift in Sources */,
 				D9D3D6FC1A71C75500A3A471 /* MenuButton.swift in Sources */,
 				1F433CA81AB7F7BD00F3D3EF /* InfiniteScrollview.swift in Sources */,
 			);
