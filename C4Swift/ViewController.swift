@@ -16,19 +16,7 @@ class ViewController: UIViewController {
     var container = C4View()
     
     override func viewDidLoad() {
-        container.frame = C4Rect(view.frame)
-        
-        let text = C4TextShape(text: "hello there", font: C4Font(name: "menlo", size:20.0))
-        let circ = C4Ellipse(frame: C4Rect(0,0,100,100))
-        circ.origin = C4Point(100,100)
-        text.origin = C4Point(100,200)
-        
-        container.add(circ)
-        container.add(text)
-        container.interactionEnabled = false
-        view.add(container)
-        
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: NSSelectorFromString("animate")))
+        appMenu()
     }
     
     func animate() {

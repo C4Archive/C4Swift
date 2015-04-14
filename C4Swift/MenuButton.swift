@@ -17,6 +17,8 @@ class MenuButton: C4View {
     var on = C4ViewAnimation(){}
     var off = C4ViewAnimation(){}
     
+    var str : C4TextShape?
+    
     convenience init(_ title: String) {
         self.init(frame: C4Rect(0,0,180,36))
         self.border.radius = self.height / 2.0
@@ -25,20 +27,25 @@ class MenuButton: C4View {
         
         backgroundColor = white
         let font = C4Font(name: "MercuryBold-Regular", size: 20.0)
-        let str = C4TextShape(text: title, font: font)
-        str.fillColor = C4Blue
-        str.interactionEnabled = false
-        str.center = center
-        add(str)
+        C4ViewAnimation(duration: 0.0) {
+            self.str = C4TextShape(text: title, font: font)
+            if let s = self.str {
+                s.fillColor = C4Blue
+                s.interactionEnabled = false
+                s.center = self.center
+                s.lineWidth = 0
+                self.add(s)
+            }
+        }.animate()
         
         on = C4ViewAnimation(duration: 0.1) {
             self.backgroundColor = C4Blue
-            str.fillColor = white
+            self.str!.fillColor = white
         }
         
         off = C4ViewAnimation(duration: 0.1) {
             self.backgroundColor = white
-            str.fillColor = C4Blue
+            self.str!.fillColor = C4Blue
         }
         
         let lp = addLongPressGestureRecognizer { location, state in
