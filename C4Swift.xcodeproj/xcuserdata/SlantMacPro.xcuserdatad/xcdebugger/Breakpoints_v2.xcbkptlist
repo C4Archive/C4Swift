@@ -14,7 +14,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "558"
-            endingLineNumber = "558">
+            endingLineNumber = "558"
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -43,7 +45,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
             endingLineNumber = "38"
-            landmarkName = "init(text:font:)"
+            landmarkName = "init()"
             landmarkType = "5">
             <Locations>
                <Location
@@ -52,6 +54,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "C4UI.C4TextShape.init (C4UI.C4TextShape.Type)(text : Swift.String, font : C4UI.C4Font) -&gt; C4UI.C4TextShape"
                   moduleName = "C4UI"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/SlantMacPro/Development/C4iOS/C4UI/C4TextShape.swift"
                   timestampString = "443666256.698347"
                   startingColumnNumber = "9223372036854775807"
@@ -66,6 +69,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "C4UI.C4TextShape.(init (C4UI.C4TextShape.Type) -&gt; (text : Swift.String, font : C4UI.C4Font) -&gt; C4UI.C4TextShape).(closure #1)"
                   moduleName = "C4UI"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/SlantMacPro/Development/C4iOS/C4UI/C4TextShape.swift"
                   timestampString = "443666256.698492"
                   startingColumnNumber = "9223372036854775807"
@@ -80,6 +84,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "reabstraction thunk helper from @callee_owned (@unowned Swift.UnsafePointer&lt;C.CGAffineTransform&gt;) -&gt; (@owned ObjectiveC.CGPath) to @callee_owned (@unowned Swift.UnsafePointer&lt;C.CGAffineTransform&gt;) -&gt; (@out ObjectiveC.CGPath)"
                   moduleName = "C4UI"
+                  usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/SlantMacPro/Development/C4iOS/C4UI/C4TextShape.swift"
                   timestampString = "443666256.698605"
                   startingColumnNumber = "9223372036854775807"

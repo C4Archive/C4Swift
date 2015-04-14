@@ -19,7 +19,7 @@ class BackgroundViewController: UIViewController {
     var myContext = 0
     var scrollviews = [InfiniteScrollView]()
     var speeds : [CGFloat] = [0.08,0.10,0.12,0.0,0.15,1.0,0.8,1.0]
-    var gap = 10.0
+    var gap = 5.0
     var signFrames : CGFloat = 12.0
     var signs = [String : SignClosure]()
     var order = ["pisces", "aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"]
@@ -64,7 +64,7 @@ class BackgroundViewController: UIViewController {
         
         let target = canvas.width * gap * Double(selection)
         
-        let anim = C4ViewAnimation(duration: 2.0) { () -> Void in
+        let anim = C4ViewAnimation(duration: 4.0) { () -> Void in
             top.contentOffset = CGPoint(x: CGFloat(target),y: 0)
         }
         anim.curve = .EaseOut
@@ -106,10 +106,37 @@ class BackgroundViewController: UIViewController {
     }
     
     func lines() -> InfiniteScrollView {
+//        let sv = InfiniteScrollView(frame: view.frame)
+//        let framesize = sv.frame.size.width * CGFloat(speeds[5])
+//        sv.contentSize = CGSizeMake(framesize * (signFrames * CGFloat(gap) + 2), 1.0)
+//        return sv
+        
         let sv = InfiniteScrollView(frame: view.frame)
-        let framesize = sv.frame.size.width * CGFloat(speeds[5])
-        sv.contentSize = CGSizeMake(framesize * (signFrames * CGFloat(gap) + 2), 1.0)
-        sv.hidden = true
+        sv.contentSize = CGSizeMake(sv.frame.size.width * signFrames * CGFloat(gap) + sv.frame.size.width, 1.0)
+
+        for i in 0..<order.count {
+            var dx = Double(i) * canvas.width * gap
+            let t = C4Transform.makeTranslation(C4Vector(x: canvas.center.x + dx, y: canvas.center.y, z: 0))
+            if let closure = signs[order[i]] {
+                let connections = closure().lines
+                
+                for points in connections {
+                    var begin = points[0]
+                    begin.transform(t)
+                    
+                    var end = points[1]
+                    end.transform(t)
+                    
+                    let line = C4Line([begin,end])
+                    C4ViewAnimation(duration: 0.0) {
+                        line.lineWidth = 1.0
+                        line.strokeColor = cosmosprpl
+                        line.opacity = 0.4
+                    }.animate()
+                    sv.add(line)
+                }
+            }
+        }
         return sv
     }
     
@@ -153,7 +180,31 @@ class BackgroundViewController: UIViewController {
             }
         }
         
+            let line = C4Line([C4Point(0,self.canvas.height),C4Point(Double(sv.contentSize.width),self.canvas.height)])
+            line.lineDashPattern = [1.0,self.canvas.width * self.gap]
+            line.lineWidth = 40
+            line.strokeColor = white
+            line.lineDashPhase = -self.canvas.width/2
+            line.opacity = 0.33
+            sv.add(line)
+        
         sv.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.New, context: &myContext)
+        
+        let fontNames = [
+            "Menlo-Regular"
+        ]
+        
+        C4ViewAnimation(duration: 0.0) {
+            for i in 0..<fontNames.count {
+                let text = C4TextShape(text:"Pisces 0 30 60 90 120", font:C4Font(name: fontNames[i], size: 13.0))
+                text.fillColor = white
+                text.lineWidth = 0
+                text.opacity = 0.33
+                text.center = C4Point(self.canvas.width/2,self.canvas.height - 60.0 - 60 * Double(i))
+                sv.add(text)
+            }
+        }.animate()
+        
         
         return sv
     }
@@ -172,7 +223,15 @@ class BackgroundViewController: UIViewController {
             C4Point(-15.75,67.3),
             C4Point(31.75,142.3)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[0],small[1]],
+            [big[1],small[0]],
+            [small[1],small[4]],
+            [small[1],small[2]],
+            [small[2],small[3]],
+            [big[1],small[3]],
+            [small[3],small[5]],
+            [small[5],small[6]]]
         
         return (big,small,lines)
     }
@@ -206,7 +265,30 @@ class BackgroundViewController: UIViewController {
             C4Point(82.25,-54.2),
             C4Point(101.25,-33.7)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [small[1],big[0]],
+            [small[0],big[0]],
+            [big[0],small[2]],
+            [small[2],small[3]],
+            [small[3],small[4]],
+            [small[4],small[5]],
+            [small[5],big[1]],
+            [big[1],small[6]],
+            [small[6],small[9]],
+            [small[9],small[10]],
+            [small[10],small[11]],
+            [small[11],small[12]],
+            [small[6],small[8]],
+            [small[8],small[13]],
+            [small[13],small[14]],
+            [small[14],small[15]],
+            [small[6],small[7]],
+            [small[7],small[13]],
+            [small[14],small[16]],
+            [small[16],small[17]],
+            [small[17],small[18]],
+            [small[16],small[19]],
+            [small[19],small[20]]]
         
         return (big,small,lines)
     }
@@ -223,7 +305,12 @@ class BackgroundViewController: UIViewController {
             C4Point(-126.75,90.8),
             C4Point(5.75,81.8)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[0],small[1]],
+            [big[1],small[3]],
+            [small[0],small[1]],
+            [big[0],small[2]],
+            [big[0],small[3]]]
         
         return (big,small,lines)
     }
@@ -249,7 +336,21 @@ class BackgroundViewController: UIViewController {
             C4Point(-56.25,18.8),
             C4Point(53.75,67.8)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[0],small[1]],
+            [big[1],small[2]],
+            [small[0],small[1]],
+            [small[1],small[2]],
+            [small[2],small[3]],
+            [small[2],small[8]],
+            [small[8],small[10]],
+            [small[10],small[11]],
+            [small[8],small[9]],
+            [small[9],big[2]],
+            [small[1],small[4]],
+            [small[4],small[7]],
+            [small[4],small[5]],
+            [small[5],small[6]]]
         
         return (big,small,lines)
     }
@@ -277,7 +378,24 @@ class BackgroundViewController: UIViewController {
             C4Point(125.5,-149.2),
             C4Point(129.5,-188.2)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[0],small[3]],
+            [big[1],small[14]],
+            [small[0],small[1]],
+            [small[1],small[2]],
+            [small[2],big[0]],
+            [small[3],small[4]],
+            [small[4],small[5]],
+            [small[5],small[6]],
+            [small[6],small[7]],
+            [small[7],small[8]],
+            [small[8],small[9]],
+            [small[9],small[10]],
+            [small[10],small[11]],
+            [small[11],big[1]],
+            [small[10],small[12]],
+            [small[12],small[13]],
+            [small[13],big[1]]]
         
         return (big,small,lines)
     }
@@ -298,7 +416,17 @@ class BackgroundViewController: UIViewController {
             C4Point(-55.75,40.8),
             C4Point(-138.25,62.3)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [small[0],small[1]],
+            [small[1],small[2]],
+            [small[2],big[1]],
+            [big[1],small[4]],
+            [small[4],big[2]],
+            [big[2],small[5]],
+            [small[5],small[6]],
+            [small[6],big[0]],
+            [big[0],small[3]],
+            [small[3],big[1]]]
         
         return (big,small,lines)
     }
@@ -323,7 +451,21 @@ class BackgroundViewController: UIViewController {
             C4Point(31.75,68.8),
             C4Point(24.25,94.8)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[0],small[0]],
+            [small[0],small[1]],
+            [small[1],small[3]],
+            [small[3],big[2]],
+            [big[2],small[6]],
+            [small[6],small[7]],
+            [small[7],small[8]],
+            [small[8],small[9]],
+            [small[1],small[2]],
+            [small[2],big[1]],
+            [small[2],small[4]],
+            [big[2],small[4]],
+            [small[4],small[5]],
+            [small[5],big[3]]]
         
         return (big,small,lines)
     }
@@ -338,7 +480,10 @@ class BackgroundViewController: UIViewController {
             C4Point(-134.5,-95.2),
             C4Point(137.0,11.3)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[0],small[0]],
+            [big[1],big[0]],
+            [big[1],small[1]]]
         
         return (big,small,lines)
     }
@@ -359,7 +504,17 @@ class BackgroundViewController: UIViewController {
             C4Point(118.75,109.3),
             C4Point(141.25,117.8)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[0],small[0]],
+            [big[0],small[2]],
+            [small[0],small[1]],
+            [small[2],small[1]],
+            [small[0],small[3]],
+            [small[3],small[4]],
+            [small[4],small[5]],
+            [small[2],small[6]],
+            [small[6],small[7]],
+            [small[7],small[8]]]
         
         return (big,small,lines)
     }
@@ -383,7 +538,19 @@ class BackgroundViewController: UIViewController {
             C4Point(-18.75,-103.2),
             C4Point(-9.75,-85.7)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [small[0],small[1]],
+            [small[1],small[2]],
+            [small[2],big[0]],
+            [big[0],small[3]],
+            [small[3],small[4]],
+            [small[4],small[5]],
+            [small[5],big[1]],
+            [big[1],big[2]],
+            [big[2],big[3]],
+            [big[1],small[6]],
+            [small[6],small[7]],
+            [small[7],small[8]]]
         
         return (big,small,lines)
     }
@@ -412,7 +579,24 @@ class BackgroundViewController: UIViewController {
             C4Point(119.25,-156.7),
             C4Point(130.25,-117.2)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [small[0],big[0]],
+            [big[0],small[1]],
+            [small[1],small[2]],
+            [small[2],big[1]],
+            [big[1],small[3]],
+            [small[3],small[4]],
+            [small[4],small[5]],
+            [small[5],small[6]],
+            [small[6],small[7]],
+            [small[7],small[8]],
+            [small[8],big[2]],
+            [big[2],small[9]],
+            [small[9],small[10]],
+            [small[10],small[11]],
+            [small[11],small[12]],
+            [small[10],small[13]],
+            [small[13],small[14]]]
         
         return (big,small,lines)
     }
@@ -436,7 +620,19 @@ class BackgroundViewController: UIViewController {
             C4Point(81.25,156.8),
             C4Point(91.25,133.3)]
         
-        let lines = [[big[0],big[0]]]
+        let lines = [
+            [big[1],big[0]],
+            [big[1],big[2]],
+            [big[2],small[0]],
+            [small[0],small[1]],
+            [small[1],big[3]],
+            [big[3],small[2]],
+            [small[2],small[3]],
+            [small[3],small[4]],
+            [small[4],small[5]],
+            [small[5],small[6]],
+            [small[6],small[7]],
+            [small[7],big[1]]]
         
         return (big,small,lines)
     }
