@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F25B71C1ADE2917000EC625 /* AstrologicalSignProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25B71B1ADE2917000EC625 /* AstrologicalSignProvider.swift */; };
 		1F389D131ADD8EDC0027CA21 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F389D121ADD8EDC0027CA21 /* MenuViewController.swift */; };
 		1F389D181ADD8EFB0027CA21 /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F389D171ADD8EFB0027CA21 /* BackgroundViewController.swift */; };
 		1F389D1A1ADD8F5E0027CA21 /* InfiniteScrollview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F389D191ADD8F5E0027CA21 /* InfiniteScrollview.swift */; };
@@ -113,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F25B71B1ADE2917000EC625 /* AstrologicalSignProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AstrologicalSignProvider.swift; sourceTree = "<group>"; };
 		1F389D121ADD8EDC0027CA21 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1F389D171ADD8EFB0027CA21 /* BackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		1F389D191ADD8F5E0027CA21 /* InfiniteScrollview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollview.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
 				1F389D171ADD8EFB0027CA21 /* BackgroundViewController.swift */,
+				1F25B71B1ADE2917000EC625 /* AstrologicalSignProvider.swift */,
 				1F389D191ADD8F5E0027CA21 /* InfiniteScrollview.swift */,
 				1F389D121ADD8EDC0027CA21 /* MenuViewController.swift */,
 				D928B55F1A004E3200B0E813 /* Main.storyboard */,
@@ -382,6 +385,7 @@
 				1F389D181ADD8EFB0027CA21 /* BackgroundViewController.swift in Sources */,
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
 				1F389D1A1ADD8F5E0027CA21 /* InfiniteScrollview.swift in Sources */,
+				1F25B71C1ADE2917000EC625 /* AstrologicalSignProvider.swift in Sources */,
 				1F389D131ADD8EDC0027CA21 /* MenuViewController.swift in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,
 			);
@@ -525,12 +529,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Debug;
@@ -547,6 +553,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Release;
