@@ -18,6 +18,8 @@ typealias MenuAction = (selection: Int) -> Void
 class MenuViewController: UIViewController {
     var longpress = UILongPressGestureRecognizer()
 
+    var signProvider = AstrologicalSignProvider()
+    
     var circles = [C4Circle]()
     var wedge = C4Wedge()
     var out = true
@@ -38,14 +40,24 @@ class MenuViewController: UIViewController {
     
     var action : MenuAction?
     
+    var shadow = C4Shape()
+    
     /*
     Next steps:
     3) add longpress changed tracking to see which logo is selected
     */
     
     override func viewDidLoad() {
+        shadow = C4Rectangle(frame: canvas.frame)
+
         canvas.backgroundColor = clear
         canvas.frame = C4Rect(0,0,80,80)
+        
+        shadow.fillColor = black
+        shadow.lineWidth = 0
+        shadow.opacity = 0.0
+        shadow.center = canvas.center
+        canvas.add(shadow)
         
         createCircles()
         addDashedCircles()
@@ -139,8 +151,6 @@ class MenuViewController: UIViewController {
                         a(selection: self.currentSelection)
                     }
                     self.wedge.hidden = true
-                } else {
-                    println("no selection")
                 }
                 if self.menuVisible {
                     self.menuIn()
@@ -189,6 +199,10 @@ class MenuViewController: UIViewController {
     }
     
     func menuOut() {
+        C4ViewAnimation(duration:0.25) {
+            self.shadow.opacity = 0.44
+        }.animate()
+        
         self.out = false
         self.menuVisible = false
         var thickCircleOut = C4ViewAnimation(duration: 0.5) {
@@ -243,6 +257,7 @@ class MenuViewController: UIViewController {
     }
     
     func menuIn() {
+        
         self.out = true
         self.randomIn()
         
@@ -286,6 +301,10 @@ class MenuViewController: UIViewController {
             thickCircleIn.curve = .EaseOut
             thickCircleIn.animate()
             self.canvas.interactionEnabled = true
+        
+            C4ViewAnimation(duration:0.25) {
+                self.shadow.opacity = 0.0
+                }.animate()
         }
     }
     
@@ -567,7 +586,7 @@ class MenuViewController: UIViewController {
         logos["sagittarius"] = sagittarius()
         logos["capricorn"] = capricorn()
         logos["aquarius"] = aquarius()
-        logos["pisces"] = pices()
+        logos["pisces"] = pisces()
         
         C4ViewAnimation(duration: 0) {
             for shape in [C4Shape](self.logos.values) {
@@ -583,17 +602,8 @@ class MenuViewController: UIViewController {
     }
     
     func taurus() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(0, 0))
-        bezier.addCurveToPoint( C4Point(6.3, 0), control2:C4Point(6.4, 10.2), point: C4Point(15.2, 10.2))
-        bezier.addCurveToPoint( C4Point(20.8, 10.2), control2:C4Point(25.4, 14.8), point: C4Point(25.4, 20.4))
-        bezier.addCurveToPoint( C4Point(25.4, 26), control2:C4Point(20.8, 30.6), point: C4Point(15.2, 30.6))
-        bezier.addCurveToPoint( C4Point(9.6, 30.6), control2:C4Point(5, 26), point: C4Point(5, 20.4))
-        bezier.addCurveToPoint( C4Point(5, 14.8), control2:C4Point(9.6, 10.2), point: C4Point(15.2, 10.2))
-        bezier.addCurveToPoint( C4Point(24, 10.2), control2:C4Point(24.1, 0), point: C4Point(30.4, 0))
-        
-        var shape = C4Shape(bezier)
+
+        var shape = signProvider.taurus().shape
         
         shape.anchorPoint = C4Point()
         
@@ -601,21 +611,8 @@ class MenuViewController: UIViewController {
     }
     
     func aries() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(2.8, 15.5))
-        bezier.addCurveToPoint( C4Point(1.1, 13.9), control2:C4Point(0, 11.6), point: C4Point(0, 9))
-        bezier.addCurveToPoint( C4Point(0, 4), control2:C4Point(4, 0), point: C4Point(9, 0))
-        bezier.addCurveToPoint( C4Point(14, 0), control2:C4Point(18, 4), point: C4Point(18, 9))
-        bezier.addLineToPoint(C4Point(18, 28.9))
-        
-        bezier.moveToPoint(C4Point(18, 28.9))
-        bezier.addLineToPoint(C4Point(18, 9))
-        bezier.addCurveToPoint( C4Point(18, 4), control2:C4Point(22, 0), point: C4Point(27, 0))
-        bezier.addCurveToPoint( C4Point(32, 0), control2:C4Point(36, 4), point: C4Point(36, 9))
-        bezier.addCurveToPoint( C4Point(36, 11.6), control2:C4Point(34.9, 13.9), point: C4Point(33.2, 15.5))
-        
-        var shape = C4Shape(bezier)
+ 
+        var shape = signProvider.aries().shape
         
         shape.anchorPoint = C4Point(0.076,0.535)
         
@@ -623,23 +620,8 @@ class MenuViewController: UIViewController {
     }
     
     func gemini() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(26, 0))
-        bezier.addCurveToPoint( C4Point(26, 0), control2:C4Point(24.2, 5.3), point: C4Point(13, 5.3))
-        bezier.addCurveToPoint( C4Point(1.8, 5.3), control2:C4Point(0, 0), point: C4Point(0, 0))
-        
-        bezier.moveToPoint(C4Point(0.1, 34.7))
-        bezier.addCurveToPoint( C4Point(0.1, 34.7), control2:C4Point(1.9, 29.4), point: C4Point(13.1, 29.4))
-        bezier.addCurveToPoint( C4Point(24.3, 29.4), control2:C4Point(26.1, 34.7), point: C4Point(26.1, 34.7))
-        
-        bezier.moveToPoint(C4Point(8.1, 5))
-        bezier.addLineToPoint(C4Point(8.1, 29.6))
-        
-        bezier.moveToPoint(C4Point(18, 5))
-        bezier.addLineToPoint(C4Point(18, 29.6))
-        
-        var shape = C4Shape(bezier)
+
+        var shape = signProvider.gemini().shape
         
         shape.anchorPoint = C4Point(1,0)
         
@@ -647,25 +629,8 @@ class MenuViewController: UIViewController {
     }
     
     func cancer() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(0, 8.1))
-        bezier.addCurveToPoint( C4Point(1.9, 4.5), control2:C4Point(6.4, 0), point: C4Point(14.2, 0))
-        bezier.addCurveToPoint( C4Point(22.1, 0), control2:C4Point(28.4, 4), point: C4Point(28.4, 8.8))
-        bezier.addCurveToPoint( C4Point(28.4, 11.7), control2:C4Point(26.1, 14), point: C4Point(23.2, 14))
-        bezier.addCurveToPoint( C4Point(20.3, 14), control2:C4Point(18, 11.7), point: C4Point(18, 8.8))
-        bezier.addCurveToPoint( C4Point(18, 5.9), control2:C4Point(20.3, 3.6), point: C4Point(23.2, 3.6))
-        bezier.addCurveToPoint( C4Point(26.1, 3.6), control2:C4Point(28.4, 5.9), point: C4Point(28.4, 8.8))
-        
-        bezier.moveToPoint(C4Point(28.4, 21.3))
-        bezier.addCurveToPoint( C4Point(26.5, 24.9), control2:C4Point(22, 29.4), point: C4Point(14.2, 29.4))
-        bezier.addCurveToPoint( C4Point(6.3, 29.4), control2:C4Point(0, 25.4), point: C4Point(0, 20.6))
-        bezier.addCurveToPoint( C4Point(0, 17.7), control2:C4Point(2.3, 15.4), point: C4Point(5.2, 15.4))
-        bezier.addCurveToPoint( C4Point(8.1, 15.4), control2:C4Point(10.4, 17.7), point: C4Point(10.4, 20.6))
-        bezier.addCurveToPoint( C4Point(10.4, 23.5), control2:C4Point(8.1, 25.8), point: C4Point(5.2, 25.8))
-        bezier.addCurveToPoint( C4Point(2.3, 25.8), control2:C4Point(0, 23.5), point: C4Point(0, 20.6))
-        
-        var shape = C4Shape(bezier)
+
+        var shape = signProvider.cancer().shape
         
         shape.anchorPoint = C4Point(0,0.27)
         
@@ -673,22 +638,8 @@ class MenuViewController: UIViewController {
     }
     
     func leo() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(10.4, 19.6))
-        bezier.addCurveToPoint( C4Point(10.4, 16.7), control2:C4Point(8.1, 14.4), point: C4Point(5.2, 14.4))
-        bezier.addCurveToPoint( C4Point(2.3, 14.4), control2:C4Point(0, 16.7), point: C4Point(0, 19.6))
-        bezier.addCurveToPoint( C4Point(0, 22.5), control2:C4Point(2.3, 24.8), point: C4Point(5.2, 24.8))
-        bezier.addCurveToPoint( C4Point(8.1, 24.8), control2:C4Point(10.4, 22.4), point: C4Point(10.4, 19.6))
-        bezier.addCurveToPoint( C4Point(10.4, 14.8), control2:C4Point(6, 15), point: C4Point(6, 9.1))
-        bezier.addCurveToPoint( C4Point(6, 4), control2:C4Point(10.1, 0), point: C4Point(15.1, 0))
-        bezier.addCurveToPoint( C4Point(20.1, 0), control2:C4Point(24.2, 4.1), point: C4Point(24.2, 9.1))
-        bezier.addCurveToPoint( C4Point(24.2, 17.2), control2:C4Point(17, 18.5), point: C4Point(17, 25.6))
-        bezier.addCurveToPoint( C4Point(17, 28.5), control2:C4Point(19.3, 30.8), point: C4Point(22.2, 30.8))
-        bezier.addCurveToPoint( C4Point(25.1, 30.8), control2:C4Point(27.4, 28.5), point: C4Point(27.4, 25.6))
-        
-        var shape = C4Shape(bezier)
-        
+
+        var shape = signProvider.leo().shape
         
         shape.anchorPoint = C4Point(0.375,0.632)
         
@@ -696,70 +647,26 @@ class MenuViewController: UIViewController {
     }
     
     func virgo() -> C4Shape {
-        var bezier = C4Path()
         
-        bezier.moveToPoint(C4Point(30, 12.2))
-        bezier.addCurveToPoint( C4Point(30, 9.4), control2:C4Point(32.2, 7.2), point: C4Point(35, 7.2))
-        bezier.addCurveToPoint( C4Point(37.8, 7.2), control2:C4Point(40, 9.4), point: C4Point(40, 12.2))
-        bezier.addCurveToPoint( C4Point(40, 23.7), control2:C4Point(24.3, 31.5), point: C4Point(24.3, 31.5))
-        
-        bezier.moveToPoint(C4Point(10, 24.1))
-        bezier.addLineToPoint(C4Point(10, 5))
-        bezier.addCurveToPoint( C4Point(10, 2.2), control2:C4Point(7.8, 0), point: C4Point(5, 0))
-        bezier.addCurveToPoint( C4Point(2.2, 0), control2:C4Point(0, 2.2), point: C4Point(0, 5))
-        
-        bezier.moveToPoint(C4Point(20, 24.1))
-        bezier.addLineToPoint(C4Point(20, 5))
-        bezier.addCurveToPoint( C4Point(20, 2.2), control2:C4Point(17.8, 0), point: C4Point(15, 0))
-        bezier.addCurveToPoint( C4Point(12.2, 0), control2:C4Point(10, 2.2), point: C4Point(10, 5))
-        
-        bezier.moveToPoint(C4Point(39.1, 29.8))
-        bezier.addCurveToPoint( C4Point(34.5, 29.8), control2:C4Point(30, 28), point: C4Point(30, 19.2))
-        bezier.addLineToPoint(C4Point(30, 5))
-        bezier.addCurveToPoint( C4Point(30, 2.2), control2:C4Point(27.8, 0), point: C4Point(25, 0))
-        bezier.addCurveToPoint( C4Point(22.2, 0), control2:C4Point(20, 2.2), point: C4Point(20, 5))
-        
-        var shape = C4Shape(bezier)
+        var shape = signProvider.virgo().shape
         
         shape.anchorPoint = C4Point(0.75,0.385)
+        
         return shape
     }
     
     func libra() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(37.5, 11.3))
-        bezier.addLineToPoint(C4Point(30, 11.3))
-        bezier.addCurveToPoint( C4Point(30, 5.1), control2:C4Point(24.9, 0), point: C4Point(18.7, 0))
-        bezier.addCurveToPoint( C4Point(12.5, 0), control2:C4Point(7.4, 5.1), point: C4Point(7.4, 11.3))
-        bezier.addLineToPoint(C4Point(0, 11.3))
-        
-        bezier.moveToPoint(C4Point(0, 20.2))
-        bezier.addLineToPoint(C4Point(37.5, 20.2))
-        
-        
-        var shape = C4Shape(bezier)
+
+        var shape = signProvider.libra().shape
         
         shape.anchorPoint = C4Point(1,0.565)
         
         return shape
     }
     
-    func pices() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(2.8, 0.1))
-        bezier.addCurveToPoint( C4Point(2.8, 0.1), control2:C4Point(9.2, 1.9), point: C4Point(9.2, 13.1))
-        bezier.addCurveToPoint( C4Point(9.2, 24.3), control2:C4Point(2.8, 26.1), point: C4Point(2.8, 26.1))
-        
-        bezier.moveToPoint(C4Point(25.4, 26))
-        bezier.addCurveToPoint( C4Point(25.4, 26), control2:C4Point(19, 24.2), point: C4Point(19, 13))
-        bezier.addCurveToPoint( C4Point(19, 1.8), control2:C4Point(25.4, 0), point: C4Point(25.4, 0))
-        
-        bezier.moveToPoint(C4Point(0, 13.1))
-        bezier.addLineToPoint(C4Point(28.2, 13.1))
-        
-        var shape = C4Shape(bezier)
+    func pisces() -> C4Shape {
+
+        var shape = signProvider.pisces().shape
         
         shape.anchorPoint = C4Point(0.1,0.005)
         
@@ -767,23 +674,7 @@ class MenuViewController: UIViewController {
     }
     
     func aquarius() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(0, 5.4))
-        bezier.addCurveToPoint( C4Point(4.5, 5.4), control2:C4Point(3.6, 0), point: C4Point(8.2, 0))
-        bezier.addCurveToPoint( C4Point(12.7, 0), control2:C4Point(11.8, 5.4), point: C4Point(16.3, 5.4))
-        bezier.addCurveToPoint( C4Point(20.8, 5.4), control2:C4Point(19.9, 0), point: C4Point(24.5, 0))
-        bezier.addCurveToPoint( C4Point(29, 0), control2:C4Point(28.1, 5.4), point: C4Point(32.6, 5.4))
-        bezier.addCurveToPoint( C4Point(37.1, 5.4), control2:C4Point(36.2, 0), point: C4Point(40.7, 0))
-        
-        bezier.moveToPoint(C4Point(40.7, 15.1))
-        bezier.addCurveToPoint( C4Point(36.2, 15.1), control2:C4Point(37.1, 20.5), point: C4Point(32.6, 20.5))
-        bezier.addCurveToPoint( C4Point(28.1, 20.5), control2:C4Point(29, 15.1), point: C4Point(24.5, 15.1))
-        bezier.addCurveToPoint( C4Point(19.9, 15.1), control2:C4Point(20.8, 20.5), point: C4Point(16.3, 20.5))
-        bezier.addCurveToPoint( C4Point(11.8, 20.5), control2:C4Point(12.7, 15.1), point: C4Point(8.2, 15.1))
-        bezier.addCurveToPoint( C4Point(3.6, 15.1), control2:C4Point(4.5, 20.5), point: C4Point(0, 20.5))
-        
-        var shape = C4Shape(bezier)
+        var shape = signProvider.aquarius().shape
         
         shape.anchorPoint = C4Point(0,0.26)
         
@@ -791,21 +682,8 @@ class MenuViewController: UIViewController {
     }
     
     func sagittarius() -> C4Shape {
-        var bezier = C4Path()
         
-        bezier.moveToPoint(C4Point(30.4, 10.6))
-        bezier.addLineToPoint(C4Point(30.4, 0))
-        bezier.addLineToPoint(C4Point(19.8, 0))
-        
-        bezier.moveToPoint(C4Point(7.8, 10.5))
-        bezier.addLineToPoint(C4Point(13.9, 16.5))
-        bezier.addLineToPoint(C4Point(0, 30.4))
-        
-        bezier.moveToPoint(C4Point(30.3, 0.1))
-        bezier.addLineToPoint(C4Point(13.9, 16.5))
-        bezier.addLineToPoint(C4Point(20, 22.7))
-        
-        var shape = C4Shape(bezier)
+        var shape = signProvider.sagittarius().shape
         
         shape.anchorPoint = C4Point(1,0.35)
         
@@ -813,25 +691,7 @@ class MenuViewController: UIViewController {
     }
     
     func capricorn() -> C4Shape {
-        var bezier = C4Path()
-        
-        bezier.moveToPoint(C4Point(13, 22.3))
-        bezier.addLineToPoint(C4Point(13, 6.5))
-        bezier.addCurveToPoint( C4Point(13, 2.9), control2:C4Point(10.1, 0), point: C4Point(6.5, 0))
-        bezier.addCurveToPoint( C4Point(2.9, 0), control2:C4Point(0, 2.9), point: C4Point(0, 6.5))
-        
-        bezier.moveToPoint(C4Point(13, 6.5))
-        bezier.addCurveToPoint( C4Point(13, 2.9), control2:C4Point(15.9, 0), point: C4Point(19.5, 0))
-        bezier.addCurveToPoint( C4Point(23.1, 0), control2:C4Point(26, 2.9), point: C4Point(26, 6.5))
-        bezier.addCurveToPoint( C4Point(26, 16.3), control2:C4Point(27.6, 19.6), point: C4Point(29.9, 22.9))
-        bezier.addCurveToPoint( C4Point(32.2, 26.3), control2:C4Point(35.2, 27.7), point: C4Point(37.7, 27.7))
-        bezier.addCurveToPoint( C4Point(41.8, 27.7), control2:C4Point(45.2, 24.4), point: C4Point(45.2, 20.3))
-        bezier.addCurveToPoint( C4Point(45.2, 16.2), control2:C4Point(41.9, 12.9), point: C4Point(37.8, 12.9))
-        bezier.addCurveToPoint( C4Point(32.1, 12.9), control2:C4Point(30.7, 18.5), point: C4Point(29.9, 22.9))
-        bezier.addCurveToPoint( C4Point(28.3, 31.7), control2:C4Point(22.4, 33.6), point: C4Point(17.1, 33.6))
-        
-        
-        var shape = C4Shape(bezier)
+        var shape = signProvider.capricorn().shape
         
         shape.anchorPoint = C4Point(0.285,0.66)
         
@@ -839,29 +699,8 @@ class MenuViewController: UIViewController {
     }
     
     func scorpio() -> C4Shape {
-        var bezier = C4Path()
         
-        bezier.moveToPoint(C4Point(10, 24.1))
-        bezier.addLineToPoint(C4Point(10, 5))
-        bezier.addCurveToPoint( C4Point(10, 2.2), control2:C4Point(7.8, 0), point: C4Point(5, 0))
-        bezier.addCurveToPoint( C4Point(2.2, 0), control2:C4Point(0, 2.2), point: C4Point(0, 5))
-        
-        bezier.moveToPoint(C4Point(20, 24.1))
-        bezier.addLineToPoint(C4Point(20, 5))
-        bezier.addCurveToPoint( C4Point(20, 2.2), control2:C4Point(17.8, 0), point: C4Point(15, 0))
-        bezier.addCurveToPoint( C4Point(12.2, 0), control2:C4Point(10, 2.2), point: C4Point(10, 5))
-        
-        bezier.moveToPoint(C4Point(39.1, 31.1))
-        bezier.addCurveToPoint( C4Point(36, 28.1), control2:C4Point(30, 23.9), point: C4Point(30, 15.1))
-        bezier.addLineToPoint(C4Point(30, 5))
-        bezier.addCurveToPoint( C4Point(30, 2.2), control2:C4Point(27.8, 0), point: C4Point(25, 0))
-        bezier.addCurveToPoint( C4Point(22.2, 0), control2:C4Point(20, 2.2), point: C4Point(20, 5))
-        
-        bezier.moveToPoint(C4Point(39.2, 20.5))
-        bezier.addLineToPoint(C4Point(39.2, 31.1))
-        bezier.addLineToPoint(C4Point(28.6, 31.1))
-        
-        var shape = C4Shape(bezier)
+        var shape = signProvider.scorpio().shape
         
         shape.anchorPoint = C4Point(0.26,0.775)
         
