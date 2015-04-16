@@ -34,11 +34,11 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
     
     func layout() {
         canvas.backgroundColor = cosmosbkgd
-        scrollviews.append(starsLayer(speeds[0],imageName: "03Star",starCount: 4))
-        scrollviews.append(starsLayer(speeds[1],imageName: "04Star",starCount: 10))
-        scrollviews.append(starsLayer(speeds[2],imageName: "05Star",starCount: 9))
+        scrollviews.append(starsLayer(speeds[0],imageName: "03Star",starCount: 20))
         scrollviews.append(vignette())
-        scrollviews.append(starsLayer(speeds[4],imageName: "07Star",starCount: 7))
+        scrollviews.append(starsLayer(speeds[1],imageName: "04Star",starCount: 20))
+        scrollviews.append(starsLayer(speeds[2],imageName: "05Star",starCount: 20))
+        scrollviews.append(starsLayer(speeds[4],imageName: "07Star",starCount: 20))
         scrollviews.append(lines())
         scrollviews.append(smallSignStars())
         scrollviews.append(bigSignStars())
@@ -88,7 +88,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         let fullframe = Double(framesize) * gap
         sv.contentSize = CGSizeMake(framesize * CGFloat(gap) * signFrames  + CGFloat(canvas.width), 1.0)
         
-        for frameCount in 0..<Int(signFrames-1) {
+        for frameCount in 0..<Int(signFrames) {
             for i in 0..<starCount {
                 var dx = fullframe * Double(frameCount)
                 var pt = C4Point(dx + random01() * fullframe, random01() * canvas.height)
@@ -227,7 +227,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
                 var point = C4Point(offset+dx*Double(i),y)
 
                 if let sign = self.signProvider.get(name)?.shape {
-                    sign.lineWidth = 1
+                    sign.lineWidth = 2
                     sign.strokeColor = white
                     sign.fillColor = clear
                     sign.opacity = 0.33
@@ -247,7 +247,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
                 
                 var value = i * 30
                 if value > 330 { value = 0 }
-                let degree = C4TextShape(text:"\(value)", font:font)
+                let degree = C4TextShape(text:"\(value)°", font:font)
                 degree.fillColor = white
                 degree.lineWidth = 0
                 degree.opacity = 0.33
