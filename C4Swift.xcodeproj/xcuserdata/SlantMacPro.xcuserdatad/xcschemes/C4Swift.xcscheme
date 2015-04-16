@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D928B5551A004E3200B0E813"
-               BuildableName = "C4Swift.app"
+               BuildableName = "C4SMOS.app"
                BlueprintName = "C4Swift"
                ReferencedContainer = "container:C4Swift.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
+            BuildableName = "C4SMOS.app"
             BlueprintName = "C4Swift"
             ReferencedContainer = "container:C4Swift.xcodeproj">
          </BuildableReference>
@@ -72,11 +72,12 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
+            BuildableName = "C4SMOS.app"
             BlueprintName = "C4Swift"
             ReferencedContainer = "container:C4Swift.xcodeproj">
          </BuildableReference>
@@ -90,11 +91,12 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
+            BuildableName = "C4SMOS.app"
             BlueprintName = "C4Swift"
             ReferencedContainer = "container:C4Swift.xcodeproj">
          </BuildableReference>

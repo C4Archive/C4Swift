@@ -41,6 +41,7 @@ class MenuViewController: UIViewController {
     var logosOrder = ["pisces","aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius"]
     var currentSelection = 0
     var dashedCircles = [C4Circle]()
+    var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
     
     var action : MenuAction?
     
@@ -79,6 +80,14 @@ class MenuViewController: UIViewController {
         createLogos()
         positionLogos()
         
+        titleLabel.font = UIFont(name: "Menlo-Regular", size: 13)
+        titleLabel.textAlignment = .Center
+        titleLabel.textColor = .whiteColor()
+        titleLabel.userInteractionEnabled = false
+        titleLabel.center = view.center
+        titleLabel.text = ""
+        
+        canvas.add(titleLabel)
     }
     
     var innerTargets = [C4Point]()
@@ -165,6 +174,7 @@ class MenuViewController: UIViewController {
                 } else {
                     self.shouldRevert = true
                 }
+                self.titleLabel.text = ""
             case .Changed:
                 self.moveWedge(location)
             default:
@@ -462,6 +472,8 @@ class MenuViewController: UIViewController {
             
             var newSelection = Int(radToDeg(angle)) / 30
             
+            titleLabel.text = logosOrder[newSelection].capitalizedString
+            
             if self.currentSelection != newSelection {
                 tick.stop()
                 tick.play()
@@ -472,6 +484,7 @@ class MenuViewController: UIViewController {
             }
         } else {
             wedge.hidden = true
+            titleLabel.text = ""
         }
         
     }
