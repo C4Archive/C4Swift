@@ -16,6 +16,10 @@ import C4Animation
 typealias MenuAction = (selection: Int) -> Void
 
 class MenuViewController: UIViewController {
+    let menuOutSound = C4AudioPlayer("menuOpen.mp3")
+    let menuInSound = C4AudioPlayer("menuClose.mp3")
+    let tick = C4AudioPlayer("tick4.mp3")
+    
     var longpress = UILongPressGestureRecognizer()
 
     var signProvider = AstrologicalSignProvider()
@@ -48,6 +52,10 @@ class MenuViewController: UIViewController {
     */
     
     override func viewDidLoad() {
+        menuInSound.volume = 0.66
+        menuOutSound.volume = 0.66
+        tick.volume = 0.4
+        
         shadow = C4Rectangle(frame: canvas.frame)
 
         canvas.backgroundColor = clear
@@ -199,6 +207,8 @@ class MenuViewController: UIViewController {
     }
     
     func menuOut() {
+        menuOutSound.play()
+        
         C4ViewAnimation(duration:0.25) {
             self.shadow.opacity = 0.44
         }.animate()
@@ -257,6 +267,7 @@ class MenuViewController: UIViewController {
     }
     
     func menuIn() {
+        menuInSound.play()
         
         self.out = true
         self.randomIn()
@@ -424,6 +435,7 @@ class MenuViewController: UIViewController {
         wedge = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
         wedge.fillColor = cosmosblue
         wedge.lineWidth = 0.0
+        wedge.opacity = 0.8
         wedge.interactionEnabled = false
         wedge.layer?.mask = donut.layer
         wedge.layer?.anchorPoint = CGPointZero
@@ -451,6 +463,8 @@ class MenuViewController: UIViewController {
             var newSelection = Int(radToDeg(angle)) / 30
             
             if self.currentSelection != newSelection {
+                tick.stop()
+                tick.play()
                 self.currentSelection = newSelection
                 var rotation = C4Transform()
                 rotation.rotate(degToRad(Double(self.currentSelection) * 30.0), axis: C4Vector(x:0,y:0,z:-1))

@@ -11,12 +11,18 @@ import C4UI
 import C4Core
 import C4Animation
 
+<<<<<<< HEAD
 class ViewController: C4CanvasController {
+=======
 let cosmosprpl = C4Color(red:0.565, green: 0.075, blue: 0.996, alpha: 1.0)
 let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)
 let cosmosbkgd = C4Color(red: 0.078, green: 0.118, blue: 0.306, alpha: 1.0)
+<<<<<<< HEAD
+>>>>>>> First commit.
+=======
 let audio1 = C4AudioPlayer("audio1.mp3")
 let audio2 = C4AudioPlayer("audio2.mp3")
+>>>>>>> Finishing touches
 
 class ViewController: UIViewController {
     let menu = MenuViewController()

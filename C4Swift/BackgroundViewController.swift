@@ -15,14 +15,18 @@ import C4Animation
 
 typealias SignClosure = () -> (big:[C4Point],small:[C4Point],lines:[[C4Point]])
 
-class BackgroundViewController: UIViewController {
+class BackgroundViewController: UIViewController, UIScrollViewDelegate {
     let signProvider = AstrologicalSignProvider()
     var myContext = 0
     var scrollviews = [InfiniteScrollView]()
     var speeds : [CGFloat] = [0.08,0.10,0.12,0.0,0.15,1.0,0.8,1.0]
-    var gap = 5.0
+    var gap = 10.0
     var signFrames : CGFloat = 12.0
     var order = ["pisces", "aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"]
+    var snapTargets = [CGFloat]()
+    var signLines = [[C4Line]]()
+    var currentLines = [C4Line]()
+    var currentLinesVisible = false
     
     override func viewDidLoad() {
         layout()
@@ -39,8 +43,16 @@ class BackgroundViewController: UIViewController {
         scrollviews.append(smallSignStars())
         scrollviews.append(bigSignStars())
         
+        for i in 0...12 {
+            snapTargets.append(CGFloat(gap * Double(i)*canvas.width))
+        }
+        
         for scrollview in scrollviews {
             canvas.add(scrollview)
+        }
+        
+        if let sv = scrollviews.last {
+            sv.contentOffset = CGPointMake(view.frame.size.width * CGFloat(gap / 2.0), 0)
         }
     }
     
@@ -49,11 +61,16 @@ class BackgroundViewController: UIViewController {
         
         let target = canvas.width * gap * Double(selection)
         
-        let anim = C4ViewAnimation(duration: 4.0) { () -> Void in
+        let anim = C4ViewAnimation(duration: 3.0) { () -> Void in
             top.contentOffset = CGPoint(x: CGFloat(target),y: 0)
         }
         anim.curve = .EaseOut
         anim.animate()
+        
+        delay(3.0) {
+            self.currentLines = self.signLines[selection]
+            self.showCurrentLines()
+        }
     }
     
     func vignette() -> InfiniteScrollView {
@@ -100,6 +117,7 @@ class BackgroundViewController: UIViewController {
             if let sign = signProvider.get(order[i]) {
                 let connections = sign.lines
                 
+                var currentLineSet = [C4Line]()
                 for points in connections {
                     var begin = points[0]
                     begin.transform(t)
@@ -109,12 +127,15 @@ class BackgroundViewController: UIViewController {
                     
                     C4ViewAnimation(duration: 0.0) {
                         let line = C4Line([begin,end])
+                        line.strokeEnd = 0.0
                         line.lineWidth = 1.0
                         line.strokeColor = cosmosprpl
                         line.opacity = 0.4
                         sv.add(line)
+                        currentLineSet.append(line)
                     }.animate()
                 }
+                signLines.append(currentLineSet)
             }
         }
         return sv
@@ -193,7 +214,7 @@ class BackgroundViewController: UIViewController {
         
         sv.addObserver(self, forKeyPath: "contentOffset", options: .New, context: &myContext)
             
-        let signNames = ["Pisces","Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius"]
+        let signNames = ["Pisces","Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
         
         let font = C4Font(name:"Menlo-Regular", size: 13.0)
         let dx = self.canvas.width*self.gap
@@ -201,8 +222,6 @@ class BackgroundViewController: UIViewController {
         var y = self.canvas.height - 86.0
 
         C4ViewAnimation(duration: 0.0) {
-            
-            
             for i in 0..<signNames.count {
                 let name = signNames[i]
                 var point = C4Point(offset+dx*Double(i),y)
@@ -226,7 +245,9 @@ class BackgroundViewController: UIViewController {
                 text.center = point
                 point.y+=22.0
                 
-                let degree = C4TextShape(text:"\(i*30)", font:font)
+                var value = i * 30
+                if value > 330 { value = 0 }
+                let degree = C4TextShape(text:"\(value)", font:font)
                 degree.fillColor = white
                 degree.lineWidth = 0
                 degree.opacity = 0.33
@@ -237,7 +258,7 @@ class BackgroundViewController: UIViewController {
             }
         }.animate()
         
-        
+        sv.delegate = self
         return sv
     }
     
@@ -245,10 +266,59 @@ class BackgroundViewController: UIViewController {
         return true
     }
     
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        let x = scrollView.contentOffset.x
+        snapIfNeeded(x, scrollView)
+    }
+    
+    func snapIfNeeded(x: CGFloat, _ scrollView: UIScrollView) {
+        for target in snapTargets {
+            let dist = abs(CGFloat(target) - x)
+            if dist <= CGFloat(canvas.width/2.0) {
+                scrollView.setContentOffset(CGPointMake(target,0), animated: true)
+                delay(0.25) {
+                    var index = Int(Double(target) / (self.canvas.width * self.gap))
+                    if index == 12 { index = 0 }
+                    self.currentLines = self.signLines[index]
+                    self.showCurrentLines()
+                }
+                return
+            }
+        }
+    }
+    
+    func showCurrentLines() {
+        C4ViewAnimation(duration: 0.25) {
+            for line in self.currentLines {
+                line.strokeEnd = 1.0
+            }
+        }.animate()
+    }
+    
+    func hideCurrentLines() {
+        C4ViewAnimation(duration: 0.25) {
+            for line in self.currentLines {
+                line.strokeEnd = 0.0
+            }
+        }.animate()
+    }
+
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if decelerate == false {
+            let x = scrollView.contentOffset.x
+            snapIfNeeded(x, scrollView)
+        }
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.hideCurrentLines()
+    }
+    
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         if context == &myContext {
             let sv = object as! InfiniteScrollView
             let offset = sv.contentOffset
+            
             for i in 0...6 {
                 let layer = scrollviews[i]
                 layer.contentOffset = CGPointMake(offset.x * speeds[i], 0.0)
