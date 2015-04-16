@@ -14,6 +14,8 @@ import C4Animation
 let cosmosprpl = C4Color(red:0.565, green: 0.075, blue: 0.996, alpha: 1.0)
 let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)
 let cosmosbkgd = C4Color(red: 0.078, green: 0.118, blue: 0.306, alpha: 1.0)
+let audio1 = C4AudioPlayer("audio1.mp3")
+let audio2 = C4AudioPlayer("audio2.mp3")
 
 class ViewController: UIViewController {
     let menu = MenuViewController()
@@ -24,6 +26,13 @@ class ViewController: UIViewController {
         canvas.add(menu.canvas)
         menu.canvas.center = canvas.center
         menu.action = self.grabSelection
+        
+        audio1.play()
+        audio2.play()
+        audio1.loops = true
+        audio2.loops = true
+        
+        let x = C4Animation()
     }
     
     override func prefersStatusBarHidden() -> Bool {
