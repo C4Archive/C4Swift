@@ -19,6 +19,7 @@ class MenuViewController: UIViewController {
     let menuOutSound = C4AudioPlayer("menuOpen.mp3")
     let menuInSound = C4AudioPlayer("menuClose.mp3")
     let tick = C4AudioPlayer("tick4.mp3")
+    var introTextStage = 0
     
     var longpress = UILongPressGestureRecognizer()
 
@@ -42,17 +43,16 @@ class MenuViewController: UIViewController {
     var currentSelection = 0
     var dashedCircles = [C4Circle]()
     var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
+    var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
     
     var action : MenuAction?
     
+    var timer = NSTimer()
+    
     var shadow = C4Shape()
     
-    /*
-    Next steps:
-    3) add longpress changed tracking to see which logo is selected
-    */
-    
     override func viewDidLoad() {
+        
         menuInSound.volume = 0.66
         menuOutSound.volume = 0.66
         tick.volume = 0.4
@@ -88,6 +88,33 @@ class MenuViewController: UIViewController {
         titleLabel.text = ""
         
         canvas.add(titleLabel)
+        
+        instructionLabel.text = "press and hold to open menu\nthen drag to choose a sign"
+        instructionLabel.font = titleLabel.font
+        instructionLabel.textAlignment = .Center
+        instructionLabel.textColor = .whiteColor()
+        instructionLabel.userInteractionEnabled = false
+        instructionLabel.center = CGPointMake(view.center.x,view.center.y - 128)
+        instructionLabel.numberOfLines = 2
+        instructionLabel.alpha = 0.0
+        canvas.add(instructionLabel)
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("showInstruction"), userInfo: nil, repeats: true)
+    }
+    
+    func showInstruction() {
+        let show = C4ViewAnimation(duration: 2.5) {
+            self.instructionLabel.alpha = 1.0
+        }
+        show.animate()
+    }
+    
+    func hideInstruction() {
+        timer.invalidate()
+        let hide = C4ViewAnimation(duration: 0.25) {
+            self.instructionLabel.alpha = 0.0
+        }
+        hide.animate()
     }
     
     var innerTargets = [C4Point]()
@@ -218,7 +245,7 @@ class MenuViewController: UIViewController {
     
     func menuOut() {
         menuOutSound.play()
-        
+        hideInstruction()
         C4ViewAnimation(duration:0.25) {
             self.shadow.opacity = 0.44
         }.animate()
