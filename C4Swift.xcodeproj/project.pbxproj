@@ -7,28 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
 		D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55D1A004E3200B0E813 /* ViewController.swift */; };
 		D928B5611A004E3200B0E813 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D928B55F1A004E3200B0E813 /* Main.storyboard */; };
 		D928B5631A004E3200B0E813 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D928B5621A004E3200B0E813 /* Images.xcassets */; };
 		D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D928B5641A004E3200B0E813 /* LaunchScreen.xib */; };
 		D928B5721A004E3200B0E813 /* C4SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B5711A004E3200B0E813 /* C4SwiftTests.swift */; };
-		D96954FA1A251B2500622AB0 /* C4UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D96954FB1A251B2500622AB0 /* C4Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D96954FC1A251B2500622AB0 /* C4Animation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
-		D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1F0D0DC41A56066400481D65 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
-			remoteInfo = C4UI;
-		};
 		1FB628CF1A0B17B100699D1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
@@ -42,6 +29,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = A9596D941A089EA00023323D;
 			remoteInfo = C4AnimationTests;
+		};
+		1FFF9D4E1A7C879A00B21C7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
+			remoteInfo = C4UI;
+		};
+		1FFF9D521A7C879A00B21C7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A9596D181A054A960023323D;
+			remoteInfo = C4Core;
+		};
+		1FFF9D561A7C879A00B21C7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A9596D891A089E9F0023323D;
+			remoteInfo = C4Animation;
 		};
 		D928B56C1A004E3200B0E813 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -64,20 +72,6 @@
 			remoteGlobalIDString = 614F824E19DB5ED4001DF1D4;
 			remoteInfo = C4iOSTests;
 		};
-		D9DEA6291A200CAE0007E5EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A9596D181A054A960023323D;
-			remoteInfo = C4Core;
-		};
-		D9DEA62D1A200CAE0007E5EC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A9596D891A089E9F0023323D;
-			remoteInfo = C4Animation;
-		};
 		D9EF499D1A0AB46E00C03774 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
@@ -95,17 +89,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D955EB021A005B12008356DD /* Embed Frameworks */ = {
+		1FA635C21A7C950B0061A54E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D96954FA1A251B2500622AB0 /* C4UI.framework in Embed Frameworks */,
-				D96954FB1A251B2500622AB0 /* C4Core.framework in Embed Frameworks */,
-				D96954FC1A251B2500622AB0 /* C4Animation.framework in Embed Frameworks */,
+				1FA635C31A7C95170061A54E /* C4UI.framework in CopyFiles */,
+				1FA635C41A7C95170061A54E /* C4Core.framework in CopyFiles */,
+				1FA635C51A7C95170061A54E /* C4Animation.framework in CopyFiles */,
 			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -129,9 +122,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9DEA6271A200CAE0007E5EC /* C4Core.framework in Frameworks */,
-				D9DEA62B1A200CAE0007E5EC /* C4Animation.framework in Frameworks */,
-				1F0D0DC31A56064400481D65 /* C4UI.framework in Frameworks */,
+				1FFF9D501A7C879A00B21C7F /* C4Core.framework in Frameworks */,
+				1FFF9D4C1A7C879A00B21C7F /* C4UI.framework in Frameworks */,
+				1FFF9D541A7C879A00B21C7F /* C4Animation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,14 +218,14 @@
 				D928B5521A004E3200B0E813 /* Sources */,
 				D928B5531A004E3200B0E813 /* Frameworks */,
 				D928B5541A004E3200B0E813 /* Resources */,
-				D955EB021A005B12008356DD /* Embed Frameworks */,
+				1FA635C21A7C950B0061A54E /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				1F0D0DC51A56066400481D65 /* PBXTargetDependency */,
-				D9DEA62A1A200CAE0007E5EC /* PBXTargetDependency */,
-				D9DEA62E1A200CAE0007E5EC /* PBXTargetDependency */,
+				1FFF9D4F1A7C879A00B21C7F /* PBXTargetDependency */,
+				1FFF9D531A7C879A00B21C7F /* PBXTargetDependency */,
+				1FFF9D571A7C879A00B21C7F /* PBXTargetDependency */,
 			);
 			name = C4Swift;
 			productName = C4Swift;
@@ -387,25 +380,25 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1F0D0DC51A56066400481D65 /* PBXTargetDependency */ = {
+		1FFF9D4F1A7C879A00B21C7F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = C4UI;
-			targetProxy = 1F0D0DC41A56066400481D65 /* PBXContainerItemProxy */;
+			targetProxy = 1FFF9D4E1A7C879A00B21C7F /* PBXContainerItemProxy */;
+		};
+		1FFF9D531A7C879A00B21C7F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Core;
+			targetProxy = 1FFF9D521A7C879A00B21C7F /* PBXContainerItemProxy */;
+		};
+		1FFF9D571A7C879A00B21C7F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Animation;
+			targetProxy = 1FFF9D561A7C879A00B21C7F /* PBXContainerItemProxy */;
 		};
 		D928B56D1A004E3200B0E813 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D928B5551A004E3200B0E813 /* C4Swift */;
 			targetProxy = D928B56C1A004E3200B0E813 /* PBXContainerItemProxy */;
-		};
-		D9DEA62A1A200CAE0007E5EC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = C4Core;
-			targetProxy = D9DEA6291A200CAE0007E5EC /* PBXContainerItemProxy */;
-		};
-		D9DEA62E1A200CAE0007E5EC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = C4Animation;
-			targetProxy = D9DEA62D1A200CAE0007E5EC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -512,13 +505,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e91109e2-dcbf-4bba-909c-bf78bf131fa1";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Debug;
@@ -527,13 +520,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e91109e2-dcbf-4bba-909c-bf78bf131fa1";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Release;

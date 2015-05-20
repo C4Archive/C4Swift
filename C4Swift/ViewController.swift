@@ -14,7 +14,12 @@ import C4Animation
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
+<<<<<<< HEAD
 
     }
 
+=======
+        //work your magic here
+    }
+>>>>>>> origin/master
 }
