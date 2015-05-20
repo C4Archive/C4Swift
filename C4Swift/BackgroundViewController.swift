@@ -19,7 +19,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
     let signProvider = AstrologicalSignProvider()
     var myContext = 0
     var scrollviews = [InfiniteScrollView]()
-    var speeds : [CGFloat] = [0.08,0.10,0.12,0.0,0.15,1.0,0.8,1.0]
+    var speeds : [CGFloat] = [0.08,0.0,0.10,0.12,0.15,1.0,0.8,1.0]
     var gap = 10.0
     var signFrames : CGFloat = 12.0
     var order = ["pisces", "aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"]
@@ -36,8 +36,8 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         canvas.backgroundColor = cosmosbkgd
         scrollviews.append(starsLayer(speeds[0],imageName: "03Star",starCount: 20))
         scrollviews.append(vignette())
-        scrollviews.append(starsLayer(speeds[1],imageName: "04Star",starCount: 20))
-        scrollviews.append(starsLayer(speeds[2],imageName: "05Star",starCount: 20))
+        scrollviews.append(starsLayer(speeds[2],imageName: "04Star",starCount: 20))
+        scrollviews.append(starsLayer(speeds[3],imageName: "05Star",starCount: 20))
         scrollviews.append(starsLayer(speeds[4],imageName: "07Star",starCount: 20))
         scrollviews.append(lines())
         scrollviews.append(smallSignStars())
@@ -87,7 +87,6 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         
         let fullframe = Double(framesize) * gap
         sv.contentSize = CGSizeMake(framesize * CGFloat(gap) * signFrames  + CGFloat(canvas.width), 1.0)
-        
         for frameCount in 0..<Int(signFrames) {
             for i in 0..<starCount {
                 var dx = fullframe * Double(frameCount)
