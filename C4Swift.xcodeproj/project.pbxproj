@@ -28,6 +28,7 @@
 		D95113B81ADF2E3E007951E0 /* tick4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D95113B71ADF2E3E007951E0 /* tick4.mp3 */; };
 		D95113BA1ADF3953007951E0 /* audio2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D95113B91ADF3953007951E0 /* audio2.mp3 */; };
 		D95113BC1ADF3959007951E0 /* audio1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D95113BB1ADF3959007951E0 /* audio1.mp3 */; };
+		D95DC2E41B0E685400297179 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DC2E31B0E685400297179 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +140,7 @@
 		D95113B91ADF3953007951E0 /* audio2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio2.mp3; sourceTree = "<group>"; };
 		D95113BB1ADF3959007951E0 /* audio1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio1.mp3; sourceTree = "<group>"; };
 		D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = C4iOS.xcodeproj; path = ../../../Development/C4iOS/C4iOS.xcodeproj; sourceTree = "<group>"; };
+		D95DC2E31B0E685400297179 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 				1F389D191ADD8F5E0027CA21 /* InfiniteScrollview.swift */,
 				1F25B71B1ADE2917000EC625 /* AstrologicalSignProvider.swift */,
 				1F389D121ADD8EDC0027CA21 /* MenuViewController.swift */,
+				D95DC2E31B0E685400297179 /* InfoViewController.swift */,
 				D928B55F1A004E3200B0E813 /* Main.storyboard */,
 				D928B5641A004E3200B0E813 /* LaunchScreen.xib */,
 				D95113AD1ADF2167007951E0 /* menuClose.mp3 */,
@@ -405,6 +408,7 @@
 				1F389D181ADD8EFB0027CA21 /* BackgroundViewController.swift in Sources */,
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
 				1F389D1A1ADD8F5E0027CA21 /* InfiniteScrollview.swift in Sources */,
+				D95DC2E41B0E685400297179 /* InfoViewController.swift in Sources */,
 				1F25B71C1ADE2917000EC625 /* AstrologicalSignProvider.swift in Sources */,
 				1F389D131ADD8EDC0027CA21 /* MenuViewController.swift in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,

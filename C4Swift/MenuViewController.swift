@@ -13,7 +13,8 @@ import C4UI
 import C4Core
 import C4Animation
 
-typealias MenuAction = (selection: Int) -> Void
+typealias SelectionAction = (selection: Int) -> Void
+typealias InfoAction = () -> Void
 
 class MenuViewController: UIViewController {
     let menuOutSound = C4AudioPlayer("menuOpen.mp3")
@@ -45,15 +46,16 @@ class MenuViewController: UIViewController {
     var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
     var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
     var infoLogo = C4Image("infoLight")
-    var infoView = C4View(frame: C4Rect(0,0,44,44))
-    var action : MenuAction?
+    var infoButtonView = C4View(frame: C4Rect(0,0,44,44))
+    var selectionAction : SelectionAction?
+    var infoAction : InfoAction?
     
     var timer = NSTimer()
     
     var shadow = C4Shape()
     
     override func viewDidLoad() {
-        
+
         menuInSound.volume = 0.66
         menuOutSound.volume = 0.66
         tick.volume = 0.4
@@ -100,12 +102,12 @@ class MenuViewController: UIViewController {
         instructionLabel.alpha = 0.0
         canvas.add(instructionLabel)
         
-        infoView.add(infoLogo)
-        infoLogo.center = infoView.center
-        infoView.center = C4Point(canvas.center.x,canvas.center.y + 190)
-        infoView.opacity = 0.0
-        canvas.add(infoView)
-    
+        infoButtonView.add(infoLogo)
+        infoLogo.center = infoButtonView.center
+        infoButtonView.center = C4Point(canvas.center.x,canvas.center.y + 190)
+        infoButtonView.opacity = 0.0
+        canvas.add(infoButtonView)
+        
         timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("showInstruction"), userInfo: nil, repeats: true)
     }
     
@@ -149,7 +151,7 @@ class MenuViewController: UIViewController {
             outerTargets.append(C4Point(r * cos(ϴ) + dx, r * sin(ϴ) + dy))
         }
     }
-    
+
     func createCircles() {
         thickCircle = C4Circle(center: canvas.center, radius: 14)
         circles.append(C4Circle(center: canvas.center, radius: 8))
@@ -198,7 +200,7 @@ class MenuViewController: UIViewController {
             case .Cancelled, .Ended, .Failed:
                 self.canvas.interactionEnabled = false
                 if !self.wedge.hidden {
-                    if let a = self.action {
+                    if let a = self.selectionAction {
                         a(selection: self.currentSelection)
                     }
                     self.wedge.hidden = true
@@ -209,25 +211,23 @@ class MenuViewController: UIViewController {
                     self.shouldRevert = true
                 }
     
-                let p = self.infoView.convert(location, from:self.canvas)
-                if self.infoView.hitTest(p) {
-                    self.showInfo()
+                if self.infoButtonView.hitTest(location, from: self.canvas) {
+                    delay(0.75) {
+                        if let a = self.infoAction {
+                            a()
+                        }
+                    }
                 }
                 self.titleLabel.text = ""
             case .Changed:
                 self.moveWedge(location)
-                let p = self.infoView.convert(location, from:self.canvas)
-                if self.infoView.hitTest(p) {
+                if self.infoButtonView.hitTest(location, from: self.canvas) {
                     self.titleLabel.text = "Info"
                 }
             default:
                 let i = 0
             }
         }
-    }
-    
-    func showInfo() {
-        println(__FUNCTION__)
     }
     
     func randomOut() {
@@ -314,7 +314,7 @@ class MenuViewController: UIViewController {
         delay(0.66) {
             dashedCirclesReveal.animate()
             C4ViewAnimation(duration:0.25) {
-                self.infoView.opacity = 1.0
+                self.infoButtonView.opacity = 1.0
             }.animate()
         }
         delay(1.0) {
@@ -358,7 +358,7 @@ class MenuViewController: UIViewController {
         dashedCirclesHide.animate()
         
         C4ViewAnimation(duration:0.25) {
-            self.infoView.opacity = 0.0
+            self.infoButtonView.opacity = 0.0
         }.animate()
 
         delay(0.16) {
@@ -536,7 +536,7 @@ class MenuViewController: UIViewController {
                 rotation.rotate(degToRad(Double(self.currentSelection) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
                 self.wedge.transform = rotation
             }
-        } else if self.infoView.hitTest(location) {
+        } else if self.infoButtonView.hitTest(location) {
             wedge.hidden = true
             titleLabel.text = "Info"
         } else {

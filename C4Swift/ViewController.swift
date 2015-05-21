@@ -20,13 +20,18 @@ let audio2 = C4AudioPlayer("audio2.mp3")
 
 class ViewController: UIViewController {
     let menu = MenuViewController()
+    let info = InfoViewController()
     let background = BackgroundViewController()
     
     override func viewDidLoad() {
         canvas.add(background.canvas)
         canvas.add(menu.canvas)
         menu.canvas.center = canvas.center
-        menu.action = self.grabSelection
+        menu.selectionAction = self.grabSelection
+        
+        menu.infoAction = info.show
+        
+        canvas.add(info.canvas)
         
         audio1.play()
         audio2.play()
