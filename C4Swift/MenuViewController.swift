@@ -209,12 +209,17 @@ class MenuViewController: UIViewController {
                     self.shouldRevert = true
                 }
     
-                if self.infoView.hitTest(location) {
+                let p = self.infoView.convert(location, from:self.canvas)
+                if self.infoView.hitTest(p) {
                     self.showInfo()
                 }
                 self.titleLabel.text = ""
             case .Changed:
                 self.moveWedge(location)
+                let p = self.infoView.convert(location, from:self.canvas)
+                if self.infoView.hitTest(p) {
+                    self.titleLabel.text = "Info"
+                }
             default:
                 let i = 0
             }
