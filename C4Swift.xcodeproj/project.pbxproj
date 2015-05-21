@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FEB9BD21B0DABB00010A882 /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
+		1FEB9BD31B0DABB00010A882 /* C4UI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1FEB9BD61B0DABB00010A882 /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
+		1FEB9BD71B0DABB00010A882 /* C4Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1FEB9BDA1B0DABB00010A882 /* C4Animation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; };
+		1FEB9BDB1B0DABB00010A882 /* C4Animation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
 		D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55D1A004E3200B0E813 /* ViewController.swift */; };
 		D928B5611A004E3200B0E813 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D928B55F1A004E3200B0E813 /* Main.storyboard */; };
@@ -29,6 +35,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = A9596D941A089EA00023323D;
 			remoteInfo = C4AnimationTests;
+		};
+		1FEB9BD41B0DABB00010A882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
+			remoteInfo = C4UI;
+		};
+		1FEB9BD81B0DABB00010A882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A9596D181A054A960023323D;
+			remoteInfo = C4Core;
+		};
+		1FEB9BDC1B0DABB00010A882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A9596D891A089E9F0023323D;
+			remoteInfo = C4Animation;
 		};
 		1FFF9D4E1A7C879A00B21C7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -95,9 +122,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1FA635C31A7C95170061A54E /* C4UI.framework in CopyFiles */,
-				1FA635C41A7C95170061A54E /* C4Core.framework in CopyFiles */,
-				1FA635C51A7C95170061A54E /* C4Animation.framework in CopyFiles */,
+				1FEB9BD71B0DABB00010A882 /* C4Core.framework in CopyFiles */,
+				1FEB9BD31B0DABB00010A882 /* C4UI.framework in CopyFiles */,
+				1FEB9BDB1B0DABB00010A882 /* C4Animation.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,9 +149,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FFF9D501A7C879A00B21C7F /* C4Core.framework in Frameworks */,
-				1FFF9D4C1A7C879A00B21C7F /* C4UI.framework in Frameworks */,
-				1FFF9D541A7C879A00B21C7F /* C4Animation.framework in Frameworks */,
+				1FEB9BD61B0DABB00010A882 /* C4Core.framework in Frameworks */,
+				1FEB9BD21B0DABB00010A882 /* C4UI.framework in Frameworks */,
+				1FEB9BDA1B0DABB00010A882 /* C4Animation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +253,9 @@
 				1FFF9D4F1A7C879A00B21C7F /* PBXTargetDependency */,
 				1FFF9D531A7C879A00B21C7F /* PBXTargetDependency */,
 				1FFF9D571A7C879A00B21C7F /* PBXTargetDependency */,
+				1FEB9BD51B0DABB00010A882 /* PBXTargetDependency */,
+				1FEB9BD91B0DABB00010A882 /* PBXTargetDependency */,
+				1FEB9BDD1B0DABB00010A882 /* PBXTargetDependency */,
 			);
 			name = C4Swift;
 			productName = C4Swift;
@@ -380,6 +410,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1FEB9BD51B0DABB00010A882 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4UI;
+			targetProxy = 1FEB9BD41B0DABB00010A882 /* PBXContainerItemProxy */;
+		};
+		1FEB9BD91B0DABB00010A882 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Core;
+			targetProxy = 1FEB9BD81B0DABB00010A882 /* PBXContainerItemProxy */;
+		};
+		1FEB9BDD1B0DABB00010A882 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Animation;
+			targetProxy = 1FEB9BDC1B0DABB00010A882 /* PBXContainerItemProxy */;
+		};
 		1FFF9D4F1A7C879A00B21C7F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = C4UI;
@@ -509,9 +554,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e91109e2-dcbf-4bba-909c-bf78bf131fa1";
+				PROVISIONING_PROFILE = "cb309049-924b-4a3d-bf4a-353609b4d100";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Debug;
@@ -524,9 +570,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e91109e2-dcbf-4bba-909c-bf78bf131fa1";
+				PROVISIONING_PROFILE = "cb309049-924b-4a3d-bf4a-353609b4d100";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Release;
