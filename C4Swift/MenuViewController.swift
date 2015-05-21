@@ -44,7 +44,8 @@ class MenuViewController: UIViewController {
     var dashedCircles = [C4Circle]()
     var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
     var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
-    
+    var infoLogo = C4Image("infoLight")
+    var infoView = C4View(frame: C4Rect(0,0,44,44))
     var action : MenuAction?
     
     var timer = NSTimer()
@@ -99,6 +100,12 @@ class MenuViewController: UIViewController {
         instructionLabel.alpha = 0.0
         canvas.add(instructionLabel)
         
+        infoView.add(infoLogo)
+        infoLogo.center = infoView.center
+        infoView.center = C4Point(canvas.center.x,canvas.center.y + 190)
+        infoView.opacity = 0.0
+        canvas.add(infoView)
+    
         timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("showInstruction"), userInfo: nil, repeats: true)
     }
     
@@ -201,6 +208,10 @@ class MenuViewController: UIViewController {
                 } else {
                     self.shouldRevert = true
                 }
+    
+                if self.infoView.hitTest(location) {
+                    self.showInfo()
+                }
                 self.titleLabel.text = ""
             case .Changed:
                 self.moveWedge(location)
@@ -208,6 +219,10 @@ class MenuViewController: UIViewController {
                 let i = 0
             }
         }
+    }
+    
+    func showInfo() {
+        println(__FUNCTION__)
     }
     
     func randomOut() {
@@ -293,6 +308,9 @@ class MenuViewController: UIViewController {
         }
         delay(0.66) {
             dashedCirclesReveal.animate()
+            C4ViewAnimation(duration:0.25) {
+                self.infoView.opacity = 1.0
+            }.animate()
         }
         delay(1.0) {
             self.menuVisible = true
@@ -334,6 +352,10 @@ class MenuViewController: UIViewController {
         
         dashedCirclesHide.animate()
         
+        C4ViewAnimation(duration:0.25) {
+            self.infoView.opacity = 0.0
+        }.animate()
+
         delay(0.16) {
             logosHide.animate()
         }
@@ -352,7 +374,7 @@ class MenuViewController: UIViewController {
         
             C4ViewAnimation(duration:0.25) {
                 self.shadow.opacity = 0.0
-                }.animate()
+            }.animate()
         }
     }
     
@@ -509,6 +531,9 @@ class MenuViewController: UIViewController {
                 rotation.rotate(degToRad(Double(self.currentSelection) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
                 self.wedge.transform = rotation
             }
+        } else if self.infoView.hitTest(location) {
+            wedge.hidden = true
+            titleLabel.text = "Info"
         } else {
             wedge.hidden = true
             titleLabel.text = ""
