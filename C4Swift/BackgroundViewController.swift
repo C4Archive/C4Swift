@@ -17,7 +17,9 @@ typealias SignClosure = () -> (big:[C4Point],small:[C4Point],lines:[[C4Point]])
 
 class BackgroundViewController: UIViewController, UIScrollViewDelegate {
     let signProvider = AstrologicalSignProvider()
+    //FIXME: rename
     var myContext = 0
+    //FIXME: tidy up this garbage, e.g. order is defined 2x in this files
     var scrollviews = [InfiniteScrollView]()
     var speeds : [CGFloat] = [0.08,0.0,0.10,0.12,0.15,1.0,0.8,1.0]
     var gap = 10.0
@@ -44,6 +46,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         scrollviews.append(bigSignStars())
         
         for i in 0...12 {
+            //FIXME: explain, rename snapTargets
             snapTargets.append(CGFloat(gap * Double(i)*canvas.width))
         }
         
@@ -73,6 +76,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    //FIXME: make consistent w/ other layouts
     func vignette() -> InfiniteScrollView {
         let sv = InfiniteScrollView(frame: view.frame)
         let img = C4Image("06Vignette")
@@ -81,6 +85,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         return sv
     }
     
+    //FIXME: rename
     func starsLayer(speed: CGFloat, imageName: String, starCount: Int) -> InfiniteScrollView {
         let sv = InfiniteScrollView(frame: view.frame)
         let framesize = sv.frame.size.width * CGFloat(speed)
@@ -106,6 +111,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         return sv
     }
     
+    //FIXME:
     func lines() -> InfiniteScrollView {
         let sv = InfiniteScrollView(frame: view.frame)
         sv.contentSize = CGSizeMake(sv.frame.size.width * signFrames * CGFloat(gap) + sv.frame.size.width, 1.0)
@@ -139,7 +145,8 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         }
         return sv
     }
-    
+
+    //FIXME: rename
     func smallSignStars() -> InfiniteScrollView {
         let sv = InfiniteScrollView(frame: view.frame)
         
@@ -162,6 +169,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         return sv
     }
     
+    //FIXME: rename
     func bigSignStars() -> InfiniteScrollView {
         let sv = InfiniteScrollView(frame: view.frame)
         sv.contentSize = CGSizeMake(sv.frame.size.width * signFrames * CGFloat(gap) + sv.frame.size.width, 1.0)
@@ -180,6 +188,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
+        //FIXME: this is a hack because lines implicitly animate
         C4ViewAnimation(duration: 0.0) {
             let points = [C4Point(0,0),C4Point(Double(sv.contentSize.width),0)]
             let marker = C4Line(points)
@@ -213,6 +222,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         
         sv.addObserver(self, forKeyPath: "contentOffset", options: .New, context: &myContext)
             
+        //FIXME: is this the right order? can we reuse the order from somewhere?
         let signNames = ["Pisces","Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
         
         let font = C4Font(name:"Menlo-Regular", size: 13.0)
@@ -261,15 +271,18 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         return sv
     }
     
+    //FIXME: move
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
     
+    //FIXME:move
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let x = scrollView.contentOffset.x
         snapIfNeeded(x, scrollView)
     }
     
+    //FIXME: move
     func snapIfNeeded(x: CGFloat, _ scrollView: UIScrollView) {
         for target in snapTargets {
             let dist = abs(CGFloat(target) - x)
@@ -286,6 +299,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    //FIXME: rename, move
     func showCurrentLines() {
         C4ViewAnimation(duration: 0.25) {
             for line in self.currentLines {
@@ -294,6 +308,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         }.animate()
     }
     
+    //FIXME: rename, move
     func hideCurrentLines() {
         C4ViewAnimation(duration: 0.25) {
             for line in self.currentLines {
