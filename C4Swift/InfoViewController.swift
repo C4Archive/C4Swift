@@ -14,40 +14,68 @@ import C4Core
 import C4Animation
 
 class InfoViewController: UIViewController {
-    
     var link = C4TextShape(text: "www.c4ios.com", font: C4Font(name: "Menlo-Regular", size: 24))
+    let logo = C4Image("logo")
+    let textLabel = UILabel(frame: CGRectMake(0, 0, 240, 480))
     
     override func viewDidLoad() {
-        canvas.backgroundColor = C4Color(red: 0, green: 0, blue: 0, alpha: 0.33)
+        applyStyles()
+        applyPositions()
+        createGestures()
+        addElementsToCanvas()
+    }
+    
+    func addElementsToCanvas() {
+        canvas.add(textLabel)
+        canvas.add(logo)
+        canvas.add(link)
+        createAddLinkLine()
+    }
+    
+    func createAddLinkLine() {
+        //create link line
+        let a = C4Point(link.origin.x,link.origin.y+link.height+5)
+        let b = C4Point(a.x + link.width + 1, a.y)
         
+        let line = C4Line([a,b])
+        line.lineWidth = 2.0
+        line.strokeColor = C4Pink
+        canvas.add(line)
+    }
+    
+    func applyStyles() {
+        canvas.backgroundColor = C4Color(red: 0, green: 0, blue: 0, alpha: 0.33)
         canvas.border.width = 4.0
         canvas.border.color = C4Color(red: 1, green: 1, blue: 1, alpha: 0.2)
-        
-        let logo = C4Image("logo")
-        var center = C4Point(canvas.center.x,logo.height)
-        logo.center = center
-        canvas.add(logo)
-        
-        let body = UILabel(frame: CGRectMake(0, 0, 240, 480))
-        body.font = UIFont(name: "Menlo-Regular", size: 18)
-        body.numberOfLines = 40
-        body.text = "C4SMOS is a lovingly\nbuilt app created\nby the C4 team.\n\nWe hope you enjoy\ncruising the C4SMOS.\n\n\n\n\n\nYou can learn how\nto build this app\n on our site at:"
-        body.textColor = .whiteColor()
-        body.textAlignment = .Center
-        body.sizeToFit()
-        
-        center.y += logo.height
-        center.y += Double(body.frame.size.height/2.0)
-        body.center = CGPoint(center)
-        canvas.add(body)
-        
-        center.y += Double(body.frame.size.height / 2.0)
-        center.y += (canvas.height - center.y - link.height) / 2.0
-        link.center = center
-        
+        canvas.opacity = 0
+
         link.fillColor = white
         link.lineWidth = 0
         
+        textLabel.font = UIFont(name: "Menlo-Regular", size: 18)
+        textLabel.numberOfLines = 40
+        textLabel.text = "C4SMOS is a lovingly\nbuilt app created\nby the C4 team.\n\nWe hope you enjoy\ncruising the C4SMOS.\n\n\n\n\n\nYou can learn how\nto build this app\n on our site at:"
+        textLabel.textColor = .whiteColor()
+        textLabel.textAlignment = .Center
+        textLabel.sizeToFit()
+    }
+    
+    func applyPositions() {
+        var center = C4Point(canvas.center.x,logo.height)
+        logo.center = center
+        center.y += logo.height + Double(textLabel.frame.size.height/2.0)
+        textLabel.center = CGPoint(center)
+        center.y += Double(textLabel.frame.size.height / 2.0)
+        center.y += (canvas.height - center.y - link.height) / 2.0
+        link.center = center
+    }
+    
+    func createGestures() {
+        linkGesture()
+        hideGesture()
+    }
+    
+    func linkGesture() {
         let press = link.addLongPressGestureRecognizer { location, state in
             switch state {
             case .Began:
@@ -62,19 +90,9 @@ class InfoViewController: UIViewController {
             }
         }
         press.minimumPressDuration = 0.0
-        
-        let a = C4Point(link.origin.x,link.origin.y+link.height+5)
-        let b = C4Point(a.x + link.width + 1, a.y)
-        
-        let line = C4Line([a,b])
-        line.lineWidth = 2.0
-        line.strokeColor = C4Pink
-        canvas.add(line)
-        
-        canvas.add(link)
-        
-        canvas.opacity = 0
-        
+    }
+    
+    func hideGesture() {
         canvas.addTapGestureRecognizer { location, state in
             self.hide()
         }
