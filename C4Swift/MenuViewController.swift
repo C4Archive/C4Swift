@@ -77,7 +77,7 @@ class MenuViewController: UIViewController {
         createLines()
         createMenuAnimations()
         createGesture()
-        layoutHighlight()
+        createMenuHighlight()
         createLogos()
         positionLogos()
         
@@ -483,23 +483,24 @@ class MenuViewController: UIViewController {
     }
     
     //FIXME: rename method and wedge
-    func layoutHighlight() {
+    func createMenuHighlight() {
+        menuHighlight = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
+        menuHighlight.fillColor = cosmosblue
+        menuHighlight.lineWidth = 0.0
+        menuHighlight.opacity = 0.8
+        menuHighlight.interactionEnabled = false
+        menuHighlight.layer?.anchorPoint = CGPointZero
+        menuHighlight.center = canvas.center
+        menuHighlight.hidden = true
+
         var path = C4Path()
         path.addEllipse(C4Rect(-156,-156,312,312))
         path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
         
         var donut = C4Shape(path)
         donut.fillRule = .EvenOdd
-        
-        menuHighlight = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
-        menuHighlight.fillColor = cosmosblue
-        menuHighlight.lineWidth = 0.0
-        menuHighlight.opacity = 0.8
-        menuHighlight.interactionEnabled = false
         menuHighlight.layer?.mask = donut.layer
-        menuHighlight.layer?.anchorPoint = CGPointZero
-        menuHighlight.center = canvas.center
-        menuHighlight.hidden = true
+
         canvas.add(menuHighlight)
     }
     
@@ -652,16 +653,6 @@ class MenuViewController: UIViewController {
     
     //MARK: Sign Icons
     var signIcons = [String:C4Shape]()
-    var iconsStrokeAnimation = C4ViewAnimation(duration:0.25) {}
-    
-    func createIconsStrokeAnimation() {
-        iconsStrokeAnimation = C4ViewAnimation(duration: 1.0) {
-            for shape in [C4Shape](self.signIcons.values) {
-                if(shape.strokeEnd < 1.0) { shape.strokeEnd = 1.0 }
-                else { shape.strokeEnd = 0.001 }
-            }
-        }
-    }
     
     func createLogos() {
         signIcons["aries"] = aries()
