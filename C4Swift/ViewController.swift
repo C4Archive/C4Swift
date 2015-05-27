@@ -40,11 +40,11 @@ class ViewController: UIViewController {
         audio2.play()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
     func grabSelection(selection: Int) {
         background.goto(selection)
+    }
+
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }
