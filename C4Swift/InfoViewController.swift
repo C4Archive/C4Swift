@@ -14,6 +14,7 @@ import C4Core
 import C4Animation
 
 class InfoViewController: UIViewController {
+    //MARK: Properties
     var link = C4TextShape(text: "www.c4ios.com", font: C4Font(name: "Menlo-Regular", size: 24))
     let logo = C4Image("logo")
     let textLabel = UILabel(frame: CGRectMake(0, 0, 240, 480))
@@ -25,6 +26,7 @@ class InfoViewController: UIViewController {
         addElementsToCanvas()
     }
     
+    //MARK: Methods
     func addElementsToCanvas() {
         canvas.add(textLabel)
         canvas.add(logo)
