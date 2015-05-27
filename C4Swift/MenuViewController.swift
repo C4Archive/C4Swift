@@ -17,81 +17,88 @@ typealias SelectionAction = (selection: Int) -> Void
 typealias InfoAction = () -> Void
 
 class MenuViewController: UIViewController {
+    //MARK: Properties
     var signProvider = AstrologicalSignProvider()
 
-    let revealMenuSound = C4AudioPlayer("menuOpen.mp3")
-    let hideMenuSound = C4AudioPlayer("menuClose.mp3")
     let tick = C4AudioPlayer("tick4.mp3")
+    let hideMenuSound = C4AudioPlayer("menuClose.mp3")
+    let revealMenuSound = C4AudioPlayer("menuOpen.mp3")
     
+    var menuVisible = false
     var menuHighlight = C4Wedge()
-    var out = true
-    
+    var menuDividingLines = [C4Line]()
     var menuRingsOut = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
     var menuRingsIn = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
     
-    var menuDividingLines = [C4Line]()
-    var menuVisible = false
     var shouldRevert = false
-    var logosOrder = ["pisces","aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius"]
     var currentSelection = 0
-    
+
     var rings = [C4Circle]()
-    var dashedRings = [C4Circle]()
-    var thickRing = C4Circle()
-    var thickRingFrames = [C4Rect]()
     var ringFrames = [C4Rect]()
 
-    var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
-    var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
+    var thickRing = C4Circle()
+    var thickRingFrames = [C4Rect]()
+
+    var dashedRings = [C4Circle]()
+    
     var infoLogo = C4Image("infoLight")
     var infoButtonView = C4View(frame: C4Rect(0,0,44,44))
-    var selectionAction : SelectionAction?
+    var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
+    var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
+
     var infoAction : InfoAction?
+    var selectionAction : SelectionAction?
     
     var timer = NSTimer()
-    
     var shadow = C4Shape()
     
     override func viewDidLoad() {
-
-        //FIXME: methodize
-        hideMenuSound.volume = 0.66
-        revealMenuSound.volume = 0.66
-        tick.volume = 0.4
-        
-        //FIXME: methodize
-        shadow = C4Rectangle(frame: canvas.frame)
-
         canvas.backgroundColor = clear
         canvas.frame = C4Rect(0,0,80,80)
         
-        //FIXME: methodize
+        adjustVolumes()
+        
+        createShadow()
+        createMenuRingsLines()
+        createMenuAnimations()
+        createMenuHighlight()
+        createGesture()
+        createSignIcons()
+        createTitleLabel()
+        createInstructionLabel()
+        createInfoViewButton()
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("showInstruction"), userInfo: nil, repeats: true)
+    }
+    
+    //MARK: Volume
+    func adjustVolumes() {
+        hideMenuSound.volume = 0.66
+        revealMenuSound.volume = 0.66
+        tick.volume = 0.4
+    }
+    
+    //MARK: Visual Elements
+    func createShadow() {
+        shadow = C4Rectangle(frame: C4Rect(UIScreen.mainScreen().bounds))
         shadow.fillColor = black
         shadow.lineWidth = 0
         shadow.opacity = 0.0
-        shadow.center = canvas.center
+        shadow.center = C4Point(canvas.width/2,canvas.height/2)
         canvas.add(shadow)
-        
-        //FIXME: make prettier
-        createRings()
-        createLines()
-        createMenuAnimations()
-        createGesture()
-        createMenuHighlight()
-        createLogos()
-        positionLogos()
-        
-        //FIXME: methodize
+    }
+    
+    func createTitleLabel() {
         titleLabel.font = UIFont(name: "Menlo-Regular", size: 13)
         titleLabel.textAlignment = .Center
         titleLabel.textColor = .whiteColor()
         titleLabel.userInteractionEnabled = false
         titleLabel.center = view.center
         titleLabel.text = ""
-        
         canvas.add(titleLabel)
-        
-        //FIXME: methodize
+    }
+    
+    func createInstructionLabel() {
         instructionLabel.text = "press and hold to open menu\nthen drag to choose a sign"
         instructionLabel.font = titleLabel.font
         instructionLabel.textAlignment = .Center
@@ -101,73 +108,26 @@ class MenuViewController: UIViewController {
         instructionLabel.numberOfLines = 2
         instructionLabel.alpha = 0.0
         canvas.add(instructionLabel)
-        
-        //FIXME: methodize
+    }
+    
+    func createInfoViewButton() {
         infoButtonView.add(infoLogo)
         infoLogo.center = infoButtonView.center
         infoButtonView.center = C4Point(canvas.center.x,canvas.center.y + 190)
         infoButtonView.opacity = 0.0
         canvas.add(infoButtonView)
-        
-        timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("showInstruction"), userInfo: nil, repeats: true)
     }
     
-    func showInstruction() {
-        let show = C4ViewAnimation(duration: 2.5) {
-            self.instructionLabel.alpha = 1.0
-        }
-        show.animate()
-    }
-    
-    func hideInstruction() {
-        timer.invalidate()
-        let hide = C4ViewAnimation(duration: 0.25) {
-            self.instructionLabel.alpha = 0.0
-        }
-        hide.animate()
-    }
-    
-    var innerTargets = [C4Point]()
-    var outerTargets = [C4Point]()
-    
-    //FIXME: make prettier, rename
-    func positionLogos() {
-        var r = 10.5
-        let dx = canvas.center.x
-        let dy = canvas.center.y
-        for i in 0..<logosOrder.count {
-            var ϴ = M_PI/6 * Double(i)
-            let name = logosOrder[i]
-            if let sign = signIcons[name] {
-                sign.center = C4Point(r * cos(ϴ) + dx, r * sin(ϴ) + dy)
-                canvas.add(sign)
-                
-                sign.anchorPoint = C4Point(0.5,0.5)
-                innerTargets.append(sign.center)
-            }
-        }
-        
-        for i in 0..<logosOrder.count {
-            let r = 129.0
-            let ϴ = M_PI/6 * Double(i) + M_PI/12.0
-            outerTargets.append(C4Point(r * cos(ϴ) + dx, r * sin(ϴ) + dy))
-        }
-    }
-   
-    //FIXME: make prettier
+    //MARK: Gesture
     func createGesture() {
         canvas.addLongPressGestureRecognizer { (location, state) -> () in
             switch state {
             case .Began:
                 self.revealMenu()
             case .Cancelled, .Ended, .Failed:
-                //FIXME: does this get set to true somewhere else?
                 self.canvas.interactionEnabled = false
                 if !self.menuHighlight.hidden {
-                    //FIXME: define elsewher?
-                    if let a = self.selectionAction {
-                        a(selection: self.currentSelection)
-                    }
+                    self.selectionAction!(selection: self.currentSelection)
                     self.menuHighlight.hidden = true
                 }
                 if self.menuVisible {
@@ -178,10 +138,7 @@ class MenuViewController: UIViewController {
     
                 if self.infoButtonView.hitTest(location, from: self.canvas) {
                     delay(0.75) {
-                        //FIXME: make prettier
-                        if let a = self.infoAction {
-                            a()
-                        }
+                        self.infoAction!()
                     }
                 }
                 self.titleLabel.text = ""
@@ -207,25 +164,30 @@ class MenuViewController: UIViewController {
         createMenuRingsInAnimations()
     }
     
-    //FIXME: rename add direction
-    func randomOut() {
-        var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
-        
-        for i in 0...11 {
-            delay(0.05*Double(i)) {
-                let randomIndex = random(below: indices.count)
-                let index = indices[randomIndex]
-                let a = C4ViewAnimation(duration: 0.1) {
-                    self.menuDividingLines[index].strokeEnd = 1.0
-                }
-                a.animate()
-                indices.removeAtIndex(randomIndex)
-            }
+    func showInstruction() {
+        let show = C4ViewAnimation(duration: 2.5) {
+            self.instructionLabel.alpha = 1.0
         }
+        show.animate()
     }
     
-    //FIXME: rename add direction
-    func randomIn() {
+    func hideInstruction() {
+        timer.invalidate()
+        let hide = C4ViewAnimation(duration: 0.25) {
+            self.instructionLabel.alpha = 0.0
+        }
+        hide.animate()
+    }
+    
+    func revealDividingLines() {
+        revealHideDividingLines(1.0)
+    }
+    
+    func hideDividingLines() {
+        revealHideDividingLines(0.0)
+    }
+
+    func revealHideDividingLines(target: Double) {
         var indices = [0,1,2,3,4,5,6,7,8,9,10,11]
         
         for i in 0...11 {
@@ -234,7 +196,7 @@ class MenuViewController: UIViewController {
                 let index = indices[randomIndex]
                 
                 let a = C4ViewAnimation(duration: 0.1) {
-                    self.menuDividingLines[index].strokeEnd = 0.0
+                    self.menuDividingLines[index].strokeEnd = target
                 }
                 a.animate()
                 indices.removeAtIndex(randomIndex)
@@ -245,11 +207,12 @@ class MenuViewController: UIViewController {
     var signIconsOut = C4ViewAnimation(duration: 0.25) {}
     var signIconsIn = C4ViewAnimation(duration: 0.25) {}
     var revealSignIcons = C4ViewAnimation(duration: 0.25) {}
+    var hideSignIcons = C4ViewAnimation(duration: 0.25) {}
     
     func createSignIconAnimations() {
         signIconsOut = C4ViewAnimation(duration: 0.33) {
-            for i in 0..<self.logosOrder.count {
-                let name = self.logosOrder[i]
+            for i in 0..<self.signProvider.order.count {
+                let name = self.signProvider.order[i]
                 if let sign = self.signIcons[name] {
                     sign.center = self.outerTargets[i]
                 }
@@ -264,6 +227,23 @@ class MenuViewController: UIViewController {
             }
         }
         revealSignIcons.curve = .EaseOut
+        
+        signIconsIn = C4ViewAnimation(duration: 0.33) {
+            for i in 0..<self.signProvider.order.count {
+                let name = self.signProvider.order[i]
+                if let sign = self.signIcons[name] {
+                    sign.center = self.innerTargets[i]
+                }
+            }
+        }
+        signIconsIn.curve = .EaseOut
+        
+        hideSignIcons = C4ViewAnimation(duration: 0.5) {
+            for sign in [C4Shape](self.signIcons.values) {
+                sign.strokeEnd = 0.001
+            }
+        }
+        hideSignIcons.curve = .EaseOut
     }
     
     var thickRingOut = C4ViewAnimation(duration: 0.25) {}
@@ -275,17 +255,29 @@ class MenuViewController: UIViewController {
             self.thickRing.updatePath()
         }
         thickRingOut.curve = .EaseOut
+        
+        thickRingIn = C4ViewAnimation(duration: 0.5) {
+            self.thickRing.frame = self.thickRingFrames[0]
+            self.thickRing.updatePath()
+        }
+        thickRingIn.curve = .EaseOut
     }
     
-    var dashedRingsReveal = C4ViewAnimation(duration: 0.25) {}
-    var dashedRingsHide = C4ViewAnimation(duration: 0.25) {}
+    var revealDashedRings = C4ViewAnimation(duration: 0.25) {}
+    var hideDashedRings = C4ViewAnimation(duration: 0.25) {}
     
     func createDashedRingAnimations() {
-        dashedRingsReveal = C4ViewAnimation(duration: 0.25) {
+        revealDashedRings = C4ViewAnimation(duration: 0.25) {
             self.dashedRings[0].lineWidth = 4
             self.dashedRings[1].lineWidth = 12
         }
-        dashedRingsReveal.curve = .EaseOut
+        revealDashedRings.curve = .EaseOut
+        
+        hideDashedRings = C4ViewAnimation(duration: 0.25) {
+            self.dashedRings[0].lineWidth = 0
+            self.dashedRings[1].lineWidth = 0
+        }
+        hideDashedRings.curve = .EaseOut
     }
     
     var revealInfoButton = C4ViewAnimation(duration: 0.25) {}
@@ -319,25 +311,22 @@ class MenuViewController: UIViewController {
     }
 
     
-    //FIXME: rework this
     func revealMenu() {
-        self.out = false
-        self.menuVisible = false
+        menuVisible = false
 
-        revealMenuSound.play()
         hideInstruction()
-
+        revealMenuSound.play()
         revealShadow.animate()
         thickRingOut.animate()
         menuRingsOut.animate()
         signIconsOut.animate()
         
         delay(0.33) {
-            self.randomOut()
+            self.revealDividingLines()
             self.revealSignIcons.animate()
         }
         delay(0.66) {
-            self.dashedRingsReveal.animate()
+            self.revealDashedRings.animate()
             self.revealInfoButton.animate()
         }
         delay(1.0) {
@@ -349,95 +338,25 @@ class MenuViewController: UIViewController {
         }
     }
     
-    //FIXME: rework this
     func hideMenu() {
+        menuVisible = false
+        
         hideMenuSound.play()
-        
-        self.out = true
-        self.randomIn()
-        
-        //FIXME: should be predefined elsewhere, instead of creating every time
-        let logosIn = C4ViewAnimation(duration: 0.33) {
-            for i in 0..<self.logosOrder.count {
-                let name = self.logosOrder[i]
-                if let sign = self.signIcons[name] {
-                    sign.center = self.innerTargets[i]
-                }
-            }
-        }
-        logosIn.curve = .EaseOut
-        
-        //FIXME: should be predefined elsewhere, instead of creating every time
-        let logosHide = C4ViewAnimation(duration: 0.5) {
-            for sign in [C4Shape](self.signIcons.values) {
-                sign.strokeEnd = 0.001
-            }
-        }
-        logosHide.curve = .EaseOut
-        
-        //FIXME: should be predefined elsewhere, instead of creating everfy time
-        let dashedCirclesHide = C4ViewAnimation(duration: 0.25) {
-            self.dashedRings[0].lineWidth = 0
-            self.dashedRings[1].lineWidth = 0
-        }
-        dashedCirclesHide.curve = .EaseOut
-        
-        dashedCirclesHide.animate()
-        
-        //FIXME: should be a "timing" section
-        C4ViewAnimation(duration:0.25) {
-            self.infoButtonView.opacity = 0.0
-        }.animate()
+        hideDividingLines()
+        hideDashedRings.animate()
+        hideInfoButton.animate()
 
         delay(0.16) {
-            logosHide.animate()
+            self.hideSignIcons.animate()
         }
         delay(0.57) {
             self.menuRingsIn.animate()
         }
         delay(0.66) {
-            logosIn.animate()
-            var thickCircleIn = C4ViewAnimation(duration: 0.5) {
-                self.thickRing.frame = self.thickRingFrames[0]
-                self.thickRing.updatePath()
-            }
-            thickCircleIn.curve = .EaseOut
-            thickCircleIn.animate()
+            self.signIconsIn.animate()
+            self.thickRingIn.animate()
+            self.hideShadow.animate()
             self.canvas.interactionEnabled = true
-        
-            C4ViewAnimation(duration:0.25) {
-                self.shadow.opacity = 0.0
-            }.animate()
-        }
-    }
-    
-    //FIXME: rename
-    func animateMenu(lines: [C4ViewAnimation]) {
-        let dt = 0.05
-        
-        for i in 0..<lines.count {
-            delay(dt*Double(i)){
-                lines[i].animate()
-            }
-        }
-    }
-    
-   //FIXME: rename, move to where we contstruct circles
-    func createLines() {
-        for i in 0...11 {
-            var line = C4Line([C4Point(),C4Point(54,0)])
-            C4ViewAnimation(duration: 0) {
-                line.layer?.anchorPoint = CGPointMake(-1.88888,0)
-                line.center = self.canvas.center
-                var rot = C4Transform()
-                rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
-                line.transform = rot
-                line.strokeColor = cosmosblue
-                line.lineWidth = 1.0
-                line.strokeEnd = 0.0
-                }.animate()
-            canvas.add(line)
-            menuDividingLines.append(line)
         }
     }
     
@@ -482,7 +401,6 @@ class MenuViewController: UIViewController {
         menuRingsIn = C4ViewAnimationSequence(animations: animationArray)
     }
     
-    //FIXME: rename method and wedge
     func createMenuHighlight() {
         menuHighlight = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
         menuHighlight.fillColor = cosmosblue
@@ -504,8 +422,6 @@ class MenuViewController: UIViewController {
         canvas.add(menuHighlight)
     }
     
-    
-    //FIXME: rename method to something more appropriate
     func updateMenuHighlight(location: C4Point) {
         
         let a = C4Vector(x:self.canvas.width / 2.0+1.0, y:self.canvas.height/2.0)
@@ -523,10 +439,8 @@ class MenuViewController: UIViewController {
             }
             
             var newSelection = Int(radToDeg(angle)) / 30
-            
-            titleLabel.text = logosOrder[newSelection].capitalizedString
-            
-            if self.currentSelection != newSelection {
+            if currentSelection != newSelection {
+                titleLabel.text = signProvider.order[newSelection].capitalizedString
                 tick.stop()
                 tick.play()
                 self.currentSelection = newSelection
@@ -544,10 +458,11 @@ class MenuViewController: UIViewController {
     }
     
     //MARK: Rings
-    func createRings() {
+    func createMenuRingsLines() {
         createThickRing()
         createThinRings()
         createDashedRings()
+        createMenuDividingLines()
     }
     
     func createThickRing() {
@@ -590,6 +505,24 @@ class MenuViewController: UIViewController {
         
         for ring in rings {
             canvas.add(ring)
+        }
+    }
+    
+    func createMenuDividingLines() {
+        for i in 0...11 {
+            var line = C4Line([C4Point(),C4Point(54,0)])
+            C4ViewAnimation(duration: 0) {
+                line.layer?.anchorPoint = CGPointMake(-1.88888,0)
+                line.center = self.canvas.center
+                var rot = C4Transform()
+                rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
+                line.transform = rot
+                line.strokeColor = cosmosblue
+                line.lineWidth = 1.0
+                line.strokeEnd = 0.0
+                }.animate()
+            canvas.add(line)
+            menuDividingLines.append(line)
         }
     }
     
@@ -654,7 +587,7 @@ class MenuViewController: UIViewController {
     //MARK: Sign Icons
     var signIcons = [String:C4Shape]()
     
-    func createLogos() {
+    func createSignIcons() {
         signIcons["aries"] = aries()
         signIcons["taurus"] = taurus()
         signIcons["gemini"] = gemini()
@@ -679,8 +612,35 @@ class MenuViewController: UIViewController {
                 shape.fillColor = clear
             }
         }.animate()
+        
+        positionSignIcons()
     }
-    
+
+    var innerTargets = [C4Point]()
+    var outerTargets = [C4Point]()
+
+    func positionSignIcons() {
+        var r = 10.5
+        let dx = canvas.center.x
+        let dy = canvas.center.y
+        for i in 0..<signProvider.order.count {
+            var ϴ = M_PI/6 * Double(i)
+            let name = signProvider.order[i]
+            if let sign = signIcons[name] {
+                sign.center = C4Point(r * cos(ϴ) + dx, r * sin(ϴ) + dy)
+                canvas.add(sign)
+                sign.anchorPoint = C4Point(0.5,0.5)
+                innerTargets.append(sign.center)
+            }
+        }
+        
+        for i in 0..<signProvider.order.count {
+            let r = 129.0
+            let ϴ = M_PI/6 * Double(i) + M_PI/12.0
+            outerTargets.append(C4Point(r * cos(ϴ) + dx, r * sin(ϴ) + dy))
+        }
+    }
+
     func taurus() -> C4Shape {
         var shape = signProvider.taurus().shape
         shape.anchorPoint = C4Point()
