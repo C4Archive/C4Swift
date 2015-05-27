@@ -135,8 +135,8 @@ class MenuViewController: UIViewController {
                 } else {
                     self.shouldRevert = true
                 }
-    
-                if self.infoButtonView.hitTest(location, from: self.canvas) {
+
+                if self.infoButtonView.hitTest(location) {
                     delay(0.75) {
                         self.infoAction!()
                     }
@@ -144,7 +144,7 @@ class MenuViewController: UIViewController {
                 self.titleLabel.text = ""
             case .Changed:
                 self.updateMenuHighlight(location)
-                if self.infoButtonView.hitTest(location, from: self.canvas) {
+                if self.infoButtonView.hitTest(location) {
                     self.titleLabel.text = "Info"
                 }
             default:
