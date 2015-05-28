@@ -20,7 +20,7 @@ class MenuViewController: UIViewController {
     //MARK: Properties
     lazy var signProvider = AstrologicalSignProvider()
 
-    let tick = C4AudioPlayer("tick4.mp3")
+    let tick = C4AudioPlayer("tick.mp3")
     let hideMenuSound = C4AudioPlayer("menuClose.mp3")
     let revealMenuSound = C4AudioPlayer("menuOpen.mp3")
     
@@ -136,7 +136,7 @@ class MenuViewController: UIViewController {
                     self.shouldRevert = true
                 }
 
-                if self.infoButtonView.hitTest(location) {
+                if self.infoButtonView.hitTest(location, from:self.canvas) {
                     delay(0.75) {
                         self.infoAction!()
                     }
@@ -144,7 +144,7 @@ class MenuViewController: UIViewController {
                 self.titleLabel.text = ""
             case .Changed:
                 self.updateMenuHighlight(location)
-                if self.infoButtonView.hitTest(location) {
+                if self.infoButtonView.hitTest(location, from:self.canvas) {
                     self.titleLabel.text = "Info"
                 }
             default:
@@ -444,7 +444,7 @@ class MenuViewController: UIViewController {
                 rotation.rotate(degToRad(Double(self.currentSelection) * 30.0), axis: C4Vector(x:0,y:0,z:-1))
                 self.menuHighlight.transform = rotation
             }
-        } else if self.infoButtonView.hitTest(location) {
+        } else if self.infoButtonView.hitTest(location, from:canvas) {
             menuHighlight.hidden = true
             titleLabel.text = "Info"
         } else {
