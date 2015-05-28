@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class InfiniteScrollView : UIScrollView {
-    internal var normalizedPosition = 0.0
+    lazy var normalizedPosition = 0.0
     
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -18,39 +18,39 @@ typealias InfoAction = () -> Void
 
 class MenuViewController: UIViewController {
     //MARK: Properties
-    var signProvider = AstrologicalSignProvider()
+    lazy var signProvider = AstrologicalSignProvider()
 
     let tick = C4AudioPlayer("tick4.mp3")
     let hideMenuSound = C4AudioPlayer("menuClose.mp3")
     let revealMenuSound = C4AudioPlayer("menuOpen.mp3")
     
-    var menuVisible = false
-    var menuHighlight = C4Wedge()
-    var menuDividingLines = [C4Line]()
-    var menuRingsOut = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
-    var menuRingsIn = C4ViewAnimationSequence(animations: [C4ViewAnimation]())
+    lazy var menuVisible = false
+    lazy var menuHighlight = C4Wedge()
+    lazy var menuDividingLines = [C4Line]()
+    var menuRingsOut : C4ViewAnimationSequence?
+    var menuRingsIn : C4ViewAnimationSequence?
     
-    var shouldRevert = false
-    var currentSelection = 0
+    lazy var shouldRevert = false
+    lazy var currentSelection = 0
 
-    var rings = [C4Circle]()
-    var ringFrames = [C4Rect]()
+    lazy var rings = [C4Circle]()
+    lazy var ringFrames = [C4Rect]()
 
-    var thickRing = C4Circle()
-    var thickRingFrames = [C4Rect]()
+    lazy var thickRing = C4Circle()
+    lazy var thickRingFrames = [C4Rect]()
 
-    var dashedRings = [C4Circle]()
+    lazy var dashedRings = [C4Circle]()
     
-    var infoLogo = C4Image("infoLight")
-    var infoButtonView = C4View(frame: C4Rect(0,0,44,44))
-    var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
-    var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
+    lazy var infoLogo = C4Image("infoLight")
+    lazy var infoButtonView = C4View(frame: C4Rect(0,0,44,44))
+    lazy var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
+    lazy var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
 
     var infoAction : InfoAction?
     var selectionAction : SelectionAction?
     
-    var timer = NSTimer()
-    var shadow = C4Shape()
+    var timer : NSTimer?
+    var shadow : C4Shape?
     
     override func viewDidLoad() {
         canvas.backgroundColor = clear
@@ -81,10 +81,10 @@ class MenuViewController: UIViewController {
     //MARK: Visual Elements
     func createShadow() {
         shadow = C4Rectangle(frame: C4Rect(UIScreen.mainScreen().bounds))
-        shadow.fillColor = black
-        shadow.lineWidth = 0
-        shadow.opacity = 0.0
-        shadow.center = C4Point(canvas.width/2,canvas.height/2)
+        shadow?.fillColor = black
+        shadow?.lineWidth = 0
+        shadow?.opacity = 0.0
+        shadow?.center = C4Point(canvas.width/2,canvas.height/2)
         canvas.add(shadow)
     }
     
@@ -165,18 +165,16 @@ class MenuViewController: UIViewController {
     }
     
     func showInstruction() {
-        let show = C4ViewAnimation(duration: 2.5) {
+        C4ViewAnimation(duration: 2.5) {
             self.instructionLabel.alpha = 1.0
-        }
-        show.animate()
+        }.animate()
     }
     
     func hideInstruction() {
-        timer.invalidate()
-        let hide = C4ViewAnimation(duration: 0.25) {
+        timer?.invalidate()
+        C4ViewAnimation(duration: 0.25) {
             self.instructionLabel.alpha = 0.0
-        }
-        hide.animate()
+        }.animate()
     }
     
     func revealDividingLines() {
@@ -195,19 +193,19 @@ class MenuViewController: UIViewController {
                 let randomIndex = random(below: indices.count)
                 let index = indices[randomIndex]
                 
-                let a = C4ViewAnimation(duration: 0.1) {
+                C4ViewAnimation(duration: 0.1) {
                     self.menuDividingLines[index].strokeEnd = target
-                }
-                a.animate()
+                }.animate()
+                
                 indices.removeAtIndex(randomIndex)
             }
         }
     }
     
-    var signIconsOut = C4ViewAnimation(duration: 0.25) {}
-    var signIconsIn = C4ViewAnimation(duration: 0.25) {}
-    var revealSignIcons = C4ViewAnimation(duration: 0.25) {}
-    var hideSignIcons = C4ViewAnimation(duration: 0.25) {}
+    var signIconsOut : C4ViewAnimation?
+    var signIconsIn : C4ViewAnimation?
+    var revealSignIcons : C4ViewAnimation?
+    var hideSignIcons : C4ViewAnimation?
     
     func createSignIconAnimations() {
         signIconsOut = C4ViewAnimation(duration: 0.33) {
@@ -219,14 +217,14 @@ class MenuViewController: UIViewController {
             }
         }
         
-        signIconsOut.curve = .EaseOut
+        signIconsOut?.curve = .EaseOut
         
         revealSignIcons = C4ViewAnimation(duration: 0.5) {
             for sign in [C4Shape](self.signIcons.values) {
                 sign.strokeEnd = 1.0
             }
         }
-        revealSignIcons.curve = .EaseOut
+        revealSignIcons?.curve = .EaseOut
         
         signIconsIn = C4ViewAnimation(duration: 0.33) {
             for i in 0..<self.signProvider.order.count {
@@ -236,98 +234,97 @@ class MenuViewController: UIViewController {
                 }
             }
         }
-        signIconsIn.curve = .EaseOut
+        signIconsIn?.curve = .EaseOut
         
         hideSignIcons = C4ViewAnimation(duration: 0.5) {
             for sign in [C4Shape](self.signIcons.values) {
                 sign.strokeEnd = 0.001
             }
         }
-        hideSignIcons.curve = .EaseOut
+        hideSignIcons?.curve = .EaseOut
     }
     
-    var thickRingOut = C4ViewAnimation(duration: 0.25) {}
-    var thickRingIn = C4ViewAnimation(duration: 0.25) {}
+    var thickRingOut : C4ViewAnimation?
+    var thickRingIn : C4ViewAnimation?
     
     func createThickRingAnimations() {
         thickRingOut = C4ViewAnimation(duration: 0.5) {
             self.thickRing.frame = self.thickRingFrames[1]
             self.thickRing.updatePath()
         }
-        thickRingOut.curve = .EaseOut
+        thickRingOut?.curve = .EaseOut
         
         thickRingIn = C4ViewAnimation(duration: 0.5) {
             self.thickRing.frame = self.thickRingFrames[0]
             self.thickRing.updatePath()
         }
-        thickRingIn.curve = .EaseOut
+        thickRingIn?.curve = .EaseOut
     }
     
-    var revealDashedRings = C4ViewAnimation(duration: 0.25) {}
-    var hideDashedRings = C4ViewAnimation(duration: 0.25) {}
+    var revealDashedRings : C4ViewAnimation?
+    var hideDashedRings : C4ViewAnimation?
     
     func createDashedRingAnimations() {
         revealDashedRings = C4ViewAnimation(duration: 0.25) {
             self.dashedRings[0].lineWidth = 4
             self.dashedRings[1].lineWidth = 12
         }
-        revealDashedRings.curve = .EaseOut
+        revealDashedRings?.curve = .EaseOut
         
         hideDashedRings = C4ViewAnimation(duration: 0.25) {
             self.dashedRings[0].lineWidth = 0
             self.dashedRings[1].lineWidth = 0
         }
-        hideDashedRings.curve = .EaseOut
+        hideDashedRings?.curve = .EaseOut
     }
     
-    var revealInfoButton = C4ViewAnimation(duration: 0.25) {}
-    var hideInfoButton = C4ViewAnimation(duration:0.25) {}
+    var revealInfoButton : C4ViewAnimation?
+    var hideInfoButton : C4ViewAnimation?
     
     func createInfoButtonAnimations() {
         revealInfoButton = C4ViewAnimation(duration:0.25) {
             self.infoButtonView.opacity = 1.0
         }
-        revealInfoButton.curve = .EaseOut
+        revealInfoButton?.curve = .EaseOut
         
         hideInfoButton = C4ViewAnimation(duration:0.25) {
             self.infoButtonView.opacity = 0.0
         }
-        hideInfoButton.curve = .EaseOut
+        hideInfoButton?.curve = .EaseOut
     }
 
-    var revealShadow = C4ViewAnimation(duration: 0.25) {}
-    var hideShadow = C4ViewAnimation(duration:0.25) {}
+    var revealShadow : C4ViewAnimation?
+    var hideShadow : C4ViewAnimation?
     
     func createShadowAnimations() {
         revealShadow = C4ViewAnimation(duration:0.25) {
-            self.shadow.opacity = 0.44
+            self.shadow?.opacity = 0.44
         }
-        revealShadow.curve = .EaseOut
+        revealShadow?.curve = .EaseOut
         
         hideShadow = C4ViewAnimation(duration:0.25) {
-            self.shadow.opacity = 0.0
+            self.shadow?.opacity = 0.0
         }
-        hideShadow.curve = .EaseOut
+        hideShadow?.curve = .EaseOut
     }
 
-    
     func revealMenu() {
         menuVisible = false
 
         hideInstruction()
         revealMenuSound.play()
-        revealShadow.animate()
-        thickRingOut.animate()
-        menuRingsOut.animate()
-        signIconsOut.animate()
+        revealShadow?.animate()
+        thickRingOut?.animate()
+        menuRingsOut?.animate()
+        signIconsOut?.animate()
         
         delay(0.33) {
             self.revealDividingLines()
-            self.revealSignIcons.animate()
+            self.revealSignIcons?.animate()
         }
         delay(0.66) {
-            self.revealDashedRings.animate()
-            self.revealInfoButton.animate()
+            self.revealDashedRings?.animate()
+            self.revealInfoButton?.animate()
         }
         delay(1.0) {
             self.menuVisible = true
@@ -343,19 +340,19 @@ class MenuViewController: UIViewController {
         
         hideMenuSound.play()
         hideDividingLines()
-        hideDashedRings.animate()
-        hideInfoButton.animate()
+        hideDashedRings?.animate()
+        hideInfoButton?.animate()
 
         delay(0.16) {
-            self.hideSignIcons.animate()
+            self.hideSignIcons?.animate()
         }
         delay(0.57) {
-            self.menuRingsIn.animate()
+            self.menuRingsIn?.animate()
         }
         delay(0.66) {
-            self.signIconsIn.animate()
-            self.thickRingIn.animate()
-            self.hideShadow.animate()
+            self.signIconsIn?.animate()
+            self.thickRingIn?.animate()
+            self.hideShadow?.animate()
             self.canvas.interactionEnabled = true
         }
     }
@@ -387,10 +384,9 @@ class MenuViewController: UIViewController {
             let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
                 var circle = self.rings[self.rings.count - i]
                 if self.rings.count - i > 0 {
-                    let opacity = C4ViewAnimation(duration: 0.0375, animations: { () -> Void in
+                    C4ViewAnimation(duration: 0.0375) {
                         circle.opacity = 0.0
-                    })
-                    opacity.animate()
+                    }.animate()
                 }
                 circle.frame = self.ringFrames[self.rings.count - i]
                 circle.updatePath()
