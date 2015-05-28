@@ -17,7 +17,7 @@ typealias SignClosure = () -> (big:[C4Point],small:[C4Point],lines:[[C4Point]])
 
 class BackgroundViewController: UIViewController, UIScrollViewDelegate {
     //MARK: Properties
-    lazy var scrollviewOffsetContext = 0
+    var scrollviewOffsetContext = 0
 
     lazy var signProvider = AstrologicalSignProvider()
     
@@ -55,14 +55,13 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         scrollviews.append(createBackgroundStars(speeds[4],imageName: "07Star",starCount: 20))
         scrollviews.append(createSignLines())
         scrollviews.append(createSmallStars())
-        scrollviews.append(createBigStars())
+        let bigStars = createBigStars()
+        scrollviews.append(bigStars)
+        
+        bigStars.contentOffset = CGPointMake(view.frame.size.width * CGFloat(gapBetweenSigns / 2.0), 0)
         
         for scrollview in scrollviews {
             canvas.add(scrollview)
-            
-            if scrollview == scrollviews.last {
-                scrollview.contentOffset = CGPointMake(view.frame.size.width * CGFloat(gapBetweenSigns / 2.0), 0)
-            }
         }
     }
     
