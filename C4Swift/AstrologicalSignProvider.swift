@@ -20,8 +20,6 @@ struct AstrologicalSign {
     var lines = [[C4Point]]()
 }
 
-//FIXME: will need to explain diff small / big
-//FIXME: combine w/ logos?
 class AstrologicalSignProvider : NSObject {
     let order = ["pisces", "aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius"]
     //FIXME: will need to explain "why" mappings

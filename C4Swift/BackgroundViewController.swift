@@ -17,19 +17,19 @@ typealias SignClosure = () -> (big:[C4Point],small:[C4Point],lines:[[C4Point]])
 
 class BackgroundViewController: UIViewController, UIScrollViewDelegate {
     //MARK: Properties
-    var scrollviewOffsetContext = 0
+    lazy var scrollviewOffsetContext = 0
 
-    let signProvider = AstrologicalSignProvider()
+    lazy var signProvider = AstrologicalSignProvider()
     
-    var signLines = [[C4Line]]()
-    var currentSignLines = [C4Line]()
-    var scrollviews = [InfiniteScrollView]()
+    lazy var signLines = [[C4Line]]()
+    lazy var currentSignLines = [C4Line]()
+    lazy var scrollviews = [InfiniteScrollView]()
     
-    var snapTargets = [CGFloat]()
+    lazy var snapTargets = [CGFloat]()
     
-    var gapBetweenSigns = 10.0
-    var signCount : CGFloat = 12.0
-    var speeds : [CGFloat] = [0.08,0.0,0.10,0.12,0.15,1.0,0.8,1.0]
+    lazy var gapBetweenSigns = 10.0
+    let signCount : CGFloat = 12.0
+    let speeds : [CGFloat] = [0.08,0.0,0.10,0.12,0.15,1.0,0.8,1.0]
     
     override func viewDidLoad() {
         canvas.backgroundColor = cosmosbkgd
