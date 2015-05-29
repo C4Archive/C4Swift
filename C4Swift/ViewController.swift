@@ -11,7 +11,7 @@ import C4UI
 import C4Core
 import C4Animation
 
-class ViewController: UIViewController {
+class ViewController: C4CanvasController {
 
     override func viewDidLoad() {
         //work your magic here
