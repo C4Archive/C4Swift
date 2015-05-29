@@ -11,20 +11,20 @@ import C4UI
 import C4Core
 import C4Animation
 
-class ViewController: C4CanvasController {
 let cosmosprpl = C4Color(red:0.565, green: 0.075, blue: 0.996, alpha: 1.0)
 let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)
 let cosmosbkgd = C4Color(red: 0.078, green: 0.118, blue: 0.306, alpha: 1.0)
 
-let audio1 = C4AudioPlayer("audio1.mp3")
-let audio2 = C4AudioPlayer("audio2.mp3")
-
-class ViewController: UIViewController {
+class ViewController: C4CanvasController {
+    
+    let audio1 = C4AudioPlayer("audio1.mp3")
+    let audio2 = C4AudioPlayer("audio2.mp3")
+    
     let menu = MenuViewController()
     let info = InfoViewController()
     let background = BackgroundViewController()
     
-    override func viewDidLoad() {
+    override func setup() {
         canvas.add(background.canvas)
         canvas.add(menu.canvas)
         menu.canvas.center = canvas.center
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         
         audio1.loops = true
         audio1.play()
-
+        
         audio2.loops = true
         audio2.play()
     }
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
     func grabSelection(selection: Int) {
         background.goto(selection)
     }
-
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }

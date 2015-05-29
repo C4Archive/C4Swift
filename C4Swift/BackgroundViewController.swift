@@ -15,7 +15,7 @@ import C4Animation
 
 typealias SignClosure = () -> (big:[C4Point],small:[C4Point],lines:[[C4Point]])
 
-class BackgroundViewController: UIViewController, UIScrollViewDelegate {
+class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
     //MARK: Properties
     var scrollviewOffsetContext = 0
 
@@ -31,7 +31,7 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
     let signCount : CGFloat = 12.0
     let speeds : [CGFloat] = [0.08,0.0,0.10,0.12,0.15,1.0,0.8,1.0]
     
-    override func viewDidLoad() {
+    override func setup() {
         canvas.backgroundColor = cosmosbkgd
         createScrollviews()
         createSnapTargets()
@@ -216,29 +216,28 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
         let marker = C4Line(points)
         let dashes = C4Line(points)
         
-        C4ViewAnimation(duration: 0.0) {
-            marker.lineDashPattern = [1.0,self.canvas.width * self.gapBetweenSigns-1.0]
-            marker.lineWidth = 40
-            marker.strokeColor = white
-            marker.lineDashPhase = -self.canvas.width/2
-            marker.opacity = 0.33
-            marker.origin = C4Point(0,self.canvas.height)
-            
-            let dw = (12.0 * self.canvas.width * self.gapBetweenSigns / 600.0)
-            
-            dashes.lineDashPattern = [0.75,3.25]
-            dashes.lineWidth = 10
-            dashes.strokeColor = cosmosblue
-            dashes.opacity = 0.33
-            
-            let highdashes = C4Line(points)
-            highdashes.lineDashPattern = [1,31]
-            highdashes.lineWidth = 20
-            highdashes.strokeColor = cosmosblue
-            dashes.add(highdashes)
-            
-            dashes.origin = marker.origin
-        }.animate()
+        marker.lineDashPattern = [1.0,self.canvas.width * self.gapBetweenSigns-1.0]
+        marker.lineWidth = 40
+        marker.strokeColor = white
+        marker.lineDashPhase = -self.canvas.width/2
+        marker.opacity = 0.33
+        marker.origin = C4Point(0,self.canvas.height)
+        
+        let dw = (12.0 * self.canvas.width * self.gapBetweenSigns / 600.0)
+        
+        dashes.lineDashPattern = [0.75,3.25]
+        dashes.lineWidth = 10
+        dashes.strokeColor = cosmosblue
+        dashes.opacity = 0.33
+        
+        let highdashes = C4Line(points)
+        highdashes.lineDashPattern = [1,31]
+        highdashes.lineWidth = 20
+        highdashes.strokeColor = cosmosblue
+        dashes.add(highdashes)
+        
+        dashes.origin = marker.origin
+
         sv.add(dashes)
         sv.add(marker)
     }
@@ -295,15 +294,14 @@ class BackgroundViewController: UIViewController, UIScrollViewDelegate {
                     var end = points[1]
                     end.transform(t)
                     
-                    C4ViewAnimation(duration: 0.0) {
-                        let line = C4Line([begin,end])
-                        line.strokeEnd = 0.0
-                        line.lineWidth = 1.0
-                        line.strokeColor = cosmosprpl
-                        line.opacity = 0.4
-                        sv.add(line)
-                        currentLineSet.append(line)
-                        }.animate()
+                    let line = C4Line([begin,end])
+                    line.strokeEnd = 0.0
+                    line.lineWidth = 1.0
+                    line.strokeColor = cosmosprpl
+                    line.opacity = 0.4
+
+                    sv.add(line)
+                    currentLineSet.append(line)
                 }
                 signLines.append(currentLineSet)
             }

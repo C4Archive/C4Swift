@@ -16,7 +16,7 @@ import C4Animation
 typealias SelectionAction = (selection: Int) -> Void
 typealias InfoAction = () -> Void
 
-class MenuViewController: UIViewController {
+class MenuViewController: C4CanvasController {
     //MARK: Properties
     lazy var signProvider = AstrologicalSignProvider()
 
@@ -52,7 +52,7 @@ class MenuViewController: UIViewController {
     var timer : NSTimer?
     var shadow : C4Shape?
     
-    override func viewDidLoad() {
+    override func setup() {
         canvas.backgroundColor = clear
         canvas.frame = C4Rect(0,0,80,80)
         
@@ -467,12 +467,10 @@ class MenuViewController: UIViewController {
         let outer = C4Circle(center: canvas.center, radius: 225)
         thickRingFrames = [inner.frame,outer.frame]
 
-        C4ViewAnimation(duration: 0.0) {
-            self.thickRing.fillColor = clear
-            self.thickRing.lineWidth = 3
-            self.thickRing.strokeColor = cosmosblue
-            self.thickRing.interactionEnabled = false
-        }.animate()
+        self.thickRing.fillColor = clear
+        self.thickRing.lineWidth = 3
+        self.thickRing.strokeColor = cosmosblue
+        self.thickRing.interactionEnabled = false
 
         canvas.add(thickRing)
     }
@@ -485,19 +483,17 @@ class MenuViewController: UIViewController {
         rings.append(C4Circle(center: canvas.center, radius: 102))
         rings.append(C4Circle(center: canvas.center, radius: 156))
         
-        C4ViewAnimation(duration: 0.0) {
-            for i in 0..<self.rings.count {
-                var ring = self.rings[i]
-                ring.fillColor = clear
-                ring.lineWidth = 1
-                ring.strokeColor = cosmosblue
-                ring.interactionEnabled = false
-                if i > 0 {
-                    ring.opacity = 0.0
-                }
-                self.ringFrames.append(ring.frame)
+        for i in 0..<self.rings.count {
+            var ring = self.rings[i]
+            ring.fillColor = clear
+            ring.lineWidth = 1
+            ring.strokeColor = cosmosblue
+            ring.interactionEnabled = false
+            if i > 0 {
+                ring.opacity = 0.0
             }
-            }.animate()
+            self.ringFrames.append(ring.frame)
+        }
         
         for ring in rings {
             canvas.add(ring)
@@ -507,16 +503,14 @@ class MenuViewController: UIViewController {
     func createMenuDividingLines() {
         for i in 0...11 {
             var line = C4Line([C4Point(),C4Point(54,0)])
-            C4ViewAnimation(duration: 0) {
-                line.layer?.anchorPoint = CGPointMake(-1.88888,0)
-                line.center = self.canvas.center
-                var rot = C4Transform()
-                rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
-                line.transform = rot
-                line.strokeColor = cosmosblue
-                line.lineWidth = 1.0
-                line.strokeEnd = 0.0
-                }.animate()
+            line.layer?.anchorPoint = CGPointMake(-1.88888,0)
+            line.center = self.canvas.center
+            var rot = C4Transform()
+            rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
+            line.transform = rot
+            line.strokeColor = cosmosblue
+            line.lineWidth = 1.0
+            line.strokeEnd = 0.0
             canvas.add(line)
             menuDividingLines.append(line)
         }
@@ -524,40 +518,36 @@ class MenuViewController: UIViewController {
     
     func createShortDashedRing() {
         let shortDashedRing = C4Circle(center: canvas.center, radius: 82+2)
-        C4ViewAnimation(duration: 0.0) {
-            let pattern = [1.465,1.465,1.465,1.465,1.465,1.465,1.465,1.465*3.0] as [NSNumber]
-            shortDashedRing.lineDashPattern = pattern
-            shortDashedRing.strokeEnd = 0.995
+        let pattern = [1.465,1.465,1.465,1.465,1.465,1.465,1.465,1.465*3.0] as [NSNumber]
+        shortDashedRing.lineDashPattern = pattern
+        shortDashedRing.strokeEnd = 0.995
 
-            var rotation = C4Transform()
-            rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
-            shortDashedRing.transform = rotation
-            
-            shortDashedRing.lineWidth = 0
-        }.animate()
+        var rotation = C4Transform()
+        rotation.rotate(-3.0*M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+        shortDashedRing.transform = rotation
+        
+        shortDashedRing.lineWidth = 0
         dashedRings.append(shortDashedRing)
     }
     
     func createLongDashedRing() {
         let longDashedRing = C4Circle(center: canvas.center, radius: 82+2)
         
-        C4ViewAnimation(duration: 0.0) {
-            longDashedRing.lineWidth = 0
-            
-            let pattern = [1.465,1.465*9.0] as [NSNumber]
-            longDashedRing.lineDashPattern = pattern
-            longDashedRing.strokeEnd = 0.995
-            
-            var rotation = C4Transform()
-            rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
-            longDashedRing.transform = rotation
+        longDashedRing.lineWidth = 0
+        
+        let pattern = [1.465,1.465*9.0] as [NSNumber]
+        longDashedRing.lineDashPattern = pattern
+        longDashedRing.strokeEnd = 0.995
+        
+        var rotation = C4Transform()
+        rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
+        longDashedRing.transform = rotation
 
-            var mask = C4Circle(center: C4Point(longDashedRing.width/2.0,longDashedRing.height/2.0), radius: 82+4)
-            mask.fillColor = clear
-            mask.strokeColor = red
-            mask.lineWidth = 8
-            longDashedRing.layer?.mask = mask.layer
-        }.animate()
+        var mask = C4Circle(center: C4Point(longDashedRing.width/2.0,longDashedRing.height/2.0), radius: 82+4)
+        mask.fillColor = clear
+        mask.strokeColor = red
+        mask.lineWidth = 8
+        longDashedRing.layer?.mask = mask.layer
 
         dashedRings.append(longDashedRing)
     }
@@ -566,14 +556,12 @@ class MenuViewController: UIViewController {
         createShortDashedRing()
         createLongDashedRing()
 
-        C4ViewAnimation(duration: 0.0) {
-            for ring in self.dashedRings {
-                ring.strokeColor = cosmosblue
-                ring.fillColor = clear
-                ring.interactionEnabled = false
-                self.canvas.add(ring)
-            }
-        }.animate()
+        for ring in self.dashedRings {
+            ring.strokeColor = cosmosblue
+            ring.fillColor = clear
+            ring.interactionEnabled = false
+            self.canvas.add(ring)
+        }
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -597,17 +585,15 @@ class MenuViewController: UIViewController {
         signIcons["aquarius"] = aquarius()
         signIcons["pisces"] = pisces()
         
-        C4ViewAnimation(duration: 0) {
-            for shape in [C4Shape](self.signIcons.values) {
-                shape.strokeEnd = 0.001
-                shape.transform = C4Transform.makeScale(0.64, 0.64, 1.0)
-                shape.lineCap = .Round
-                shape.lineJoin = .Round
-                shape.lineWidth = 2
-                shape.strokeColor = white
-                shape.fillColor = clear
-            }
-        }.animate()
+        for shape in [C4Shape](self.signIcons.values) {
+            shape.strokeEnd = 0.001
+            shape.transform = C4Transform.makeScale(0.64, 0.64, 1.0)
+            shape.lineCap = .Round
+            shape.lineJoin = .Round
+            shape.lineWidth = 2
+            shape.strokeColor = white
+            shape.fillColor = clear
+        }
         
         positionSignIcons()
     }
