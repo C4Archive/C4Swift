@@ -445,6 +445,7 @@
 
 /* Begin PBXTargetDependency section */
 		611A13E81B16897F00A9A4B1 /* PBXTargetDependency */ = {
+<<<<<<< HEAD
 			isa = PBXTargetDependency;
 			name = C4UI;
 			targetProxy = 611A13E71B16897F00A9A4B1 /* PBXContainerItemProxy */;
@@ -472,6 +473,35 @@
 		611A14051B168A3400A9A4B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = C4Animation;
+=======
+			isa = PBXTargetDependency;
+			name = C4UI;
+			targetProxy = 611A13E71B16897F00A9A4B1 /* PBXContainerItemProxy */;
+		};
+		611A13EA1B16897F00A9A4B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Core;
+			targetProxy = 611A13E91B16897F00A9A4B1 /* PBXContainerItemProxy */;
+		};
+		611A13EC1B16897F00A9A4B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Animation;
+			targetProxy = 611A13EB1B16897F00A9A4B1 /* PBXContainerItemProxy */;
+		};
+		611A13FD1B168A3400A9A4B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4UI;
+			targetProxy = 611A13FC1B168A3400A9A4B1 /* PBXContainerItemProxy */;
+		};
+		611A14011B168A3400A9A4B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Core;
+			targetProxy = 611A14001B168A3400A9A4B1 /* PBXContainerItemProxy */;
+		};
+		611A14051B168A3400A9A4B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = C4Animation;
+>>>>>>> origin/cosmos-integrated
 			targetProxy = 611A14041B168A3400A9A4B1 /* PBXContainerItemProxy */;
 		};
 		D928B56D1A004E3200B0E813 /* PBXTargetDependency */ = {
@@ -586,8 +616,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -603,8 +634,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;

@@ -36,7 +36,6 @@ class ViewController: C4CanvasController {
         
         audio1.loops = true
         audio1.play()
-        
         audio2.loops = true
         audio2.play()
     }
@@ -44,7 +43,7 @@ class ViewController: C4CanvasController {
     func grabSelection(selection: Int) {
         background.goto(selection)
     }
-    
+
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
