@@ -14,10 +14,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let navController = UINavigationController()
+        let viewController = ViewController()
+        navController.addChildViewController(viewController)
+        navController.navigationBar.translucent = false
+        
+        self.window?.rootViewController = navController
+        
+        //        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        let blue = UIColor(red: 0.0, green: 0.616, blue: 0.875, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = blue
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: blue]
+        
+        setStatusBarColor(blue)
         return true
     }
 
+    func setStatusBarColor(color: UIColor)
+    {
+        let statusBarWindow = UIApplication.sharedApplication().valueForKey("statusBarWindow") as! UIWindow
+        let statusBar = statusBarWindow.valueForKey("statusBar") as! NSObject
+        let key = "foregroundColor"
+        let sel = NSSelectorFromString(key)
+        
+        if statusBar.respondsToSelector(sel) {
+            statusBar.setValue(color, forKey: key)
+        }
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
