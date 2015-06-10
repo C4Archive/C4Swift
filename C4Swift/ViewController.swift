@@ -92,7 +92,7 @@ class ViewController: C4CanvasController, UIAlertViewDelegate {
         alternativeSuppliers.add(createRequisitionButton)
         
         createRequisitionButton.addTapGestureRecognizer { (location, state) -> () in
-            let alert = UIAlertView(title: "Requisition has been created.", message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "ok")
+            let alert = UIAlertView(title: "Requisition has been created.", message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "OK")
             alert.show()
             alert.delegate = self
         }
@@ -192,7 +192,7 @@ class ViewController: C4CanvasController, UIAlertViewDelegate {
     }
     
     func setupCylinderHeadPopup() {
-        let cylinderHeadButton = C4Rectangle(frame: C4Rect(0,107,346,66))
+        let cylinderHeadButton = C4Rectangle(frame: C4Rect(480,107,135,66))
         cylinderHeadButton.fillColor = clear
         cylinderHeadButton.strokeColor = clear
         
