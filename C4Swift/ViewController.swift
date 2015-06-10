@@ -11,7 +11,7 @@ import C4UI
 import C4Core
 import C4Animation
 
-class ViewController: C4CanvasController {
+class ViewController: C4CanvasController, UIAlertViewDelegate {
     let productionPlanningRed = C4Image("productionPlanningRed")
     let productionPlanningBlue = C4Image("productionPlanningBlue")
     let productionPlanningPopup = C4Image("productionPlanningPopup")
@@ -92,17 +92,9 @@ class ViewController: C4CanvasController {
         alternativeSuppliers.add(createRequisitionButton)
         
         createRequisitionButton.addTapGestureRecognizer { (location, state) -> () in
-            self.productionPlanningBlue.hidden = false
-            self.pop(self.alternativeSuppliers)
-            delay(0.5) {
-                self.monarkMark.hidden = false
-                self.densoMark.hidden = true
-                self.densoLine.opacity = 0.0
-                self.densoDays.opacity = 0.0
-                self.monarkLine.opacity = 1.0
-                self.monarkDay.opacity = 1.0
-                self.alternativeSuppliersScrollview.contentOffset = CGPointZero
-            }
+            let alert = UIAlertView(title: "Requisition has been created.", message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "ok")
+            alert.show()
+            alert.delegate = self
         }
         
         densoButton.addTapGestureRecognizer { (location, state) -> () in
@@ -207,7 +199,7 @@ class ViewController: C4CanvasController {
         cylinderHeadButton.addTapGestureRecognizer { location, state in
             self.reveal(self.cylinderHeadPopup)
             delay(0.5) {
-                C4ViewAnimation(duration: 0.25) {
+                C4ViewAnimation(duration: 0.66) {
                     self.cylinderHeadPopupLinesMask.origin = C4Point()
                     }.animate()
             }
@@ -215,7 +207,7 @@ class ViewController: C4CanvasController {
         
         primaryEngineAssembly.add(cylinderHeadButton)
         
-        cylinderHeadPopup.origin = C4Point(244,70)
+        cylinderHeadPopup.origin = C4Point(554,70)
         cylinderHeadPopup.opacity = 0.0
         cylinderHeadPopup.shadow.opacity = 0.25
         cylinderHeadPopup.shadow.offset = C4Size(2,2)
@@ -227,6 +219,22 @@ class ViewController: C4CanvasController {
         cylinderHeadPopupLinesMask = C4Rectangle(frame: cylinderHeadPopupLines.bounds)
         cylinderHeadPopupLinesMask.origin = C4Point(-cylinderHeadPopupLinesMask.width,0)
         cylinderHeadPopupLines.layer?.mask = cylinderHeadPopupLinesMask.layer
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        self.productionPlanningBlue.hidden = false
+        delay(0.25) {
+            self.pop(self.alternativeSuppliers)
+        }
+        delay(0.75) {
+            self.monarkMark.hidden = false
+            self.densoMark.hidden = true
+            self.densoLine.opacity = 0.0
+            self.densoDays.opacity = 0.0
+            self.monarkLine.opacity = 1.0
+            self.monarkDay.opacity = 1.0
+            self.alternativeSuppliersScrollview.contentOffset = CGPointZero
+        }
     }
     
     func setupPrimaryEngineAssemblyPopup() {
@@ -249,9 +257,9 @@ class ViewController: C4CanvasController {
         primaryEngineAssemblySourceButton.addTapGestureRecognizer { location, state in
             self.reveal(self.primaryEngineAssemblySourcePopup)
             delay(0.5) {
-                C4ViewAnimation(duration: 0.25) {
+                C4ViewAnimation(duration: 0.66) {
                     self.primaryEngineAssemblySourcePopupLineMask.origin = C4Point()
-                    }.animate()
+                }.animate()
             }
         }
         
