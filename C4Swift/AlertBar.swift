@@ -17,7 +17,7 @@ public class AlertBar : C4CanvasController {
     var isRed = true
 
     override public func setup() {
-        canvas.frame = C4Rect(0,0,canvas.width,66)
+        canvas.frame = C4Rect(0,-66,canvas.width,66)
         canvas.backgroundColor = C4Color(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
         
         var center = canvas.center
@@ -32,7 +32,7 @@ public class AlertBar : C4CanvasController {
         canvas.add(blueAlertMessage)
         
         canvas.shadow.offset = C4Size(0,2)
-        canvas.shadow.opacity = 0.33
+        canvas.shadow.opacity = 0.0
     }
     
     public func red() {
