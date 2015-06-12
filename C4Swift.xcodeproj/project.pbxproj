@@ -14,6 +14,7 @@
 		D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D928B5641A004E3200B0E813 /* LaunchScreen.xib */; };
 		D928B5721A004E3200B0E813 /* C4SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B5711A004E3200B0E813 /* C4SwiftTests.swift */; };
 		D9615D431B2B8011006E9233 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9615D421B2B8011006E9233 /* Graph.swift */; };
+		D9615D531B2B8F13006E9233 /* AlertBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9615D521B2B8F13006E9233 /* AlertBar.swift */; };
 		D9BFF0DB1B15005C00560081 /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
 		D9BFF0DC1B15005C00560081 /* C4UI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D9BFF0DF1B15005C00560081 /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
@@ -144,6 +145,7 @@
 		D928B5711A004E3200B0E813 /* C4SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C4SwiftTests.swift; sourceTree = "<group>"; };
 		D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = C4iOS.xcodeproj; path = ../../../Development/C4iOS/C4iOS.xcodeproj; sourceTree = "<group>"; };
 		D9615D421B2B8011006E9233 /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		D9615D521B2B8F13006E9233 /* AlertBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 			children = (
 				D928B55B1A004E3200B0E813 /* AppDelegate.swift */,
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
+				D9615D521B2B8F13006E9233 /* AlertBar.swift */,
 				D9615D421B2B8011006E9233 /* Graph.swift */,
 				D928B55F1A004E3200B0E813 /* Main.storyboard */,
 				D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */,
@@ -399,6 +402,7 @@
 			files = (
 				D9615D431B2B8011006E9233 /* Graph.swift in Sources */,
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
+				D9615D531B2B8F13006E9233 /* AlertBar.swift in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

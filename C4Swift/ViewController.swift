@@ -13,6 +13,8 @@ import C4Animation
 
 class ViewController: C4CanvasController {
     let bg = C4Image("statusBarBG1px")
+    let alertBar = AlertBar()
+    
     override func setup() {
         view.backgroundColor = UIColor(patternImage: bg.uiimage)
         var neutech = UIImage(named: "neutech")
@@ -25,6 +27,9 @@ class ViewController: C4CanvasController {
         var gears = UIImage(named: "gears")
         gears = gears?.imageWithRenderingMode(.AlwaysOriginal)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: gears, landscapeImagePhone: gears, style: .Plain, target: nil, action: nil)
+
+        self.navigationController?.view.add(alertBar.canvas)
+        
     }
     
     func reset() {
