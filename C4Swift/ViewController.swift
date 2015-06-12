@@ -21,6 +21,10 @@ class ViewController: C4CanvasController {
     let brakeTemp01 = C4Image("brakeTemp01")
     let brakeTemp02 = C4Image("brakeTemp02")
     let brakeTempOverlay = C4Image("brakeTempOverlay")
+    var popup = C4Rectangle(frame: C4Rect())
+    var popupImage = C4Image("popup")
+    var yesButton = C4Circle(center: C4Point(269,305), radius: 8)
+    var noButton = C4Circle(center: C4Point(355,305), radius: 8)
     
     override func setup() {
         view.backgroundColor = UIColor(patternImage: bg.uiimage)
@@ -66,6 +70,34 @@ class ViewController: C4CanvasController {
         brakeImageContainer.origin = C4Point(461,572)
         brakeImageContainer.add(brakeTemp01)
         canvas.add(brakeImageContainer)
+        
+        popup.interactionEnabled = false
+        popup.frame = screen1.bounds
+        popupImage.center = popup.center
+        popup.add(popupImage)
+        popup.origin = screen1.origin
+        popup.backgroundColor = C4Color(red: 0, green: 0, blue: 0, alpha: 0.4)
+        popup.opacity = 0.0
+        canvas.add(popup)
+    
+        popupImage.interactionEnabled = true
+        yesButton.fillColor = clear
+        yesButton.strokeColor = clear
+        popupImage.add(yesButton)
+
+        yesButton.addTapGestureRecognizer { (location, state) -> () in
+            self.yesButton.fillColor = green
+            self.noButton.fillColor = clear
+        }
+
+        noButton.fillColor = clear
+        noButton.strokeColor = clear
+        popupImage.add(noButton)
+        
+        noButton.addTapGestureRecognizer { (location, state) -> () in
+            self.yesButton.fillColor = clear
+            self.noButton.fillColor = green
+        }
     }
     
     func reset() {
@@ -81,6 +113,14 @@ class ViewController: C4CanvasController {
     }
     
     func revealPopup() {
-        
+        popup.interactionEnabled = true
+        C4ViewAnimation(duration: 0.5) {
+            self.popup.opacity = 1.0
+        }.animate()
+        delay(0.25) {
+            C4ViewAnimation(duration: 0.25) {
+                self.popupImage.opacity = 1.0
+            }.animate()
+       }
     }
 }
