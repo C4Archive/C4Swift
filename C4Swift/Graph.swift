@@ -1,25 +1,24 @@
 //
-//  ViewController.swift
+//  Graph.swift
 //  C4Swift
 //
-//  Created by travis on 2014-10-28.
-//  Copyright (c) 2014 C4. All rights reserved.
+//  Created by travis on 2015-06-12.
+//  Copyright (c) 2015 C4. All rights reserved.
 //
 
-import UIKit
-import C4UI
+import Foundation
 import C4Core
+import C4UI
 import C4Animation
 
-class ViewController: C4CanvasController {
+class Graph : C4CanvasController {
     var displaylink : CADisplayLink?
     var points = [C4Point]()
     let dx = 2.0
     
     var poly = C4Shape()
-    var polyPath = C4Path()
     
-    override func viewDidLoad() {
+    override func setup() {
         displaylink = CADisplayLink(target: self, selector: Selector("update"))
         displaylink?.frameInterval = 2
         displaylink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
@@ -64,4 +63,5 @@ class ViewController: C4CanvasController {
             updatePath()
         }
     }
+
 }
