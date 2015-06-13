@@ -244,9 +244,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D928B5551A004E3200B0E813 /* C4Swift */ = {
+		D928B5551A004E3200B0E813 /* DriveOn */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D928B5751A004E3200B0E813 /* Build configuration list for PBXNativeTarget "C4Swift" */;
+			buildConfigurationList = D928B5751A004E3200B0E813 /* Build configuration list for PBXNativeTarget "DriveOn" */;
 			buildPhases = (
 				D928B5521A004E3200B0E813 /* Sources */,
 				D928B5531A004E3200B0E813 /* Frameworks */,
@@ -263,7 +263,7 @@
 				D9BFF0E21B15005C00560081 /* PBXTargetDependency */,
 				D9BFF0E61B15005C00560081 /* PBXTargetDependency */,
 			);
-			name = C4Swift;
+			name = DriveOn;
 			productName = C4Swift;
 			productReference = D928B5561A004E3200B0E813 /* C4Swift.app */;
 			productType = "com.apple.product-type.application";
@@ -324,7 +324,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				D928B5551A004E3200B0E813 /* C4Swift */,
+				D928B5551A004E3200B0E813 /* DriveOn */,
 				D928B56A1A004E3200B0E813 /* C4SwiftTests */,
 			);
 		};
@@ -435,7 +435,7 @@
 		};
 		D928B56D1A004E3200B0E813 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D928B5551A004E3200B0E813 /* C4Swift */;
+			target = D928B5551A004E3200B0E813 /* DriveOn */;
 			targetProxy = D928B56C1A004E3200B0E813 /* PBXContainerItemProxy */;
 		};
 		D9BFF0DE1B15005C00560081 /* PBXTargetDependency */ = {
@@ -640,7 +640,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D928B5751A004E3200B0E813 /* Build configuration list for PBXNativeTarget "C4Swift" */ = {
+		D928B5751A004E3200B0E813 /* Build configuration list for PBXNativeTarget "DriveOn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D928B5761A004E3200B0E813 /* Debug */,

@@ -57,7 +57,10 @@ class ViewController: C4CanvasController {
         brakeTemp01.interactionEnabled = true
         
         brakeTemp01.addTapGestureRecognizer { (location, state) -> () in
-            self.flip01()
+            delay(2.0) {
+                self.flip01()
+                self.alertBar.reveal()
+            }
         }
         
         brakeTemp02.addTapGestureRecognizer { (location, state) -> () in
@@ -124,12 +127,41 @@ class ViewController: C4CanvasController {
         barsRed.add(barsRedMask)
         barsRed.layer?.mask = barsRedMask.layer
         popupImage.add(barsRed)
+
+        let button = C4Rectangle(frame: C4Rect(popupImage.width-204,popupImage.height-44,194,40))
+        button.fillColor = clear
+        button.strokeColor = clear
+        button.addTapGestureRecognizer { (location, state) -> () in
+            self.brakeImageContainer.interactionEnabled = false
+            self.hidePopup()
+            delay(0.25){
+                self.alertBar.blue()
+            }
+            delay(0.5){
+                C4ViewAnimation(duration: 0.25) {
+                    self.brakeTempOverlay.opacity = 0.0
+                    }.animate()
+            }
+            delay(2.0) {
+                self.alertBar.hide()
+            }
+        }
+        popupImage.add(button)
     }
     
     func reset() {
-        
+        brakeImageContainer.interactionEnabled = true
+        alertBar.hide()
+        alertBar.red()
+        flip02()
+        brakeTempOverlay.opacity = 1.0
+        barsRedMask.origin = C4Point(-barsRedMask.width,0)
+        barsGreyMask.origin = C4Point(-barsGreyMask.width,0)
+        linesMask.origin = C4Point(-linesMask.width,0)
+        self.yesButton.fillColor = clear
+        self.noButton.fillColor = red
     }
-    
+
     func flip01() {
         UIView.transitionFromView(brakeTemp01.view, toView: brakeTemp02.view, duration: 0.25, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
     }
@@ -163,5 +195,12 @@ class ViewController: C4CanvasController {
                 self.barsRedMask.origin = C4Point()
             }.animate()
         }
+    }
+
+    func hidePopup() {
+        popup.interactionEnabled = false
+        C4ViewAnimation(duration: 0.5) {
+            self.popup.opacity = 0.0
+        }.animate()
     }
 }
