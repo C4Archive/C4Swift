@@ -133,7 +133,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C4Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = C4Swift.app; path = DriveOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D928B55A1A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D928B55B1A004E3200B0E813 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D928B55D1A004E3200B0E813 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };

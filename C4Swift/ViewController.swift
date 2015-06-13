@@ -34,52 +34,83 @@ class ViewController: C4CanvasController {
     
     override func setup() {
         view.backgroundColor = UIColor(patternImage: bg.uiimage)
+        styleNavigationBar()
+        addScreenContents()
+        positionSpeedNeedle()
+        createFlippableBreakTemperatureWithBehaviours()
+        createPopup()
+    }
+
+    func addScreenContents() {
+        screen1.origin = C4Point(0,64)
+        canvas.add(screen1)
+    }
+
+    func styleNavigationBar() {
         var neutech = UIImage(named: "neutech")
         neutech = neutech?.imageWithRenderingMode(.AlwaysOriginal)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: neutech, landscapeImagePhone: neutech, style: .Plain, target: self, action:NSSelectorFromString("reset"))
-        
+
         var driveOnTitleLogo = UIImage(named: "driveOnTitleLogo")
         self.navigationItem.titleView = UIImageView(image: driveOnTitleLogo)
-        
+
         var gears = UIImage(named: "gears")
         gears = gears?.imageWithRenderingMode(.AlwaysOriginal)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: gears, landscapeImagePhone: gears, style: .Plain, target: nil, action: nil)
 
         self.navigationController?.view.add(alertBar.canvas)
-        
-        screen1.origin = C4Point(0,64)
-        canvas.add(screen1)
+    }
 
+    func positionSpeedNeedle() {
         needle.anchorPoint = C4Point(0.88,0.12)
         needle.center = C4Point(477,236)
         canvas.add(needle)
-        
+    }
+
+    func createFlippableBreakTemperatureWithBehaviours() {
+        addBehaviourToBreakTemp01()
+        addBehaviourToBreakTemp02()
+        createBreakTemperatureContainer()
+    }
+
+    func createBreakTemperatureContainer() {
+        brakeImageContainer.frame = brakeTemp01.bounds
+        brakeImageContainer.origin = C4Point(461,572)
+        brakeImageContainer.add(brakeTemp01)
+
+        canvas.add(brakeImageContainer)
+    }
+
+    func addBehaviourToBreakTemp01() {
         brakeTemp01.interactionEnabled = true
-        
+
         brakeTemp01.addTapGestureRecognizer { (location, state) -> () in
             delay(2.0) {
                 self.flip01()
                 self.alertBar.reveal()
             }
         }
-        
+    }
+
+    func addBehaviourToBreakTemp02() {
+        brakeTemp02.interactionEnabled = true
         brakeTemp02.addTapGestureRecognizer { (location, state) -> () in
             self.flip02()
         }
-        
         brakeTempOverlay.addTapGestureRecognizer { (location, state) -> () in
             self.revealPopup()
         }
-        
-        brakeTemp02.interactionEnabled = true
         brakeTempOverlay.interactionEnabled = true
         brakeTemp02.add(brakeTempOverlay)
-        
-        brakeImageContainer.frame = brakeTemp01.bounds
-        brakeImageContainer.origin = C4Point(461,572)
-        brakeImageContainer.add(brakeTemp01)
-        canvas.add(brakeImageContainer)
-        
+    }
+
+    func createPopup() {
+        createBackgroundAndImageForPopup()
+        createAnimatedDataForPopup()
+        createScheduleServiceButton()
+    }
+
+    func createBackgroundAndImageForPopup() {
         popup.interactionEnabled = false
         popup.frame = screen1.bounds
         popupImage.center = popup.center
@@ -88,7 +119,9 @@ class ViewController: C4CanvasController {
         popup.backgroundColor = C4Color(red: 0, green: 0, blue: 0, alpha: 0.4)
         popup.opacity = 0.0
         canvas.add(popup)
-    
+    }
+
+    func createYesNoButtonsForPopup() {
         popupImage.interactionEnabled = true
         yesButton.fillColor = clear
         yesButton.strokeColor = clear
@@ -102,24 +135,26 @@ class ViewController: C4CanvasController {
         noButton.fillColor = red
         noButton.strokeColor = clear
         popupImage.add(noButton)
-        
+
         noButton.addTapGestureRecognizer { (location, state) -> () in
             self.yesButton.fillColor = clear
             self.noButton.fillColor = red
         }
-        
+    }
+
+    func createAnimatedDataForPopup() {
         lines.origin = C4Point(82,470)
         linesMask = C4Rectangle(frame: lines.bounds)
         linesMask.origin = C4Point(-linesMask.width,0)
         lines.layer?.mask = linesMask.layer
         popupImage.add(lines)
-        
+
         barsGrey.origin = C4Point(496,460)
         barsGreyMask = C4Rectangle(frame: barsRed.bounds)
         barsGreyMask.origin = C4Point(-barsGreyMask.width,0)
         barsGrey.layer?.mask = barsGreyMask.layer
         popupImage.add(barsGrey)
-        
+
         barsRed.origin = barsGrey.origin
         barsRedMask = C4Rectangle(frame: barsRed.bounds)
         barsRedMask.fillColor = red
@@ -127,7 +162,9 @@ class ViewController: C4CanvasController {
         barsRed.add(barsRedMask)
         barsRed.layer?.mask = barsRedMask.layer
         popupImage.add(barsRed)
+    }
 
+    func createScheduleServiceButton() {
         let button = C4Rectangle(frame: C4Rect(popupImage.width-204,popupImage.height-44,194,40))
         button.fillColor = clear
         button.strokeColor = clear
