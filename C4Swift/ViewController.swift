@@ -25,6 +25,12 @@ class ViewController: C4CanvasController {
     var popupImage = C4Image("popup")
     var yesButton = C4Circle(center: C4Point(269,305), radius: 8)
     var noButton = C4Circle(center: C4Point(355,305), radius: 8)
+    let lines = C4Image("lines")
+    var linesMask = C4Rectangle(frame: C4Rect())
+    let barsRed = C4Image("barsRed")
+    var barsRedMask = C4Rectangle(frame: C4Rect())
+    let barsGrey = C4Image("barsGrey")
+    var barsGreyMask = C4Rectangle(frame: C4Rect())
     
     override func setup() {
         view.backgroundColor = UIColor(patternImage: bg.uiimage)
@@ -90,14 +96,34 @@ class ViewController: C4CanvasController {
             self.noButton.fillColor = clear
         }
 
-        noButton.fillColor = clear
+        noButton.fillColor = red
         noButton.strokeColor = clear
         popupImage.add(noButton)
         
         noButton.addTapGestureRecognizer { (location, state) -> () in
             self.yesButton.fillColor = clear
-            self.noButton.fillColor = green
+            self.noButton.fillColor = red
         }
+        
+        lines.origin = C4Point(82,470)
+        linesMask = C4Rectangle(frame: lines.bounds)
+        linesMask.origin = C4Point(-linesMask.width,0)
+        lines.layer?.mask = linesMask.layer
+        popupImage.add(lines)
+        
+        barsGrey.origin = C4Point(496,460)
+        barsGreyMask = C4Rectangle(frame: barsRed.bounds)
+        barsGreyMask.origin = C4Point(-barsGreyMask.width,0)
+        barsGrey.layer?.mask = barsGreyMask.layer
+        popupImage.add(barsGrey)
+        
+        barsRed.origin = barsGrey.origin
+        barsRedMask = C4Rectangle(frame: barsRed.bounds)
+        barsRedMask.fillColor = red
+        barsRedMask.origin = C4Point(-barsRedMask.width,0)
+        barsRed.add(barsRedMask)
+        barsRed.layer?.mask = barsRedMask.layer
+        popupImage.add(barsRed)
     }
     
     func reset() {
@@ -122,5 +148,20 @@ class ViewController: C4CanvasController {
                 self.popupImage.opacity = 1.0
             }.animate()
        }
+        delay(0.5) {
+            C4ViewAnimation(duration: 0.66) {
+                self.linesMask.origin = C4Point()
+            }.animate()
+        }
+        delay(0.75) {
+            C4ViewAnimation(duration: 0.66) {
+                self.barsGreyMask.origin = C4Point()
+            }.animate()
+        }
+        delay(1.0) {
+            C4ViewAnimation(duration: 0.66) {
+                self.barsRedMask.origin = C4Point()
+            }.animate()
+        }
     }
 }
