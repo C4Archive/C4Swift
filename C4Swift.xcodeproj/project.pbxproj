@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F970FA71B2C06B400AE7DD6 /* SensorTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F970F9F1B2C06B400AE7DD6 /* SensorTag.m */; };
+		1F970FA81B2C06B400AE7DD6 /* SensorTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F970FA31B2C06B400AE7DD6 /* SensorTagManager.m */; };
+		1F970FA91B2C06B400AE7DD6 /* NSData+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F970FA51B2C06B400AE7DD6 /* NSData+Convert.m */; };
 		D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55B1A004E3200B0E813 /* AppDelegate.swift */; };
 		D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B55D1A004E3200B0E813 /* ViewController.swift */; };
 		D928B5611A004E3200B0E813 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D928B55F1A004E3200B0E813 /* Main.storyboard */; };
@@ -133,7 +136,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D928B5561A004E3200B0E813 /* C4Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = C4Swift.app; path = DriveOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F970F9D1B2C06B300AE7DD6 /* DriveOn-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DriveOn-Bridging-Header.h"; sourceTree = "<group>"; };
+		1F970F9E1B2C06B400AE7DD6 /* SensorTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorTag.h; sourceTree = "<group>"; };
+		1F970F9F1B2C06B400AE7DD6 /* SensorTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorTag.m; sourceTree = "<group>"; };
+		1F970FA11B2C06B400AE7DD6 /* SensorTagGATT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorTagGATT.h; sourceTree = "<group>"; };
+		1F970FA21B2C06B400AE7DD6 /* SensorTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorTagManager.h; sourceTree = "<group>"; };
+		1F970FA31B2C06B400AE7DD6 /* SensorTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorTagManager.m; sourceTree = "<group>"; };
+		1F970FA41B2C06B400AE7DD6 /* NSData+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Convert.h"; sourceTree = "<group>"; };
+		1F970FA51B2C06B400AE7DD6 /* NSData+Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Convert.m"; sourceTree = "<group>"; };
+		1F970FA61B2C06B400AE7DD6 /* SensorTagManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorTagManagerDelegate.h; sourceTree = "<group>"; };
+		D928B5561A004E3200B0E813 /* DriveOn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriveOn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D928B55A1A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D928B55B1A004E3200B0E813 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D928B55D1A004E3200B0E813 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +181,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F970F9C1B2C069F00AE7DD6 /* SensorTag */ = {
+			isa = PBXGroup;
+			children = (
+				1F970F9E1B2C06B400AE7DD6 /* SensorTag.h */,
+				1F970F9F1B2C06B400AE7DD6 /* SensorTag.m */,
+				1F970FA11B2C06B400AE7DD6 /* SensorTagGATT.h */,
+				1F970FA21B2C06B400AE7DD6 /* SensorTagManager.h */,
+				1F970FA31B2C06B400AE7DD6 /* SensorTagManager.m */,
+				1F970FA41B2C06B400AE7DD6 /* NSData+Convert.h */,
+				1F970FA51B2C06B400AE7DD6 /* NSData+Convert.m */,
+				1F970FA61B2C06B400AE7DD6 /* SensorTagManagerDelegate.h */,
+				1F970F9D1B2C06B300AE7DD6 /* DriveOn-Bridging-Header.h */,
+			);
+			name = SensorTag;
+			sourceTree = "<group>";
+		};
 		D928B54D1A004E3200B0E813 = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +209,7 @@
 		D928B5571A004E3200B0E813 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D928B5561A004E3200B0E813 /* C4Swift.app */,
+				D928B5561A004E3200B0E813 /* DriveOn.app */,
 				D928B56B1A004E3200B0E813 /* C4SwiftTests.xctest */,
 			);
 			name = Products;
@@ -194,6 +222,7 @@
 				D928B55D1A004E3200B0E813 /* ViewController.swift */,
 				D9615D521B2B8F13006E9233 /* AlertBar.swift */,
 				D9615D421B2B8011006E9233 /* Graph.swift */,
+				1F970F9C1B2C069F00AE7DD6 /* SensorTag */,
 				D928B55F1A004E3200B0E813 /* Main.storyboard */,
 				D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */,
 				D928B5621A004E3200B0E813 /* Images.xcassets */,
@@ -265,7 +294,7 @@
 			);
 			name = DriveOn;
 			productName = C4Swift;
-			productReference = D928B5561A004E3200B0E813 /* C4Swift.app */;
+			productReference = D928B5561A004E3200B0E813 /* DriveOn.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D928B56A1A004E3200B0E813 /* C4SwiftTests */ = {
@@ -402,7 +431,10 @@
 			files = (
 				D9615D431B2B8011006E9233 /* Graph.swift in Sources */,
 				D928B55E1A004E3200B0E813 /* ViewController.swift in Sources */,
+				1F970FA71B2C06B400AE7DD6 /* SensorTag.m in Sources */,
 				D9615D531B2B8F13006E9233 /* AlertBar.swift in Sources */,
+				1F970FA81B2C06B400AE7DD6 /* SensorTagManager.m in Sources */,
+				1F970FA91B2C06B400AE7DD6 /* NSData+Convert.m in Sources */,
 				D928B55C1A004E3200B0E813 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,6 +594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -569,6 +602,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
+				SWIFT_OBJC_BRIDGING_HEADER = "C4Swift/DriveOn-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 2;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
@@ -578,6 +613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -585,6 +621,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
+				SWIFT_OBJC_BRIDGING_HEADER = "C4Swift/DriveOn-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 2;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};

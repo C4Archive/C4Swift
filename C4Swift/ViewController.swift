@@ -11,7 +11,7 @@ import C4UI
 import C4Core
 import C4Animation
 
-class ViewController: C4CanvasController {
+class ViewController: C4CanvasController, SensorTagManagerDelegate {
     let bg = C4Image("statusBarBG1px")
     let alertBar = AlertBar()
     let needle = C4Image("needle")
@@ -31,14 +31,69 @@ class ViewController: C4CanvasController {
     var barsRedMask = C4Rectangle(frame: C4Rect())
     let barsGrey = C4Image("barsGrey")
     var barsGreyMask = C4Rectangle(frame: C4Rect())
-    
+    var graph = Graph()
+
+    var sensorTagManager : SensorTagManager?
+
     override func setup() {
+        sensorTagManager = SensorTagManager(delegate: self)
+        createInterface()
+    }
+
+    //MARK: SensorTag
+    func bluetoothStateChanged(on: Bool) {
+        if on {
+            self.sensorTagManager?.startScan()
+        }
+    }
+
+    func didDiscoverSensorTag(sensorTag: SensorTag!) {
+        self.sensorTagManager?.stopScan()
+        self.sensorTagManager?.connectSensorTag(sensorTag)
+    }
+
+    func didConnectSensorTag(sensorTag: SensorTag!) {
+        sensorTag.setMovementNotify(true)
+        sensorTag.setAllPeriod(150)
+        sensorTag.setMovementEnabled(true)
+    }
+
+    func sensorTag(sensorTag: SensorTag!, didUpdateAmbientTemperature ambientTemperature: Float, targetTemperature: Float) {
+    }
+
+    func sensorTag(sensorTag: SensorTag!, didUpdateBarometer barometer: Float, temperature: Float) {
+    }
+
+    func sensorTag(sensorTag: SensorTag!, didUpdateHumidity humidity: Float, temperature: Float) {
+    }
+
+    func sensorTag(sensorTag: SensorTag!, didUpdateLuxometer lux: Float) {
+    }
+
+    func sensorTag(sensorTag: SensorTag!, didUpdateRSSI rssi: NSNumber!) {
+    }
+
+    func sensorTag(sensorTag: SensorTag!, didUpdateAccelerometer accelerometer: Point3D, gyroscope: Point3D, magnetometer: Point3D) {
+        println("acc: \(accelerometer.x,accelerometer.y,accelerometer.z)")
+    }
+
+    func didDisconnectSensorTag(sensorTag: SensorTag!) {
+        self.sensorTagManager?.startScan()
+    }
+
+    //MARK: Interface
+    func createInterface() {
         view.backgroundColor = UIColor(patternImage: bg.uiimage)
         styleNavigationBar()
         addScreenContents()
         positionSpeedNeedle()
         createFlippableBreakTemperatureWithBehaviours()
         createPopup()
+        createDataGraph()
+    }
+
+    func createDataGraph() {
+        canvas.add(graph.canvas)
     }
 
     func addScreenContents() {
@@ -107,12 +162,15 @@ class ViewController: C4CanvasController {
     func createPopup() {
         createBackgroundAndImageForPopup()
         createAnimatedDataForPopup()
+        createYesNoButtonsForPopup()
         createScheduleServiceButton()
     }
 
     func createBackgroundAndImageForPopup() {
         popup.interactionEnabled = false
+
         popup.frame = screen1.bounds
+        popupImage.interactionEnabled = true
         popupImage.center = popup.center
         popup.add(popupImage)
         popup.origin = screen1.origin
@@ -122,7 +180,6 @@ class ViewController: C4CanvasController {
     }
 
     func createYesNoButtonsForPopup() {
-        popupImage.interactionEnabled = true
         yesButton.fillColor = clear
         yesButton.strokeColor = clear
         popupImage.add(yesButton)

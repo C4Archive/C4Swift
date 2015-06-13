@@ -22,17 +22,19 @@ class Graph : C4CanvasController {
         displaylink = CADisplayLink(target: self, selector: Selector("update"))
         displaylink?.frameInterval = 2
         displaylink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
-        
-        poly.frame = C4Rect(0,200,canvas.width,200)
-        poly.border.width = 1.0
+
+        canvas.frame = C4Rect(674,120,276,180)
+        poly.frame = canvas.bounds
         poly.fillColor = clear
-        poly.lineWidth = 2.0
+        poly.lineWidth = 3.0
         poly.shadow.opacity = 0.66
         poly.shadow.radius = 0.5
         poly.shadow.offset = C4Size(1,1)
-        poly.strokeColor = C4Blue
+        poly.strokeColor = white
+        poly.lineCap = .Round
         canvas.add(poly)
         points.append(C4Point(0,poly.height/2.0))
+        println(self.canvas.width)
     }
     
     func updatePoints() -> Bool {
@@ -54,6 +56,9 @@ class Graph : C4CanvasController {
             var point = points[i]
             point.x = Double(i)*dx
             path.addLineToPoint(point)
+        }
+        if let p = points.last {
+            path.addEllipse(C4Rect(Double(points.count)*dx-2.0,p.y-2,4.0,4.0))
         }
         self.poly.path = path
     }
