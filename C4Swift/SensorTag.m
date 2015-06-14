@@ -141,7 +141,7 @@ Point3D Point3DMake(float x, float y, float z){
     // 3-axis gyro on: 7 (0000111)
     // 3-axis acc. + 3-axis gyro on: 63 (0111111)
     // 3-axis acc. + 3-axis gyro + magnetometer on: 127 (1111111)
-    unsigned char enableCode = enabled ? 127 : 0;
+    unsigned char enableCode = enabled ? 56 : 0;
     unsigned char data[2];
     data[0] = enableCode;
     data[1] = 0;

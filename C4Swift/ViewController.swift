@@ -1,4 +1,4 @@
-//
+ //
 //  ViewController.swift
 //  C4Swift
 //
@@ -40,6 +40,8 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
         createInterface()
     }
 
+//    Next step: link graph with sensor data...
+
     //MARK: SensorTag
     func bluetoothStateChanged(on: Bool) {
         if on {
@@ -53,9 +55,16 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     }
 
     func didConnectSensorTag(sensorTag: SensorTag!) {
-        sensorTag.setMovementNotify(true)
-        sensorTag.setAllPeriod(150)
         sensorTag.setMovementEnabled(true)
+        sensorTag.setMovementNotify(true)
+        sensorTag.setMovementPeriod(100)
+
+        delay(1.0) {
+            sensorTag.setLuxometerEnabled(false)
+            sensorTag.setTemperatureEnabled(false)
+            sensorTag.setHumidityEnabled(false)
+            sensorTag.setBarometerEnabled(false)
+        }
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateAmbientTemperature ambientTemperature: Float, targetTemperature: Float) {
@@ -71,10 +80,23 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateRSSI rssi: NSNumber!) {
+
     }
 
+    var px = 0.0
     func sensorTag(sensorTag: SensorTag!, didUpdateAccelerometer accelerometer: Point3D, gyroscope: Point3D, magnetometer: Point3D) {
-        println("acc: \(accelerometer.x,accelerometer.y,accelerometer.z)")
+        println(magnetometer.x,magnetometer.y,magnetometer.z)
+
+        var x = Double(px * 0.9 + Double(accelerometer.x) * 0.1)
+        graph.updateAccelerometerData(x)
+        px = x
+
+        updateSpeed()
+    }
+
+    func updateSpeed() {
+        let t = C4Transform.makeRotation(abs(px*3)*rotationScale, axis: C4Vector(x: 0, y: 0, z: 1))
+        needle.transform = t
     }
 
     func didDisconnectSensorTag(sensorTag: SensorTag!) {
