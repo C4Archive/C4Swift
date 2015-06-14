@@ -60,14 +60,15 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
         sensorTag.setMovementPeriod(100)
 
         delay(1.0) {
-            sensorTag.setLuxometerEnabled(false)
             sensorTag.setTemperatureEnabled(false)
+            sensorTag.setLuxometerEnabled(false)
             sensorTag.setHumidityEnabled(false)
             sensorTag.setBarometerEnabled(false)
         }
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateAmbientTemperature ambientTemperature: Float, targetTemperature: Float) {
+        println(ambientTemperature)
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateBarometer barometer: Float, temperature: Float) {
@@ -85,17 +86,41 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
 
     var px = 0.0
     func sensorTag(sensorTag: SensorTag!, didUpdateAccelerometer accelerometer: Point3D, gyroscope: Point3D, magnetometer: Point3D) {
-        println(magnetometer.x,magnetometer.y,magnetometer.z)
-
         var x = Double(px * 0.9 + Double(accelerometer.x) * 0.1)
         graph.updateAccelerometerData(x)
         px = x
-
-        updateSpeed()
+        updateSpeed(x)
     }
 
-    func updateSpeed() {
-        let t = C4Transform.makeRotation(abs(px*3)*rotationScale, axis: C4Vector(x: 0, y: 0, z: 1))
+    var velocities = [0.0,0.0,0.0,0.0,0.0]
+    var accels = [0.0,0.0,0.0,0.0,0.0]
+    var pv = 0.0
+    var pa = 0.0
+    var start = NSDate(timeIntervalSinceNow: 0)
+    var pt = NSDate.timeIntervalSinceReferenceDate()
+
+    func updateSpeed(val: Double) {
+        accels.removeAtIndex(0)
+        accels.append(val)
+        var avg = 0.0
+        for v in accels {
+            avg += v
+        }
+        avg /= Double(accels.count)
+
+        var y = avg * 100
+        if y < 0 {
+            y = ceil(y)
+        } else {
+            y = floor(y)
+        }
+
+        println(y)
+
+        if abs(y) < 2 { y = 0 }
+
+
+        let t = C4Transform.makeRotation(abs(y)/30.0*rotationScale, axis: C4Vector(x: 0, y: 0, z: 1))
         needle.transform = t
     }
 
