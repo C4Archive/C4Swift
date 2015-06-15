@@ -15,7 +15,7 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     let bg = C4Image("statusBarBG1px")
     let alertBar = AlertBar()
     let needle = C4Image("needle")
-    let screen1 = C4Image("screen1")
+    let staticContent = C4Image("staticContent")
     let rotationScale = -1.495*M_PI
     let brakeImageContainer = C4View()
     let brakeTemp01 = C4Image("brakeTemp01")
@@ -34,11 +34,58 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     var graph = Graph()
     var gearsButton : UIBarButtonItem?
 
+    let extTemp = C4Circle(frame: C4Rect(0,0,174,174))
+    let intTemp = C4Circle(frame: C4Rect(0,0,199,199))
+
+    let intTempLabel = UILabel(frame: CGRectMake(132, 334.5, 100, 25))
+    let extTempLabel = UILabel(frame: CGRectMake(132, 306.5, 100, 25))
+
+    let speedLabel = UILabel(frame: CGRectMake(392, 321, 100, 36))
+
     var sensorTagManager : SensorTagManager?
 
     override func setup() {
         sensorTagManager = SensorTagManager(delegate: self)
         createInterface()
+        extTemp.hidden = true
+        extTemp.fillColor = clear
+        extTemp.strokeColor = C4Color(red: 0.93,green: 0.87,blue: 0.85,alpha: 1.0)
+        extTemp.lineWidth = 13.0
+        extTemp.center = C4Point(210.5,234.5)
+        extTemp.strokeEnd = 0
+        extTemp.transform = C4Transform.makeRotation(-3*M_PI_4, axis: C4Vector(x: 0, y: 0, z: 1))
+        canvas.add(extTemp)
+        intTemp.hidden = true
+        intTemp.fillColor = clear
+        intTemp.strokeColor = C4Color(red: 0.89,green: 0.87,blue: 0.85,alpha: 1.0)
+        intTemp.lineWidth = 13.0
+        intTemp.center = C4Point(210.5,234.5)
+        intTemp.strokeEnd = 0.0
+        intTemp.transform = C4Transform.makeRotation(-3*M_PI_4, axis: C4Vector(x: 0, y: 0, z: 1))
+        canvas.add(intTemp)
+
+        extTempLabel.text = "--"
+        extTempLabel.textAlignment = .Right
+        extTempLabel.textColor = .whiteColor()
+        extTempLabel.font = UIFont(name: "Arial", size: 24)
+        canvas.add(extTempLabel)
+
+        intTempLabel.text = "--"
+        intTempLabel.textAlignment = .Right
+        intTempLabel.textColor = .whiteColor()
+        intTempLabel.font = UIFont(name: "Arial", size: 24)
+        canvas.add(intTempLabel)
+
+        speedLabel.text = "--"
+        speedLabel.textColor = .whiteColor()
+        speedLabel.textAlignment = .Right
+        speedLabel.font = UIFont(name: "Arial", size: 36)
+        canvas.add(speedLabel)
+
+        delay(0.75) {
+            self.intTemp.hidden = false
+            self.extTemp.hidden = false
+        }
     }
 
     //MARK: SensorTag
@@ -72,7 +119,28 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateAmbientTemperature ambientTemperature: Float, targetTemperature: Float) {
-        println(ambientTemperature, targetTemperature)
+        C4ViewAnimation(duration: 0.5) {
+            self.intTemp.strokeEnd = clamp(Double(targetTemperature), 0.0, 30.0) * 0.025
+            if targetTemperature >= 25.0 {
+                self.intTemp.strokeColor = red
+                self.intTempLabel.textColor = .redColor()
+            } else {
+                self.intTemp.strokeColor = white
+                self.intTempLabel.textColor = .whiteColor()
+            }
+            self.intTempLabel.text = NSString(format: "%2.2f", targetTemperature) as String
+
+            self.extTemp.strokeEnd = clamp(Double(ambientTemperature), 0.0, 30.0) * 0.025
+            if ambientTemperature >= 25.0 {
+                self.extTemp.strokeColor = red
+                self.extTempLabel.textColor = .redColor()
+            } else {
+                self.extTemp.strokeColor = white
+                self.extTempLabel.textColor = .whiteColor()
+            }
+            self.extTempLabel.text = NSString(format: "%2.2f", ambientTemperature) as String
+
+        }.animate()
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateBarometer barometer: Float, temperature: Float) {
@@ -91,6 +159,7 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     func sensorTag(sensorTag: SensorTag!, didUpdateAccelerometer accelerometer: Point3D, gyroscope: Point3D, magnetometer: Point3D) {
         var x = Double(px * 0.9 + Double(accelerometer.x) * 0.1)
         graph.updateAccelerometerData(x)
+        graph.updateRawData(Double(accelerometer.x))
         px = x
         updateSpeed(x)
     }
@@ -103,22 +172,20 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     var pt = NSDate.timeIntervalSinceReferenceDate()
 
     func updateSpeed(var val: Double) {
-        if abs(val) < 0.03 {
+        println(val)
+        if abs(val) < 0.015 {
             val = 0.0
         }
-        accels.removeAtIndex(0)
-        accels.append(val)
-        var avg = 0.0
-        for v in accels {
-            avg += v
-        }
-        avg /= Double(accels.count)
+        val /= 0.3
 
-        var y = avg * 100
-    
-        if abs(y) < 1 { y = 0 }
-        let t = C4Transform.makeRotation(abs(y)/30.0*rotationScale, axis: C4Vector(x: 0, y: 0, z: 1))
+        val = clamp(val, -1.0, 1.0)
+        val = abs(val)
+        let t = C4Transform.makeRotation(val*rotationScale, axis: C4Vector(x: 0, y: 0, z: 1))
         needle.transform = t
+
+        let speed = val*30.0
+
+        speedLabel.text = NSString(format: "%2.1f", speed) as String
     }
 
 //    NEXT STEPS:
@@ -146,8 +213,8 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     }
 
     func addScreenContents() {
-        screen1.origin = C4Point(0,64)
-        canvas.add(screen1)
+        staticContent.origin = C4Point(0,64)
+        canvas.add(staticContent)
     }
 
     func styleNavigationBar() {
@@ -219,11 +286,11 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     func createBackgroundAndImageForPopup() {
         popup.interactionEnabled = false
 
-        popup.frame = screen1.bounds
+        popup.frame = staticContent.bounds
         popupImage.interactionEnabled = true
         popupImage.center = popup.center
         popup.add(popupImage)
-        popup.origin = screen1.origin
+        popup.origin = staticContent.origin
         popup.backgroundColor = C4Color(red: 0, green: 0, blue: 0, alpha: 0.4)
         popup.opacity = 0.0
         canvas.add(popup)
