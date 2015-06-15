@@ -32,6 +32,7 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     let barsGrey = C4Image("barsGrey")
     var barsGreyMask = C4Rectangle(frame: C4Rect())
     var graph = Graph()
+    var gearsButton : UIBarButtonItem?
 
     var sensorTagManager : SensorTagManager?
 
@@ -39,8 +40,6 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
         sensorTagManager = SensorTagManager(delegate: self)
         createInterface()
     }
-
-//    Next step: link graph with sensor data...
 
     //MARK: SensorTag
     func bluetoothStateChanged(on: Bool) {
@@ -52,15 +51,20 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     func didDiscoverSensorTag(sensorTag: SensorTag!) {
         self.sensorTagManager?.stopScan()
         self.sensorTagManager?.connectSensorTag(sensorTag)
+        self.navigationItem.rightBarButtonItem?.tintColor = .yellowColor()
     }
 
     func didConnectSensorTag(sensorTag: SensorTag!) {
         sensorTag.setMovementEnabled(true)
         sensorTag.setMovementNotify(true)
         sensorTag.setMovementPeriod(100)
+        navigationItem.rightBarButtonItem?.tintColor = .whiteColor()
+
+        sensorTag.setTemperatureEnabled(true)
+        sensorTag.setTemperaturePeriod(100)
+        sensorTag.setTemperatureNotify(true)
 
         delay(1.0) {
-            sensorTag.setTemperatureEnabled(false)
             sensorTag.setLuxometerEnabled(false)
             sensorTag.setHumidityEnabled(false)
             sensorTag.setBarometerEnabled(false)
@@ -68,7 +72,7 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateAmbientTemperature ambientTemperature: Float, targetTemperature: Float) {
-        println(ambientTemperature)
+        println(ambientTemperature, targetTemperature)
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateBarometer barometer: Float, temperature: Float) {
@@ -81,7 +85,6 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     }
 
     func sensorTag(sensorTag: SensorTag!, didUpdateRSSI rssi: NSNumber!) {
-
     }
 
     var px = 0.0
@@ -93,13 +96,16 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
     }
 
     var velocities = [0.0,0.0,0.0,0.0,0.0]
-    var accels = [0.0,0.0,0.0,0.0,0.0]
+    var accels = [0.0,0.0,0.0]
     var pv = 0.0
     var pa = 0.0
     var start = NSDate(timeIntervalSinceNow: 0)
     var pt = NSDate.timeIntervalSinceReferenceDate()
 
-    func updateSpeed(val: Double) {
+    func updateSpeed(var val: Double) {
+        if abs(val) < 0.03 {
+            val = 0.0
+        }
         accels.removeAtIndex(0)
         accels.append(val)
         var avg = 0.0
@@ -109,23 +115,19 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
         avg /= Double(accels.count)
 
         var y = avg * 100
-        if y < 0 {
-            y = ceil(y)
-        } else {
-            y = floor(y)
-        }
-
-        println(y)
-
-        if abs(y) < 2 { y = 0 }
-
-
+    
+        if abs(y) < 1 { y = 0 }
         let t = C4Transform.makeRotation(abs(y)/30.0*rotationScale, axis: C4Vector(x: 0, y: 0, z: 1))
         needle.transform = t
     }
 
+//    NEXT STEPS:
+//    1) Figure out next type of sensor / view
+//    3) Create interface for adjusting values
+
     func didDisconnectSensorTag(sensorTag: SensorTag!) {
         self.sensorTagManager?.startScan()
+        navigationItem.rightBarButtonItem?.tintColor = .redColor()
     }
 
     //MARK: Interface
@@ -157,10 +159,11 @@ class ViewController: C4CanvasController, SensorTagManagerDelegate {
         self.navigationItem.titleView = UIImageView(image: driveOnTitleLogo)
 
         var gears = UIImage(named: "gears")
-        gears = gears?.imageWithRenderingMode(.AlwaysOriginal)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: gears, landscapeImagePhone: gears, style: .Plain, target: nil, action: nil)
+        gearsButton = UIBarButtonItem(image: gears, landscapeImagePhone: gears, style: .Plain, target: nil, action: nil)
 
+        self.navigationItem.rightBarButtonItem = gearsButton
         self.navigationController?.view.add(alertBar.canvas)
+        self.navigationItem.rightBarButtonItem?.tintColor = .redColor()
     }
 
     func positionSpeedNeedle() {

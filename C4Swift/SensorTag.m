@@ -195,9 +195,9 @@ Point3D Point3DMake(float x, float y, float z){
     }
     
     NSLog(@"Discovered services for peripheral %@:", peripheral.name);
-    for (CBService *service in peripheral.services) {
-        NSLog(@"  %@", service.UUID);
-        [peripheral discoverCharacteristics:nil forService:service];
+        for (CBService *service in peripheral.services) {
+            NSLog(@"  %@", service.UUID);
+            [peripheral discoverCharacteristics:nil forService:service];
     }
 
     // Send the didConnect event to listeners after we've connected and discovered all services and characteristics

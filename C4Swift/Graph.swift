@@ -18,6 +18,7 @@ class Graph : C4CanvasController {
     let filteringFactor = 0.3
     var accel = 0.0
     var accels : [Double] = [0.0,0.0,0.0,0.0,0.0]
+    var circle = C4Circle(center: C4Point(), radius: 4)
 
     var poly = C4Shape()
     
@@ -26,10 +27,10 @@ class Graph : C4CanvasController {
         displaylink?.frameInterval = 2
         displaylink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
 
-        canvas.frame = C4Rect(674,120,276,180)
+        canvas.frame = C4Rect(674,122,280,180)
         poly.frame = canvas.bounds
         poly.fillColor = clear
-        poly.lineWidth = 3.0
+        poly.lineWidth = 2.0
         poly.shadow.opacity = 0.66
         poly.shadow.radius = 0.5
         poly.shadow.offset = C4Size(1,1)
@@ -38,12 +39,22 @@ class Graph : C4CanvasController {
         canvas.add(poly)
         points.append(C4Point(0,canvas.height/2.0))
         println(self.canvas.width)
+
+        circle.fillColor = white
+        circle.shadow = poly.shadow
+        circle.strokeColor = clear
+        circle.center = points.last!
+        canvas.add(circle)
     }
 
-    func updateAccelerometerData(val: Double) -> Bool {
+    func updateAccelerometerData(var val: Double) -> Bool {
         if var pt : C4Point = points.last {
+            if abs(val) < 0.03 {
+                val = 0.0
+            }
             accels.removeAtIndex(0)
             accels.append(val)
+
             var avg = 0.0
             for v in accels {
                 avg += v
@@ -51,17 +62,13 @@ class Graph : C4CanvasController {
             avg /= Double(accels.count)
 
             var y = avg * 100
-            if y < 0 {
-                y = ceil(y)
-            } else {
-                y = floor(y)
-            }
 
             if abs(y) < 2 { y = 0 }
 
             y *= dx
             y += canvas.height/2.0
 
+            y = clamp(y, 0.0, canvas.height)
             pt.y = y
 
             points.append(pt)
@@ -101,10 +108,8 @@ class Graph : C4CanvasController {
                 point.x = Double(i)*self.dx
                 path.addLineToPoint(point)
             }
-            if let p = self.points.last {
-                path.addEllipse(C4Rect(Double(self.points.count)*self.dx-2.0,p.y-2,4.0,4.0))
-            }
             self.poly.path = path
+            self.circle.center = path.currentPoint
         }.animate()
     }
     
