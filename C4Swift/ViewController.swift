@@ -13,7 +13,7 @@ import C4Animation
 
 class ViewController: C4CanvasController {
 
-    override func viewDidLoad() {
+    override func setup() {
         //work your magic here
     }
 }
