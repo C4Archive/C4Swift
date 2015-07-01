@@ -467,19 +467,10 @@ class MenuViewController: C4CanvasController {
         let outer = C4Circle(center: canvas.center, radius: 225)
         thickRingFrames = [inner.frame,outer.frame]
 
-<<<<<<< HEAD
         self.thickRing.fillColor = clear
         self.thickRing.lineWidth = 3
         self.thickRing.strokeColor = cosmosblue
         self.thickRing.interactionEnabled = false
-=======
-        C4ViewAnimation(duration: 0.0) {
-            self.thickRing.fillColor = clear
-            self.thickRing.lineWidth = 3
-            self.thickRing.strokeColor = cosmosblue
-            self.thickRing.interactionEnabled = false
-        }.animate()
->>>>>>> origin/cosmos-integrated
 
         canvas.add(thickRing)
     }
