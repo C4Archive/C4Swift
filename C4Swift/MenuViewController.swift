@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 import C4UI
 import C4Core
-import C4Animation
 
 typealias SelectionAction = (selection: Int) -> Void
 typealias InfoAction = () -> Void

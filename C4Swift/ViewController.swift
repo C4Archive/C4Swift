@@ -9,7 +9,6 @@
 import UIKit
 import C4UI
 import C4Core
-import C4Animation
 
 let cosmosprpl = C4Color(red:0.565, green: 0.075, blue: 0.996, alpha: 1.0)
 let cosmosblue = C4Color(red: 0.094, green: 0.271, blue: 1.0, alpha: 1.0)

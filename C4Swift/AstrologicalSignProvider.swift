@@ -8,7 +8,6 @@
 
 import Foundation
 import C4Core
-import C4Animation
 import C4UI
 
 typealias AstrologicalSignFunction = () -> AstrologicalSign

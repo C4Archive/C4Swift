@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 import C4UI
 import C4Core
-import C4Animation
 
 typealias SignClosure = () -> (big:[C4Point],small:[C4Point],lines:[[C4Point]])
 
