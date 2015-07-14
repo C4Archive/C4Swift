@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import C4Core
-import C4UI
-import C4Animation
+import C4
+import QuartzCore
 
 class Graph : C4CanvasController {
     var displaylink : CADisplayLink?
@@ -31,7 +30,8 @@ class Graph : C4CanvasController {
         displaylink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
 
         canvas.frame = C4Rect(674,124,280,176)
-
+        canvas.backgroundColor = clear
+        
         raw.frame = canvas.bounds
         raw.fillColor = clear
         raw.lineWidth = 1.0

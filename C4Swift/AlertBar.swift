@@ -7,9 +7,7 @@
 //
 
 import Foundation
-import C4UI
-import C4Core
-import C4Animation
+import C4
 
 public class AlertBar : C4CanvasController {
     let redAlertMessage = C4Image("redAlertMessage")

@@ -15,17 +15,17 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D928B5551A004E3200B0E813"
-               BuildableName = "C4Swift.app"
-               BlueprintName = "C4Swift"
+               BuildableName = "DriveOn.app"
+               BlueprintName = "DriveOn"
                ReferencedContainer = "container:C4Swift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D928B56A1A004E3200B0E813"
@@ -57,8 +57,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
-            BlueprintName = "C4Swift"
+            BuildableName = "DriveOn.app"
+            BlueprintName = "DriveOn"
             ReferencedContainer = "container:C4Swift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -72,12 +72,13 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
-            BlueprintName = "C4Swift"
+            BuildableName = "DriveOn.app"
+            BlueprintName = "DriveOn"
             ReferencedContainer = "container:C4Swift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -90,12 +91,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
-            BlueprintName = "C4Swift"
+            BuildableName = "DriveOn.app"
+            BlueprintName = "DriveOn"
             ReferencedContainer = "container:C4Swift.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
