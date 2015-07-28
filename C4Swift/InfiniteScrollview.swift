@@ -10,21 +10,19 @@ import Foundation
 import UIKit
 
 class InfiniteScrollView : UIScrollView {
-    lazy var normalizedPosition = 0.0
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        calculateNormalizedPosition()
+        upadteOffsetIfNeeded()
     }
 
-    internal func calculateNormalizedPosition() {
+    internal func upadteOffsetIfNeeded() {
         var curr = self.contentOffset
         if curr.x < 0 {
             curr.x = self.contentSize.width-self.frame.size.width
+            contentOffset = curr
         } else if curr.x >= self.contentSize.width - self.frame.size.width {
             curr.x = 0
+            contentOffset = curr
         }
-        self.contentOffset = curr
-        normalizedPosition = 1.0 - Double(curr.x / self.frame.size.width)
     }
 }
