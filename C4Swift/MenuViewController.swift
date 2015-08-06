@@ -9,41 +9,40 @@
 import Foundation
 
 import UIKit
-import C4UI
-import C4Core
+import C4
 
 typealias SelectionAction = (selection: Int) -> Void
 typealias InfoAction = () -> Void
 
 class MenuViewController: C4CanvasController {
     //MARK: Properties
-    lazy var signProvider = AstrologicalSignProvider()
+    var signProvider = AstrologicalSignProvider()
 
     let tick = C4AudioPlayer("tick.mp3")
     let hideMenuSound = C4AudioPlayer("menuClose.mp3")
     let revealMenuSound = C4AudioPlayer("menuOpen.mp3")
     
-    lazy var menuVisible = false
-    lazy var menuHighlight = C4Wedge()
-    lazy var menuDividingLines = [C4Line]()
+    var menuVisible = false
+    var menuHighlight = C4Wedge()
+    var menuDividingLines = [C4Line]()
     var menuRingsOut : C4ViewAnimationSequence?
     var menuRingsIn : C4ViewAnimationSequence?
     
-    lazy var shouldRevert = false
-    lazy var currentSelection = 0
+    var shouldRevert = false
+    var currentSelection = 0
 
-    lazy var rings = [C4Circle]()
-    lazy var ringFrames = [C4Rect]()
+    var rings = [C4Circle]()
+    var ringFrames = [C4Rect]()
 
-    lazy var thickRing = C4Circle()
-    lazy var thickRingFrames = [C4Rect]()
+    var thickRing = C4Circle()
+    var thickRingFrames = [C4Rect]()
 
-    lazy var dashedRings = [C4Circle]()
+    var dashedRings = [C4Circle]()
     
-    lazy var infoLogo = C4Image("infoLight")
-    lazy var infoButtonView = C4View(frame: C4Rect(0,0,44,44))
-    lazy var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
-    lazy var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
+    var infoLogo = C4Image("infoLight")
+    var infoButtonView = C4View(frame: C4Rect(0,0,44,44))
+    var titleLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 160, height: 22))
+    var instructionLabel = UILabel(frame: CGRect(x: 0,y: 0,width: 320, height: 44))
 
     var infoAction : InfoAction?
     var selectionAction : SelectionAction?
@@ -147,7 +146,7 @@ class MenuViewController: C4CanvasController {
                     self.titleLabel.text = "Info"
                 }
             default:
-                let i = 0
+                _ = ""
             }
         }
     }
@@ -360,7 +359,7 @@ class MenuViewController: C4CanvasController {
         var animationArray = [C4ViewAnimation]()
         for i in 0..<self.rings.count-1 {
             let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01) {
-                var circle = self.rings[i]
+                let circle = self.rings[i]
 
                 if (i > 0) {
                     C4ViewAnimation(duration: 0.0375) {
@@ -381,7 +380,7 @@ class MenuViewController: C4CanvasController {
         var animationArray = [C4ViewAnimation]()
         for i in 1...self.rings.count {
             let anim = C4ViewAnimation(duration: 0.075 + Double(i) * 0.01, animations: { () -> Void in
-                var circle = self.rings[self.rings.count - i]
+                let circle = self.rings[self.rings.count - i]
                 if self.rings.count - i > 0 {
                     C4ViewAnimation(duration: 0.0375) {
                         circle.opacity = 0.0
@@ -406,11 +405,11 @@ class MenuViewController: C4CanvasController {
         menuHighlight.center = canvas.center
         menuHighlight.hidden = true
 
-        var path = C4Path()
+        let path = C4Path()
         path.addEllipse(C4Rect(-156,-156,312,312))
         path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
         
-        var donut = C4Shape(path)
+        let donut = C4Shape(path)
         donut.fillRule = .EvenOdd
         menuHighlight.layer?.mask = donut.layer
 
@@ -423,7 +422,7 @@ class MenuViewController: C4CanvasController {
         let b = C4Vector(x:self.canvas.width / 2.0, y:self.canvas.height/2.0)
         let c = C4Vector(x:location.x, y:location.y)
         
-        let dist = distance(location, self.canvas.bounds.center)
+        let dist = distance(location, rhs: self.canvas.bounds.center)
         
         if dist > 102.0 && dist < 156 {
             menuHighlight.hidden = false
@@ -433,7 +432,7 @@ class MenuViewController: C4CanvasController {
                 angle = 2*M_PI - angle
             }
             
-            var newSelection = Int(radToDeg(angle)) / 30
+            let newSelection = Int(radToDeg(angle)) / 30
             if currentSelection != newSelection {
                 titleLabel.text = signProvider.order[newSelection].capitalizedString
                 tick.stop()
@@ -483,7 +482,7 @@ class MenuViewController: C4CanvasController {
         rings.append(C4Circle(center: canvas.center, radius: 156))
         
         for i in 0..<self.rings.count {
-            var ring = self.rings[i]
+            let ring = self.rings[i]
             ring.fillColor = clear
             ring.lineWidth = 1
             ring.strokeColor = cosmosblue
@@ -501,7 +500,7 @@ class MenuViewController: C4CanvasController {
     
     func createMenuDividingLines() {
         for i in 0...11 {
-            var line = C4Line([C4Point(),C4Point(54,0)])
+            let line = C4Line([C4Point(),C4Point(54,0)])
             line.layer?.anchorPoint = CGPointMake(-1.88888,0)
             line.center = self.canvas.center
             var rot = C4Transform()
@@ -542,7 +541,7 @@ class MenuViewController: C4CanvasController {
         rotation.rotate(M_PI/360.0, axis: C4Vector(x: 0, y: 0, z: 1.0))
         longDashedRing.transform = rotation
 
-        var mask = C4Circle(center: C4Point(longDashedRing.width/2.0,longDashedRing.height/2.0), radius: 82+4)
+        let mask = C4Circle(center: C4Point(longDashedRing.width/2.0,longDashedRing.height/2.0), radius: 82+4)
         mask.fillColor = clear
         mask.strokeColor = red
         mask.lineWidth = 8
@@ -559,6 +558,7 @@ class MenuViewController: C4CanvasController {
             ring.strokeColor = cosmosblue
             ring.fillColor = clear
             ring.interactionEnabled = false
+            ring.lineCap = .Butt
             self.canvas.add(ring)
         }
     }
@@ -601,11 +601,11 @@ class MenuViewController: C4CanvasController {
     var outerTargets = [C4Point]()
 
     func positionSignIcons() {
-        var r = 10.5
+        let r = 10.5
         let dx = canvas.center.x
         let dy = canvas.center.y
         for i in 0..<signProvider.order.count {
-            var ϴ = M_PI/6 * Double(i)
+            let ϴ = M_PI/6 * Double(i)
             let name = signProvider.order[i]
             if let sign = signIcons[name] {
                 sign.center = C4Point(r * cos(ϴ) + dx, r * sin(ϴ) + dy)
@@ -623,73 +623,73 @@ class MenuViewController: C4CanvasController {
     }
 
     func taurus() -> C4Shape {
-        var shape = signProvider.taurus().shape
+        let shape = signProvider.taurus().shape
         shape.anchorPoint = C4Point()
         return shape
     }
     
     func aries() -> C4Shape {
-        var shape = signProvider.aries().shape
+        let shape = signProvider.aries().shape
         shape.anchorPoint = C4Point(0.076,0.535)
         return shape
     }
     
     func gemini() -> C4Shape {
-        var shape = signProvider.gemini().shape
+        let shape = signProvider.gemini().shape
         shape.anchorPoint = C4Point(1,0)
         return shape
     }
     
     func cancer() -> C4Shape {
-        var shape = signProvider.cancer().shape
+        let shape = signProvider.cancer().shape
         shape.anchorPoint = C4Point(0,0.27)
         return shape
     }
     
     func leo() -> C4Shape {
-        var shape = signProvider.leo().shape
+        let shape = signProvider.leo().shape
         shape.anchorPoint = C4Point(0.375,0.632)
         return shape
     }
     
     func virgo() -> C4Shape {
-        var shape = signProvider.virgo().shape
+        let shape = signProvider.virgo().shape
         shape.anchorPoint = C4Point(0.75,0.385)
         return shape
     }
     
     func libra() -> C4Shape {
-        var shape = signProvider.libra().shape
+        let shape = signProvider.libra().shape
         shape.anchorPoint = C4Point(1,0.565)
         return shape
     }
     
     func pisces() -> C4Shape {
-        var shape = signProvider.pisces().shape
+        let shape = signProvider.pisces().shape
         shape.anchorPoint = C4Point(0.1,0.005)
         return shape
     }
     
     func aquarius() -> C4Shape {
-        var shape = signProvider.aquarius().shape
+        let shape = signProvider.aquarius().shape
         shape.anchorPoint = C4Point(0,0.26)
         return shape
     }
     
     func sagittarius() -> C4Shape {
-        var shape = signProvider.sagittarius().shape
+        let shape = signProvider.sagittarius().shape
         shape.anchorPoint = C4Point(1,0.35)
         return shape
     }
     
     func capricorn() -> C4Shape {
-        var shape = signProvider.capricorn().shape
+        let shape = signProvider.capricorn().shape
         shape.anchorPoint = C4Point(0.285,0.66)
         return shape
     }
     
     func scorpio() -> C4Shape {
-        var shape = signProvider.scorpio().shape
+        let shape = signProvider.scorpio().shape
         shape.anchorPoint = C4Point(0.26,0.775)
         return shape
     }

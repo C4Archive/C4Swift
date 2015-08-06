@@ -9,8 +9,7 @@
 import Foundation
 
 import UIKit
-import C4UI
-import C4Core
+import C4
 
 typealias SignClosure = () -> (big:[C4Point],small:[C4Point],lines:[[C4Point]])
 
@@ -97,8 +96,8 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
         let fullframe = Double(framesize) * gapBetweenSigns
         sv.contentSize = CGSizeMake(framesize * CGFloat(gapBetweenSigns) * signCount  + CGFloat(canvas.width), 1.0)
         for frameCount in 0..<Int(signCount) {
-            for i in 0..<starCount {
-                var dx = fullframe * Double(frameCount)
+            for _ in 0..<starCount {
+                let dx = fullframe * Double(frameCount)
                 var pt = C4Point(dx + random01() * fullframe, random01() * canvas.height)
                 let img = C4Image(imageName)
                 img.center = pt
@@ -126,7 +125,7 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
         signOrder.append(signOrder[0])
         
         for i in 0..<signOrder.count {
-            var dx = Double(i) * canvas.width * Double(speeds[6]) * gapBetweenSigns
+            let dx = Double(i) * canvas.width * Double(speeds[6]) * gapBetweenSigns
             let t = C4Transform.makeTranslation(C4Vector(x: canvas.center.x + dx, y: canvas.center.y, z: 0))
             if let sign = signProvider.get(signOrder[i]) {
                 for point in sign.small {
@@ -161,7 +160,7 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
         signOrder.append(signOrder[0])
         
         for i in 0..<signOrder.count {
-            var dx = Double(i) * canvas.width * gapBetweenSigns
+            let dx = Double(i) * canvas.width * gapBetweenSigns
             let t = C4Transform.makeTranslation(C4Vector(x: canvas.center.x + dx, y: canvas.center.y, z: 0))
             if let sign = signProvider.get(signOrder[i]) {
                 for point in sign.big {
@@ -179,7 +178,7 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
         var signNames = signProvider.order
         signNames.append(signNames[0])
         
-        var y = self.canvas.height - 86.0
+        let y = self.canvas.height - 86.0
         let dx = self.canvas.width*self.gapBetweenSigns
         let offset = self.canvas.width / 2.0
         let font = C4Font(name:"Menlo-Regular", size: 13.0)
@@ -212,27 +211,28 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
     
     func addDashesMarker(sv: InfiniteScrollView) {
         let points = [C4Point(0,0),C4Point(Double(sv.contentSize.width),0)]
+
         let marker = C4Line(points)
-        let dashes = C4Line(points)
-        
         marker.lineDashPattern = [1.0,self.canvas.width * self.gapBetweenSigns-1.0]
         marker.lineWidth = 40
         marker.strokeColor = white
         marker.lineDashPhase = -self.canvas.width/2
+        marker.lineCap = .Butt
         marker.opacity = 0.33
         marker.origin = C4Point(0,self.canvas.height)
-        
-        let dw = (12.0 * self.canvas.width * self.gapBetweenSigns / 600.0)
-        
+
+        let dashes = C4Line(points)
         dashes.lineDashPattern = [0.75,3.25]
         dashes.lineWidth = 10
         dashes.strokeColor = cosmosblue
         dashes.opacity = 0.33
-        
+        dashes.lineCap = .Butt
+
         let highdashes = C4Line(points)
         highdashes.lineDashPattern = [1,31]
         highdashes.lineWidth = 20
         highdashes.strokeColor = cosmosblue
+        highdashes.lineCap = .Butt
         dashes.add(highdashes)
         
         dashes.origin = marker.origin
@@ -280,7 +280,7 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
         signOrder.append(signOrder[0])
         
         for i in 0..<signOrder.count {
-            var dx = Double(i) * canvas.width * gapBetweenSigns
+            let dx = Double(i) * canvas.width * gapBetweenSigns
             let t = C4Transform.makeTranslation(C4Vector(x: canvas.center.x + dx, y: canvas.center.y, z: 0))
             if let sign = signProvider.get(signOrder[i]) {
                 let connections = sign.lines
@@ -356,12 +356,12 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.hideCurrentSignLines()
     }
-    
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if context == &scrollviewOffsetContext {
             let sv = object as! InfiniteScrollView
             let offset = sv.contentOffset
-            
+
             for i in 0...6 {
                 let layer = scrollviews[i]
                 layer.contentOffset = CGPointMake(offset.x * speeds[i], 0.0)

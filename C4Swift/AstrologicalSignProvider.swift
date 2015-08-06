@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import C4Core
-import C4UI
+import C4
 
 typealias AstrologicalSignFunction = () -> AstrologicalSign
 
@@ -48,7 +47,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func taurus() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(0, 0))
         bezier.addCurveToPoint(C4Point(6.3, 0), control2:C4Point(6.4, 10.2), point: C4Point(15.2, 10.2))
@@ -91,7 +90,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func aries() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(2.8, 15.5))
         bezier.addCurveToPoint(C4Point(1.1, 13.9), control2:C4Point(0, 11.6), point: C4Point(0, 9))
@@ -128,7 +127,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func gemini() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(26, 0))
         bezier.addCurveToPoint(C4Point(26, 0), control2:C4Point(24.2, 5.3), point: C4Point(13, 5.3))
@@ -189,7 +188,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func cancer() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(0, 8.1))
         bezier.addCurveToPoint(C4Point(1.9, 4.5), control2:C4Point(6.4, 0), point: C4Point(14.2, 0))
@@ -234,7 +233,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func leo() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(10.4, 19.6))
         bezier.addCurveToPoint(C4Point(10.4, 16.7), control2:C4Point(8.1, 14.4), point: C4Point(5.2, 14.4))
@@ -284,7 +283,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func virgo() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(30, 12.2))
         bezier.addCurveToPoint(C4Point(30, 9.4), control2:C4Point(32.2, 7.2), point: C4Point(35, 7.2))
@@ -351,7 +350,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func libra() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(37.5, 11.3))
         bezier.addLineToPoint(C4Point(30, 11.3))
@@ -398,7 +397,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func pisces() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(2.8, 0.1))
         bezier.addCurveToPoint(C4Point(2.8, 0.1), control2:C4Point(9.2, 1.9), point: C4Point(9.2, 13.1))
@@ -463,7 +462,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func aquarius() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(0, 5.4))
         bezier.addCurveToPoint(C4Point(4.5, 5.4), control2:C4Point(3.6, 0), point: C4Point(8.2, 0))
@@ -520,7 +519,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func sagittarius() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(30.4, 10.6))
         bezier.addLineToPoint(C4Point(30.4, 0))
@@ -596,7 +595,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func capricorn() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(13, 22.3))
         bezier.addLineToPoint(C4Point(13, 6.5))
@@ -654,7 +653,7 @@ class AstrologicalSignProvider : NSObject {
     }
     
     func scorpio() -> AstrologicalSign {
-        var bezier = C4Path()
+        let bezier = C4Path()
         
         bezier.moveToPoint(C4Point(10, 24.1))
         bezier.addLineToPoint(C4Point(10, 5))
