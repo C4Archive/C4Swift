@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import C4UI
-import C4Core
-import C4Animation
+import C4
 
 class ViewController: C4CanvasController {
 

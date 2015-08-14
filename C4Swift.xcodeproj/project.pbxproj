@@ -14,28 +14,17 @@
 		D928B5631A004E3200B0E813 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D928B5621A004E3200B0E813 /* Images.xcassets */; };
 		D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D928B5641A004E3200B0E813 /* LaunchScreen.xib */; };
 		D928B5721A004E3200B0E813 /* C4SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B5711A004E3200B0E813 /* C4SwiftTests.swift */; };
-		D9BFF0DB1B15005C00560081 /* C4UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; };
-		D9BFF0DC1B15005C00560081 /* C4UI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D9BFF0DF1B15005C00560081 /* C4Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; };
-		D9BFF0E01B15005C00560081 /* C4Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D9EF499E1A0AB46E00C03774 /* C4Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D9BFF0E31B15005C00560081 /* C4Animation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; };
-		D9BFF0E41B15005C00560081 /* C4Animation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1FB628D01A0B17B100699D1E /* C4Animation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D9BFF0DB1B15005C00560081 /* C4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4.framework */; };
+		D9BFF0DC1B15005C00560081 /* C4.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1FB628CF1A0B17B100699D1E /* PBXContainerItemProxy */ = {
+		1FAAA3CA1B538B210089B126 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = A9596D8A1A089E9F0023323D;
-			remoteInfo = C4Animation;
-		};
-		1FB628D11A0B17B100699D1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A9596D941A089EA00023323D;
-			remoteInfo = C4AnimationTests;
+			remoteGlobalIDString = A96F505A1B5385A5002B3A46;
+			remoteInfo = C4App;
 		};
 		1FFF9D4E1A7C879A00B21C7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -43,20 +32,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
 			remoteInfo = C4UI;
-		};
-		1FFF9D521A7C879A00B21C7F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A9596D181A054A960023323D;
-			remoteInfo = C4Core;
-		};
-		1FFF9D561A7C879A00B21C7F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A9596D891A089E9F0023323D;
-			remoteInfo = C4Animation;
 		};
 		D928B56C1A004E3200B0E813 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -86,34 +61,6 @@
 			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
 			remoteInfo = C4UI;
 		};
-		D9BFF0E11B15005C00560081 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A9596D181A054A960023323D;
-			remoteInfo = C4Core;
-		};
-		D9BFF0E51B15005C00560081 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A9596D891A089E9F0023323D;
-			remoteInfo = C4Animation;
-		};
-		D9EF499D1A0AB46E00C03774 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A9596D191A054A960023323D;
-			remoteInfo = C4Core;
-		};
-		D9EF499F1A0AB46E00C03774 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A9596D231A054A960023323D;
-			remoteInfo = C4CoreTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -123,9 +70,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D9BFF0E01B15005C00560081 /* C4Core.framework in CopyFiles */,
-				D9BFF0DC1B15005C00560081 /* C4UI.framework in CopyFiles */,
-				D9BFF0E41B15005C00560081 /* C4Animation.framework in CopyFiles */,
+				D9BFF0DC1B15005C00560081 /* C4.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,9 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9BFF0DF1B15005C00560081 /* C4Core.framework in Frameworks */,
-				D9BFF0DB1B15005C00560081 /* C4UI.framework in Frameworks */,
-				D9BFF0E31B15005C00560081 /* C4Animation.framework in Frameworks */,
+				D9BFF0DB1B15005C00560081 /* C4.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,12 +171,9 @@
 		D955EAF61A004F4A008356DD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D955EAFB1A004F4B008356DD /* C4UI.framework */,
+				D955EAFB1A004F4B008356DD /* C4.framework */,
 				D955EAFD1A004F4B008356DD /* C4UITests.xctest */,
-				D9EF499E1A0AB46E00C03774 /* C4Core.framework */,
-				D9EF49A01A0AB46E00C03774 /* C4CoreTests.xctest */,
-				1FB628D01A0B17B100699D1E /* C4Animation.framework */,
-				1FB628D21A0B17B100699D1E /* C4AnimationTests.xctest */,
+				1FAAA3CB1B538B210089B126 /* C4App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -254,11 +194,7 @@
 			);
 			dependencies = (
 				1FFF9D4F1A7C879A00B21C7F /* PBXTargetDependency */,
-				1FFF9D531A7C879A00B21C7F /* PBXTargetDependency */,
-				1FFF9D571A7C879A00B21C7F /* PBXTargetDependency */,
 				D9BFF0DE1B15005C00560081 /* PBXTargetDependency */,
-				D9BFF0E21B15005C00560081 /* PBXTargetDependency */,
-				D9BFF0E61B15005C00560081 /* PBXTargetDependency */,
 			);
 			name = C4Swift;
 			productName = C4Swift;
@@ -328,46 +264,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1FB628D01A0B17B100699D1E /* C4Animation.framework */ = {
+		1FAAA3CB1B538B210089B126 /* C4App.app */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = C4Animation.framework;
-			remoteRef = 1FB628CF1A0B17B100699D1E /* PBXContainerItemProxy */;
+			fileType = wrapper.application;
+			path = C4App.app;
+			remoteRef = 1FAAA3CA1B538B210089B126 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1FB628D21A0B17B100699D1E /* C4AnimationTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = C4AnimationTests.xctest;
-			remoteRef = 1FB628D11A0B17B100699D1E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D955EAFB1A004F4B008356DD /* C4UI.framework */ = {
+		D955EAFB1A004F4B008356DD /* C4.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = C4UI.framework;
+			path = C4.framework;
 			remoteRef = D955EAFA1A004F4B008356DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D955EAFD1A004F4B008356DD /* C4UITests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = C4UITests.xctest;
+			path = C4Tests.xctest;
 			remoteRef = D955EAFC1A004F4B008356DD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D9EF499E1A0AB46E00C03774 /* C4Core.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = C4Core.framework;
-			remoteRef = D9EF499D1A0AB46E00C03774 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D9EF49A01A0AB46E00C03774 /* C4CoreTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = C4CoreTests.xctest;
-			remoteRef = D9EF499F1A0AB46E00C03774 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -419,16 +334,6 @@
 			name = C4UI;
 			targetProxy = 1FFF9D4E1A7C879A00B21C7F /* PBXContainerItemProxy */;
 		};
-		1FFF9D531A7C879A00B21C7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = C4Core;
-			targetProxy = 1FFF9D521A7C879A00B21C7F /* PBXContainerItemProxy */;
-		};
-		1FFF9D571A7C879A00B21C7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = C4Animation;
-			targetProxy = 1FFF9D561A7C879A00B21C7F /* PBXContainerItemProxy */;
-		};
 		D928B56D1A004E3200B0E813 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D928B5551A004E3200B0E813 /* C4Swift */;
@@ -438,16 +343,6 @@
 			isa = PBXTargetDependency;
 			name = C4UI;
 			targetProxy = D9BFF0DD1B15005C00560081 /* PBXContainerItemProxy */;
-		};
-		D9BFF0E21B15005C00560081 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = C4Core;
-			targetProxy = D9BFF0E11B15005C00560081 /* PBXContainerItemProxy */;
-		};
-		D9BFF0E61B15005C00560081 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = C4Animation;
-			targetProxy = D9BFF0E51B15005C00560081 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -560,7 +455,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -575,7 +469,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
