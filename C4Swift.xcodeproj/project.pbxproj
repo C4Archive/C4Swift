@@ -26,13 +26,6 @@
 			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
 			remoteInfo = C4UI;
 		};
-		D917E13D1B851DB30084BC82 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A96F505A1B5385A5002B3A46;
-			remoteInfo = C4App;
-		};
 		D928B56C1A004E3200B0E813 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D928B54E1A004E3200B0E813 /* Project object */;
@@ -53,6 +46,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 614F824E19DB5ED4001DF1D4;
 			remoteInfo = C4iOSTests;
+		};
+		D995B63B1B73DF1600114428 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A96F505A1B5385A5002B3A46;
+			remoteInfo = C4App;
 		};
 		D9BFF0DD1B15005C00560081 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -173,7 +173,7 @@
 			children = (
 				D955EAFB1A004F4B008356DD /* C4.framework */,
 				D955EAFD1A004F4B008356DD /* C4Tests.xctest */,
-				D917E13E1B851DB30084BC82 /* C4App.app */,
+				D995B63C1B73DF1600114428 /* C4App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -284,6 +284,13 @@
 			fileType = wrapper.cfbundle;
 			path = C4Tests.xctest;
 			remoteRef = D955EAFC1A004F4B008356DD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D995B63C1B73DF1600114428 /* C4App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = C4App.app;
+			remoteRef = D995B63B1B73DF1600114428 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
