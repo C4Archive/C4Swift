@@ -19,19 +19,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1FAAA3CA1B538B210089B126 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A96F505A1B5385A5002B3A46;
-			remoteInfo = C4App;
-		};
 		1FFF9D4E1A7C879A00B21C7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 614F824219DB5ED3001DF1D4;
 			remoteInfo = C4UI;
+		};
+		D917E13D1B851DB30084BC82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A96F505A1B5385A5002B3A46;
+			remoteInfo = C4App;
 		};
 		D928B56C1A004E3200B0E813 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -173,7 +173,7 @@
 			children = (
 				D955EAFB1A004F4B008356DD /* C4.framework */,
 				D955EAFD1A004F4B008356DD /* C4UITests.xctest */,
-				1FAAA3CB1B538B210089B126 /* C4App.app */,
+				D917E13E1B851DB30084BC82 /* C4App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -264,11 +264,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1FAAA3CB1B538B210089B126 /* C4App.app */ = {
+		D917E13E1B851DB30084BC82 /* C4App.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = C4App.app;
-			remoteRef = 1FAAA3CA1B538B210089B126 /* PBXContainerItemProxy */;
+			remoteRef = D917E13D1B851DB30084BC82 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D955EAFB1A004F4B008356DD /* C4.framework */ = {
