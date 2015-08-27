@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "C4Swift/ViewController.swift"
-            timestampString = "454361003.794819"
+            timestampString = "462154202.176572"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "661"
-            endingLineNumber = "661"
-            landmarkName = "ViewController"
+            startingLineNumber = "1249"
+            endingLineNumber = "1249"
+            landmarkName = "C4Emitter"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -94,6 +94,22 @@
                   offsetFromSymbolStart = "11">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../C4iOS/C4/UI/C4ShapeLayer.swift"
+            timestampString = "461803502.35334"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "actionForKey(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
