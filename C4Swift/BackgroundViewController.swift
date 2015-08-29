@@ -93,17 +93,17 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
         let sv = InfiniteScrollView(frame: view.frame)
         let framesize = sv.frame.size.width * CGFloat(speed)
         
-        let fullframe = Double(framesize) * gapBetweenSigns
+        let singleSignContentSize = Double(framesize) * gapBetweenSigns
         sv.contentSize = CGSizeMake(framesize * CGFloat(gapBetweenSigns) * signCount  + CGFloat(canvas.width), 1.0)
         for frameCount in 0..<Int(signCount) {
             for _ in 0..<starCount {
-                let dx = fullframe * Double(frameCount)
-                var pt = C4Point(dx + random01() * fullframe, random01() * canvas.height)
+                let dx = singleSignContentSize * Double(frameCount)
+                var pt = C4Point(dx + random01() * singleSignContentSize, random01() * canvas.height)
                 let img = C4Image(imageName)
                 img.center = pt
                 sv.add(img)
                 if pt.x < canvas.width {
-                    pt.x += 12 * fullframe
+                    pt.x += 12 * singleSignContentSize
                     let img = C4Image(imageName)
                     img.center = pt
                     sv.add(img)
