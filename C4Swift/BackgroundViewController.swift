@@ -210,7 +210,7 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
     }
     
     func addDashesMarker(sv: InfiniteScrollView) {
-        let points = [C4Point(0,0),C4Point(Double(sv.contentSize.width),0)]
+        let points = (C4Point(0,0),C4Point(Double(sv.contentSize.width),0))
 
         let marker = C4Line(points)
         marker.lineDashPattern = [1.0,self.canvas.width * self.gapBetweenSigns-1.0]
@@ -221,21 +221,19 @@ class BackgroundViewController: C4CanvasController, UIScrollViewDelegate {
         marker.opacity = 0.33
         marker.origin = C4Point(0,self.canvas.height)
 
-        let dashes = C4Line(points)
+        let dashes = C4Line(marker.endPoints)
         dashes.lineDashPattern = [0.75,3.25]
         dashes.lineWidth = 10
         dashes.strokeColor = cosmosblue
         dashes.opacity = 0.33
         dashes.lineCap = .Butt
 
-        let highdashes = C4Line(points)
+        let highdashes = C4Line(marker.endPoints)
         highdashes.lineDashPattern = [1,31]
         highdashes.lineWidth = 20
         highdashes.strokeColor = cosmosblue
         highdashes.lineCap = .Butt
         dashes.add(highdashes)
-        
-        dashes.origin = marker.origin
 
         sv.add(dashes)
         sv.add(marker)
