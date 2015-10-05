@@ -500,7 +500,7 @@ class MenuViewController: C4CanvasController {
     
     func createMenuDividingLines() {
         for i in 0...11 {
-            let line = C4Line([C4Point(),C4Point(54,0)])
+            let line = C4Line((C4Point(),C4Point(54,0)))
             line.layer?.anchorPoint = CGPointMake(-1.88888,0)
             line.center = self.canvas.center
             var rot = C4Transform()
