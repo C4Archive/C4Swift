@@ -172,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				D955EAFB1A004F4B008356DD /* C4.framework */,
-				D955EAFD1A004F4B008356DD /* C4UITests.xctest */,
+				D955EAFD1A004F4B008356DD /* C4Tests.xctest */,
 				D917E13E1B851DB30084BC82 /* C4App.app */,
 			);
 			name = Products;
@@ -225,7 +225,8 @@
 		D928B54E1A004E3200B0E813 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = C4;
 				TargetAttributes = {
 					D928B5551A004E3200B0E813 = {
@@ -278,7 +279,7 @@
 			remoteRef = D955EAFA1A004F4B008356DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D955EAFD1A004F4B008356DD /* C4UITests.xctest */ = {
+		D955EAFD1A004F4B008356DD /* C4Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = C4Tests.xctest;
@@ -387,6 +388,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -457,6 +459,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.c4ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
@@ -471,6 +474,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.c4ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
@@ -492,6 +496,7 @@
 				);
 				INFOPLIST_FILE = C4SwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.c4ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/C4Swift.app/C4Swift";
@@ -509,6 +514,7 @@
 				);
 				INFOPLIST_FILE = C4SwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.c4ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/C4Swift.app/C4Swift";

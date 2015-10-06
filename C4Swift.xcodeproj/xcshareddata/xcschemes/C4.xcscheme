@@ -14,10 +14,38 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D928B5551A004E3200B0E813"
-               BuildableName = "C4Swift.app"
-               BlueprintName = "C4Swift"
-               ReferencedContainer = "container:C4Swift.xcodeproj">
+               BlueprintIdentifier = "614F824219DB5ED3001DF1D4"
+               BuildableName = "C4.framework"
+               BlueprintName = "C4"
+               ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "614F824D19DB5ED4001DF1D4"
+               BuildableName = "C4Tests.xctest"
+               BlueprintName = "C4Tests"
+               ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A96F50591B5385A5002B3A46"
+               BuildableName = "C4App.app"
+               BlueprintName = "C4App"
+               ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +56,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D928B56A1A004E3200B0E813"
-               BuildableName = "C4SwiftTests.xctest"
-               BlueprintName = "C4SwiftTests"
-               ReferencedContainer = "container:C4Swift.xcodeproj">
+               BlueprintIdentifier = "6114EDBB1BA4B36700A29541"
+               BuildableName = "C4.framework"
+               BlueprintName = "C4 (OSX)"
+               ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,20 +74,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D928B56A1A004E3200B0E813"
-               BuildableName = "C4SwiftTests.xctest"
-               BlueprintName = "C4SwiftTests"
-               ReferencedContainer = "container:C4Swift.xcodeproj">
+               BlueprintIdentifier = "614F824D19DB5ED4001DF1D4"
+               BuildableName = "C4Tests.xctest"
+               BlueprintName = "C4Tests"
+               ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
-            BlueprintName = "C4Swift"
-            ReferencedContainer = "container:C4Swift.xcodeproj">
+            BlueprintIdentifier = "614F824219DB5ED3001DF1D4"
+            BuildableName = "C4.framework"
+            BlueprintName = "C4"
+            ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,16 +103,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
-            BlueprintName = "C4Swift"
-            ReferencedContainer = "container:C4Swift.xcodeproj">
+            BlueprintIdentifier = "614F824219DB5ED3001DF1D4"
+            BuildableName = "C4.framework"
+            BlueprintName = "C4"
+            ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -94,16 +121,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D928B5551A004E3200B0E813"
-            BuildableName = "C4Swift.app"
-            BlueprintName = "C4Swift"
-            ReferencedContainer = "container:C4Swift.xcodeproj">
+            BlueprintIdentifier = "614F824219DB5ED3001DF1D4"
+            BuildableName = "C4.framework"
+            BlueprintName = "C4"
+            ReferencedContainer = "container:../C4iOS/C4iOS.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
