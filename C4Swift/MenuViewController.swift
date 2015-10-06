@@ -396,7 +396,7 @@ class MenuViewController: C4CanvasController {
     }
     
     func createMenuHighlight() {
-        menuHighlight = C4Wedge(center: canvas.center, radius: 156, start: 0.0, end: M_PI/6.0)
+        menuHighlight = C4Wedge(center: canvas.center, radius: 156, start: M_PI/6.0, end: 0.0, clockwise: false)
         menuHighlight.fillColor = cosmosblue
         menuHighlight.lineWidth = 0.0
         menuHighlight.opacity = 0.8
@@ -405,12 +405,9 @@ class MenuViewController: C4CanvasController {
         menuHighlight.center = canvas.center
         menuHighlight.hidden = true
 
-        let path = C4Path()
-        path.addEllipse(C4Rect(-156,-156,312,312))
-        path.addEllipse(C4Rect((312-204)/2-156,(312-204)/2-156,204,204))
-        
-        let donut = C4Shape(path)
-        donut.fillRule = .EvenOdd
+        let donut = C4Circle(center: menuHighlight.center, radius: 156-54/2.0)
+        donut.fillColor = clear
+        donut.lineWidth = 54
         menuHighlight.layer?.mask = donut.layer
 
         canvas.add(menuHighlight)
@@ -506,6 +503,7 @@ class MenuViewController: C4CanvasController {
             var rot = C4Transform()
             rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
             line.transform = rot
+            line.lineCap = .Butt
             line.strokeColor = cosmosblue
             line.lineWidth = 1.0
             line.strokeEnd = 0.0
