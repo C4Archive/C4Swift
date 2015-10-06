@@ -401,14 +401,14 @@ class MenuViewController: C4CanvasController {
         menuHighlight.lineWidth = 0.0
         menuHighlight.opacity = 0.8
         menuHighlight.interactionEnabled = false
-        menuHighlight.layer?.anchorPoint = CGPointZero
+        menuHighlight.anchorPoint = C4Point()
         menuHighlight.center = canvas.center
         menuHighlight.hidden = true
 
         let donut = C4Circle(center: menuHighlight.center, radius: 156-54/2.0)
         donut.fillColor = clear
         donut.lineWidth = 54
-        menuHighlight.layer?.mask = donut.layer
+        menuHighlight.mask = donut
 
         canvas.add(menuHighlight)
     }
@@ -498,7 +498,7 @@ class MenuViewController: C4CanvasController {
     func createMenuDividingLines() {
         for i in 0...11 {
             let line = C4Line((C4Point(),C4Point(54,0)))
-            line.layer?.anchorPoint = CGPointMake(-1.88888,0)
+            line.anchorPoint = C4Point(-1.88888,0)
             line.center = self.canvas.center
             var rot = C4Transform()
             rot.rotate(M_PI / 6.0 * Double(i) , axis: C4Vector(x: 0, y: 0, z: -1))
@@ -543,7 +543,7 @@ class MenuViewController: C4CanvasController {
         mask.fillColor = clear
         mask.strokeColor = red
         mask.lineWidth = 8
-        longDashedRing.layer?.mask = mask.layer
+        longDashedRing.mask = mask
 
         dashedRings.append(longDashedRing)
     }
