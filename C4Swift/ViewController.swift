@@ -10,8 +10,8 @@ import UIKit
 import C4
 
 class ViewController: C4CanvasController {
-
     override func setup() {
-        //work your magic here
+        let img = C4Image("rockies")
+        canvas.add(img)
     }
 }

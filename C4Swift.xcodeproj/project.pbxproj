@@ -16,6 +16,9 @@
 		D928B5721A004E3200B0E813 /* C4SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D928B5711A004E3200B0E813 /* C4SwiftTests.swift */; };
 		D9BFF0DB1B15005C00560081 /* C4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4.framework */; };
 		D9BFF0DC1B15005C00560081 /* C4.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D955EAFB1A004F4B008356DD /* C4.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D9C5866E1BE9521000E1054D /* halo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D9C5866C1BE9521000E1054D /* halo.mp4 */; };
+		D9C5866F1BE9521000E1054D /* haloGray.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D9C5866D1BE9521000E1054D /* haloGray.mp4 */; };
+		D9C586711BE9533C00E1054D /* loop.aif in Resources */ = {isa = PBXBuildFile; fileRef = D9C586701BE9533C00E1054D /* loop.aif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +92,9 @@
 		D928B5701A004E3200B0E813 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D928B5711A004E3200B0E813 /* C4SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C4SwiftTests.swift; sourceTree = "<group>"; };
 		D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = C4iOS.xcodeproj; path = ../../../Development/C4iOS/C4iOS.xcodeproj; sourceTree = "<group>"; };
+		D9C5866C1BE9521000E1054D /* halo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = halo.mp4; sourceTree = "<group>"; };
+		D9C5866D1BE9521000E1054D /* haloGray.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = haloGray.mp4; sourceTree = "<group>"; };
+		D9C586701BE9533C00E1054D /* loop.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = loop.aif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +144,7 @@
 				D955EAF51A004F4A008356DD /* C4iOS.xcodeproj */,
 				D928B5621A004E3200B0E813 /* Images.xcassets */,
 				D928B5641A004E3200B0E813 /* LaunchScreen.xib */,
+				D9C586691BE951B200E1054D /* Media */,
 				D928B5591A004E3200B0E813 /* Supporting Files */,
 			);
 			path = C4Swift;
@@ -176,6 +183,16 @@
 				D917E13E1B851DB30084BC82 /* C4App.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D9C586691BE951B200E1054D /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				D9C586701BE9533C00E1054D /* loop.aif */,
+				D9C5866C1BE9521000E1054D /* halo.mp4 */,
+				D9C5866D1BE9521000E1054D /* haloGray.mp4 */,
+			);
+			name = Media;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +252,7 @@
 					};
 					D928B56A1A004E3200B0E813 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 75C7KVJZ99;
 						TestTargetID = D928B5551A004E3200B0E813;
 					};
 				};
@@ -293,9 +311,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9C586711BE9533C00E1054D /* loop.aif in Resources */,
 				D928B5611A004E3200B0E813 /* Main.storyboard in Resources */,
 				D928B5661A004E3200B0E813 /* LaunchScreen.xib in Resources */,
+				D9C5866F1BE9521000E1054D /* haloGray.mp4 in Resources */,
 				D928B5631A004E3200B0E813 /* Images.xcassets in Resources */,
+				D9C5866E1BE9521000E1054D /* halo.mp4 in Resources */,
 				1F85555D1B3B02F600EB0A67 /* halo.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,13 +475,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
+				PROVISIONING_PROFILE = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Debug;
@@ -469,13 +490,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = C4Swift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dd12fa13-dc75-48dc-8266-ccc9afd8c174";
+				PROVISIONING_PROFILE = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "/Users/travis/Development/C4iOS/**";
 			};
 			name = Release;
@@ -484,7 +505,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Travis Stuart Kirton (L8K667RYG7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
