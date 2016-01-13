@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A0315A4C1A7053754CE9C2F5CE7AB94C27F23BA4",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "54F4D03C461288D08B6868DC66C04481BECA35A3" : 0,
+    "A0315A4C1A7053754CE9C2F5CE7AB94C27F23BA4" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1AAC1896-00F7-4D85-8263-77A20FE22510",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "54F4D03C461288D08B6868DC66C04481BECA35A3" : "C4iOS",
+    "A0315A4C1A7053754CE9C2F5CE7AB94C27F23BA4" : "C4Swift"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "C4Swift",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "C4Swift.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/C4Framework\/C4iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "54F4D03C461288D08B6868DC66C04481BECA35A3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/C4Framework\/C4Swift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A0315A4C1A7053754CE9C2F5CE7AB94C27F23BA4"
+    }
+  ]
+}

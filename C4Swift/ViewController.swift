@@ -12,6 +12,22 @@ import C4
 class ViewController: C4CanvasController {
 
     override func setup() {
-        //work your magic here
+        let lines = SlackLogo()
+        let squares = SlackLogo()
+        squares.isSquares = true
+        let container = C4View(frame: lines.bounds)
+//        container.center = canvas.center
+//        let img = C4Image("slackLogo")
+//        canvas.add(img)
+
+        container.add(lines)
+        container.add(squares)
+        canvas.add(container)
+
+        canvas.addTapGestureRecognizer { (location, state) -> () in
+            lines.animate()
+            squares.animate()
+        }
+
     }
 }
