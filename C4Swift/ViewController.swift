@@ -14,7 +14,11 @@ class ViewController: C4CanvasController {
     var points = [C4Point]()
 
     override func setup() {
-        setupDisperse()
+//        let g = C4Gradient(frame: C4Rect(0,0,200,200), locations: [0,1])
+//        canvas.add(g)
+        setupPan()
+//        setupDisperse()
+//        setupRain()
     }
     
     func setupDisperse() {
@@ -57,7 +61,7 @@ class ViewController: C4CanvasController {
     
     func createGradients() {
         for _ in 0...50 {
-            let g = C4Gradient(frame: C4Rect(0,0,3,random01()*100+100))
+            let g = C4Gradient(frame: C4Rect(0,0,3,random01()*100+100), colors: [C4Pink, C4Blue])
             let mod = (random01()*2.0-1.0)*10
             g.center = C4Point(self.canvas.center.x + mod, self.canvas.center.y)
             self.canvas.add(g)
@@ -76,7 +80,7 @@ class ViewController: C4CanvasController {
         canvas.addTapGestureRecognizer { (location, state) -> () in
             if location.y < 100 {
                 for _ in 0...10 {
-                    let g = C4Gradient(frame: C4Rect((random01()*2.0-1.0)*40+location.x,location.y,2,2))
+                    let g = C4Gradient(frame: C4Rect((random01()*2.0-1.0)*40+location.x,location.y,2,2), colors: [C4Pink, C4Blue])
                     self.canvas.add(g)
                     self.canvas.sendToBack(g)
                     let anim = C4ViewAnimation(duration: random01()/2.0 + 0.5) {
@@ -109,7 +113,7 @@ class ViewController: C4CanvasController {
         
         canvas.addPanGestureRecognizer { (location, translation, velocity, state) -> () in
             if location.y < 100 {
-                    let g = C4Gradient(frame: C4Rect((random01()*2.0-1.0)*40+location.x,location.y,2,2))
+                    let g = C4Gradient(frame: C4Rect((random01()*2.0-1.0)*40+location.x,location.y,2,2), colors: [C4Pink, C4Blue])
                     self.canvas.add(g)
                     self.canvas.sendToBack(g)
                     let anim = C4ViewAnimation(duration: random01()/2.0 + 0.5) {
@@ -137,7 +141,7 @@ class ViewController: C4CanvasController {
                 self.gradients.removeAll()
             }
         }
-        
+
         canvas.backgroundColor = black
     }
     
@@ -153,15 +157,16 @@ class ViewController: C4CanvasController {
     }
 
     func createBar(point: C4Point) {
-        let width = random(below: 5)+5
-        let g = C4Gradient(frame: C4Rect(0,0,width,random(below: 250)+50))
+        let width = random(below: 5)+1
+        let g = C4Gradient(frame: C4Rect(0,0,width,random(below: 250)+50), locations: [0,1])
         g.center = point
+        g.endPoint = C4Point(0,1.0)
         g.border.radius = Double(width)/4.0
         switch random(below: 2) {
         case 0:
-            g.colors = [black,C4Pink]
+            g.colors = [C4Blue,C4Pink]
         default:
-            g.colors = [C4Pink,black]
+            g.colors = [C4Pink,C4Blue]
         }
         canvas.add(g)
         createAnim(g)
