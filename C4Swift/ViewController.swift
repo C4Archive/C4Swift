@@ -9,17 +9,6 @@
 import UIKit
 import C4
 
-class DisplayLink: NSObject {
-
-    override init() {
-        super.init()
-    }
-
-    func update() {
-
-    }
-}
-
 class ViewController: C4CanvasController {
     var line: RandomLine!
     var line2: RandomLine!
