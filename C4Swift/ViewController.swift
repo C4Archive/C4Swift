@@ -9,35 +9,75 @@
 import UIKit
 import C4
 
-class ViewController: C4CanvasController {
-    var points: [C4Point]!
-    var line: C4Polygon!
-    var line2: C4Polygon!
-    var timer: C4Timer!
+class DisplayLink: NSObject {
 
-    override func setup() {
-        points = [C4Point]()
-
-        var x = 0.0
-        repeat {
-            points.append(C4Point(x,canvas.center.y))
-            x  += 4.0
-        } while x <= canvas.width
-        points.append(C4Point(x,canvas.center.y))
-
-        line = C4Polygon(points)
-        line.strokeColor = clear
-        line.fillColor = C4Pink
-        canvas.add(line)
-
-        timer = C4Timer(interval: 1/30.0) {
-            self.updatePoints()
-            self.updateLine(self.timer.interval)
-        }
-        timer.start()
+    override init() {
+        super.init()
     }
 
-    func updatePoints() {
+    func update() {
+
+    }
+}
+
+class ViewController: C4CanvasController {
+    var line: RandomLine!
+    var line2: RandomLine!
+    var line3: RandomLine!
+
+    var timer: C4Timer!
+
+    var displayLink: CADisplayLink!
+
+    override func setup() {
+        line = RandomLine(frame: C4Rect(0,0,canvas.width,100))
+        line.setup()
+        line.line.fillColor = C4Purple
+        line.center = canvas.center
+        canvas.add(line)
+
+        line2 = RandomLine(frame: C4Rect(0,0,canvas.width,100))
+        line2.setup()
+        line2.line.fillColor = C4Blue
+        line2.center = canvas.center
+        canvas.add(line2)
+
+        line3 = RandomLine(frame: C4Rect(0,0,canvas.width,100))
+        line3.setup()
+        line3.center = canvas.center
+        canvas.add(line3)
+
+        displayLink = CADisplayLink(target: self, selector: "update")
+        displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+    }
+
+    func update() {
+        line.update()
+        line2.update()
+        line3.update()
+    }
+}
+
+class RandomLine: C4View {
+    var line: C4Polygon!
+
+    func setup() {
+        var points = [C4Point]()
+        var x = 0.0
+        repeat {
+            points.append(C4Point(x,height/2.0))
+            x += 4.0
+        } while x < width
+        points.append(C4Point(x,height/2.0))
+
+        line = C4Polygon(points)
+        line.fillColor = C4Pink
+        line.strokeColor = clear
+        add(line)
+    }
+
+    func update() {
+        var points = line.points
         for _ in 1...40 {
             let index = random(below: points.count)
 
@@ -45,16 +85,11 @@ class ViewController: C4CanvasController {
 
             let dy = random01() * 20 * dir
 
-            round(random01() * 3.0) == 0 ? points[index].y = canvas.center.y : (points[index].y += dy)
+            round(random01() * 3.0) == 0 ? points[index].y = height/2.0 : (points[index].y += dy)
         }
-    }
 
-    func updateLine(duration: Double) {
-
-        let newLine = C4Polygon(points)
-
-        C4ViewAnimation(duration: duration) {
-            self.line.path = newLine.path
+        C4ViewAnimation(duration: 1/60.0) {
+            self.line.points = points
         }.animate()
     }
 }
