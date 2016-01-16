@@ -36,7 +36,6 @@ class ViewController: C4CanvasController {
         return newPoints
     }
 
-
 //pink change update method
 //    var pointCount = 90
 //    var radius = (60.0,50.0)
@@ -135,9 +134,6 @@ class ViewController: C4CanvasController {
     func initializeDisplayLink() {
         let displayLink = CADisplayLink(target: self, selector: "update")
         displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
-        canvas.addTapGestureRecognizer { (location, state) -> () in
-            self.update()
-        }
     }
 
     func animateCanvas() {
