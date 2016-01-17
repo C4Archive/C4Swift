@@ -14,11 +14,12 @@ class ViewController: C4CanvasController {
     var points = [C4Point]()
 
     override func setup() {
-//        let g = C4Gradient(frame: C4Rect(0,0,200,200), locations: [0,1])
-//        canvas.add(g)
-        setupPan()
-//        setupDisperse()
-//        setupRain()
+        var x = 1.0
+        let w = 1.0
+        repeat {
+            createBar(C4Point(x,canvas.center.y), width: w)
+            x += w * 2.0
+        } while x < canvas.width
     }
     
     func setupDisperse() {
@@ -178,20 +179,34 @@ class ViewController: C4CanvasController {
             self.gradients.removeAtIndex(0)
         }
     }
+
+    func createBar(point: C4Point, width: Double) {
+        let h = random(below: 50)+50
+        let g = C4Gradient(frame: C4Rect(0,0,Int(width),h), locations: [0,1])
+        g.endPoint = C4Point(0,1.0)
+        g.center = point
+        switch random(below: 2) {
+        case 0:
+            g.colors = [C4Blue,C4Pink]
+        default:
+            g.colors = [C4Pink,C4Blue]
+        }
+        canvas.add(g)
+        createAnim(g)
+    }
     
     func createAnim(g: C4Gradient) {
         let c = g.center
-        let anim = C4ViewAnimation(duration: 3.0) {
+        let anim = C4ViewAnimation(duration: random01()*1.5 + 0.5) {
             let t = C4Transform.makeScale(1, random01() + 0.5)
             g.transform = t
             g.center = c
         }
-        anim.autoreverses = true
-        anim.repeats = true
+        anim.delay = random01()
         anim.curve = .EaseInOut
-        
-        delay(random01()*1.0 + 0.25) {
-            anim.animate()
+        anim.addCompletionObserver { () -> Void in
+            self.createAnim(g)
         }
+        anim.animate()
     }
 }
