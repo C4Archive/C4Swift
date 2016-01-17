@@ -57,7 +57,7 @@ class ViewController: C4CanvasController {
     func createBit(petri: C4Circle) -> C4Circle {
         let θ = random01() * 2 * M_PI
         let r = petri.width/2.0 * random01()
-        let c = C4Point(r * sin(θ), r * cos(θ)) + petri.bounds.center
+        let c = C4Point(r * sin(θ), r * cos(θ)) + C4Vector(petri.bounds.center)
         let bit = C4Circle(center: c, radius: 2)
         bit.lineWidth = 0
         bit.fillColor = C4Pink
@@ -74,7 +74,7 @@ class ViewController: C4CanvasController {
         let anim = C4ViewAnimation(duration: random01() * 5 + 2.0) { () -> Void in
             let θ = random01() * 2 * M_PI
             let r = petri.width/2.0 * random01()
-            let c = C4Point(r * sin(θ), r * cos(θ)) + petri.bounds.center
+            let c = C4Point(r * sin(θ), r * cos(θ)) + C4Vector(petri.bounds.center)
             bit.center = c
         }
         anim.delay = random01() * 1.0
